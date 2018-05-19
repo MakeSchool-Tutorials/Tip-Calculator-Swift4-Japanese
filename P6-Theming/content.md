@@ -1,53 +1,53 @@
 ---
-title: "Theming and Styling"
+title: "テーマとスタイリング"
 slug: theming
 ---
 
-To finish our tip calculator, we'll need to add some final touches to styling and implement our light/dark theme switch.
+チップ計算機を完成させるには、スタイルを仕上げて、明るいテーマ/暗いテーマを切り替えるスイッチを実装する必要があります。
 
-Let's review what our app looks like so far:
+アプリのここまでの出来栄えを見てみましょう。
 
 ![Current App](assets/current_app.png)
 
-Next, let's take a look at our designs:
+次に、デザインについて見てみましょう。
 
 ![Final Design](assets/final_design.png)
 
-Although the differences are subtle, to complete our UI, we'll need to add the following:
+違いはわずかですが、UIを完成させるには次を追加する必要があります。
 
-- header view shadow
-- input card rounded corners
-- output card rounded corners
-- reset button rounded corners
-- output card border
+- ヘッダービューの影
+- 入力カードの丸い角
+- 出力カードの丸い角
+- リセットボタンの丸い角
+- 出力カードの枠線
 
-Let's start by making these changes!
+これらの変更を加えていきましょう！
 
-# Configuring Layers
+# レイヤーの構成
 
-To make our final UI changes, we'll need to learn about `CALayer`.
+最終的なUIの変更を加えるには、`CALayer`について学ぶ必要があります。
 
-Each `UIView` object has a `layer` property of type `CALayer`. The view's layer is a lower-level API that gives developers more control on how the view is rendered.
+各`UIView`オブジェクトには`CALayer`型の`layer`プロパティがあります。ビューのレイヤーは低水準APIで、開発者はビューのレンダリングを制御できます。
 
-By using each view's `layer` property, we can easily create shadows, add rounded corners and display borders.
+各ビューの`layer`プロパティを使用すると、簡単に影を付け、角を丸くし、枠線を表示できます。
 
-Before we start with configuring our view's layers, let's first create a new, empty method in our view controller.
+ビューのレイヤーを構成していく前に、まずは新しい空のメソッドをビューコントローラーに作成しましょう。
 
 > [action]
-In `ViewController.swift`, add the following function:
+`ViewController.swift`に次の関数を追加してください。
 >
 ```
 func setupViews() {
-    // nothing yet
+    // まだ何もありません
 }
 ```
 
-We'll use this method to add code that initially configures each view's respective layer.
+このメソッドを使って各ビューのレイヤーを初期構成するコードを追加します。
 
-This function will need to be called at the beginning of the view controller's lifecycle so it initially makes all of our layer customizations.
+レイヤーのカスタマイズをすべて最初に実行するように、この関数はビュー コントローラーのライフサイクルの最初に呼び出す必要があります。
 
 > [action]
-In `ViewController.swift`, call `setupViews()` in `viewDidLoad()`:
+`ViewController.swift`で`viewDidLoad()`の`setupViews()`を呼び出します。
 >
 ```
 override func viewDidLoad() {
@@ -61,10 +61,10 @@ override func viewDidLoad() {
 }
 ```
 
-With our near `setupViews()` method, we can add the code for adding a shadow to the bottom of the header view.
+`setupViews()`メソッドでヘッダービュー下部に影を追加するコードを追加できます。
 
 > [action]
-Add a shadow by configuring the _Header View's_ layer:
+ヘッダービューのレイヤーを構成して影を追加します。
 >
 ```
 func setupViews() {
@@ -72,30 +72,30 @@ func setupViews() {
     headerView.layer.shadowOpacity = 0.05
     headerView.layer.shadowColor = UIColor.black.cgColor
     headerView.layer.shadowRadius = 35
-}
+}}
 ```
 >
-`CALayer` has many attributes that allow you to configure a view's appearance. In the code above, we add code to create a slight shadow for our _Header View_.
+`CALayer`にはビューの外観を構成できる属性がたくさんあります。上記のコードにヘッダービューの薄い影を作成するコードを追加します。
 >
-Build and run your project. You should see your shadow appear under your _Header View_:
+プロジェクトをビルドして実行します。影がヘッダービューの下に表示されます。
 >
 ![Header Shadow](assets/header_shadow.png)
 
 <!-- break -->
 
 > [info]
-The shadow in our UI is soft and can be hard to see. If you want to test that your code works, you can adjust the layer's `shadowOpacity` to a value closer to `1`. Don't forget to change the value back after testing.
+UIの影は薄くてよく見えません。コードが正しく機能することを検証したい場合は、レイヤーの`shadowOpacity`を`1`に近い値に調整できます。検証が済んだら値を戻すことを忘れずに。
 
-Next, we'll look at setting a view's layer to have rounded corners.
+次に、ビューのレイヤーを設定して、丸みのある角にします。
 
-## Rounded Corners
+## 丸みのある角部
 
-Similar to setting our shadow, each `CALayer` also has a `cornerRadius` property that we can adjust to give our view a rounded corner.
+影の設定と同様に、各`CALayer`には`cornerRadius`プロパティがあります。これを調整してビューの角を丸くすることができます。
 
-Let's add the code to give our _Input Card_ rounded corners.
+入力カードの角を丸くするコードを追加しましょう。
 
 > [action]
-Add rounded corners to the input card:
+入力カードに丸い角を追加します。
 >
 ```
 func setupViews() {
@@ -109,24 +109,24 @@ func setupViews() {
 }
 ```
 >
-It's important to note that we also set the layer's `maskToBounds` property to `true`. This prevents our view's content from appearing outside of our rounded corner's boundary.
+レイヤーの`maskToBounds`プロパティを`true`に設定したことも重要です。これによってビューの内容が丸い角の外に表示されるのを防ぎます。
 
-Let's test that our code works!
+コードがちゃんと機能するかテストしましょう！
 
 > [action]
-Build and run your project the updates to your UI:
+UIの更新をビルドして実行します。
 >
 ![Input Rounded Corners](assets/input_rounded_corners.png)
 
-Easy enough! Time to practice on your own.
+簡単ですね！ 自分で練習してみてください。
 
 > [challenge]
-Add rounded corners (with the same corner radius as above) to give both the `outputCardView` and `resetButton` rounded corners.
+丸い角 (上と同じ角の半径) を`outputCardView`と`resetButton`の両方に追加します。
 
 <!-- break -->
 
 > [solution]
-To add rounded corners for both views, you should have added the code below to your `setupViews()` method:
+両方のビューに丸い角を追加するには、下のコードに`setupViews()`メソッドを追加します。
 >
 ```
 func setupViews() {
@@ -141,12 +141,12 @@ func setupViews() {
 }
 ```
 
-## Borders
+## 境界線
 
-To finish up our UI changes, we'll need to add a border to our output card. Again, `CALayer` has two properties: `borderWidth` and `borderColor` that allow us to set a border for a layer. No surprise...
+UIの変更を完了するには、出力カードに枠線を追加します。繰り返しますが、`CALayer`には2つのプロパティがあります。`borderWidth`と`borderColor`でレイヤーの枠線を設定できます。驚くことはありませんね。
 
 > [action]
-Add the following code to `setupViews()`:
+次のコードを`setupViews()`に追加します。
 >
 ```
 func setupViews() {
@@ -156,7 +156,7 @@ func setupViews() {
     outputCardView.layer.cornerRadius = 8
     outputCardView.layer.masksToBounds = true
 >
-    // set output card border
+    // 出力カードの境界線を設定
     outputCardView.layer.borderWidth = 1
     outputCardView.layer.borderColor = UIColor.tcHotPink.cgColor
 >
@@ -165,18 +165,18 @@ func setupViews() {
 }
 ```
 
-We've finished styling our tip calculator's subviews. Your tip calculator should look like the following:
+チップ計算機のサブビューのスタイリングが完了しました。チップ計算機は次のような外観になります。
 
 ![Finished UI](assets/finished_ui.png)
 
-# Light / Dark Theme
+# ライト / ダークテーマ
 
-The last feature we need to implement is the ability to toggle themes. Currently, our app has a light colored theme. When we're finished, our `UISwitch` will be able to toggle from our light colored theme to a dark one (and vice versa.)
+実装する必要がある最後の機能はテーマの切り替えです。現在のアプリは明るい色のテーマになっています。実装が完了すると、`UISwitch`が明るい色のテーマと暗い色のテーマを切り替えられるようになります。
 
-Let's start by creating a new function that will eventually contain all our theme switching code.
+まず、テーマを切り替えるコードを記述する新しい関数を作成しましょう。
 
 > [action]
-In `ViewController.swift`, add the following new method:
+`ViewController.swift`に次の新しいメソッドを追加します。
 >
 ```
 func setTheme(isDark: Bool) {
@@ -184,30 +184,30 @@ func setTheme(isDark: Bool) {
 }
 ```
 
-Next, we'll create a new data structure that contains each theme's color information. When we're done, we'll be able to use this object to switch between themes.
+次に、各テーマの色情報を格納する新しいデータ構造を作成します。作成が終わったら、このオブジェクトを使ってテーマを切り替えられるようになります。
 
 > [action]
-Create a new `ColorTheme` struct:
+新しい`ColorTheme`構造体を作成します。
 >
-1. Press CMD-N to create a new file into your project. ![New File Template](assets/new_file_template.png)
-1. Select _Swift File_ and click _Next_ . ![Select Swift Template](assets/select_swift_template.png)
-1. Name your new Swift file `ColorTheme.swift` and click _Create_. ![Set Struct Name](assets/set_struct_name.png)
+1. CMD-Nを押してプロジェクトに新しいファイルを作成します。![New File Template](assets/new_file_template.png)
+1. _Swift File_ を選択して _Next_ をクリックします。![Select Swift Template](assets/select_swift_template.png)
+1. 新しいSwiftファイルに`ColorTheme.swift`という名前を付けて _Create_ をクリックします。![Set Struct Name](assets/set_struct_name.png)
 >
-When you're finished, you should see a new Swift source file named `ColorTheme.swift`:
+終わったら、`ColorTheme.swift`という名前の新しいSwiftソース ファイルが表示されるはずです。
 >
 ![New Empty File](assets/new_empty_file.png)
 
-With our new source file, we can create our `ColorTheme` data structure.
+新しいソース ファイルを使って`ColorTheme`データ構造を作成できます。
 
 > [action]
-In `ColorTheme.swift`, add the following code:
+`ColorTheme.swift`に次のコードを追加します。
 >
 ```
 import UIKit
 >
 struct ColorTheme {
 >
-    // MARK: - Instance Vars
+    // MARK: - インスタンス変数
 >
     let isDefaultStatusBar: Bool
     let viewControllerBackgroundColor: UIColor
@@ -222,17 +222,17 @@ struct ColorTheme {
 }
 ```
 >
-We create a new `struct` that contains the data for each theme. Each property in `ColorTheme` sets the color of a corresponding view in our tip calculator's UI.
+各テーマのデータを格納する新しい「構造体」を作成します。`ColorTheme`の各プロパティはチップ計算機のUIの対応するビューの色を設定します。
 
-Using our `ColorTheme` struct, we can create our light and dark color themes. We'll do this using class variables.
+`ColorTheme`構造体を使用して、明るい色のテーマと暗い色のテーマを作成できます。これにはクラス変数を使います。
 
 > [action]
-In `ColorTheme.swift`, create two new class variables:
+`ColorTheme.swift`で新しいクラス変数を2つ作成してください。
 >
 ```
 struct ColorTheme {
 >
-    // MARK: - Class Vars
+    // MARK: - クラス変数
 >
     static let light = ColorTheme(isDefaultStatusBar: true,
                                   viewControllerBackgroundColor: .tcOffWhite,
@@ -255,10 +255,10 @@ struct ColorTheme {
 }
 ```
 
-We can use the data from the class variables we created to change the current color theme of our tip calculator.
+作成したクラス変数のデータを使ってチップ計算機の現在の色のテーマを変更できます。
 
 > [action]
-In `ViewController.swift`, update `setTheme(isDark:)` to use our change the color of our tip calculator depending on the active theme.
+`ViewController.swift`で`setTheme(isDark:)`を更新し、有効になっているテーマに応じて、チップ計算機の色を変更するようにします。
 >
 ```
 func setTheme(isDark: Bool) {
@@ -287,15 +287,15 @@ func setTheme(isDark: Bool) {
 }
 ```
 
-In addition, we'll need to add some more code to make sure the color of our status bar is correctly updated.
+さらに、ステータスバーの色が正しく更新されるようにコードを追加する必要があります。
 
 > [action]
-In `ViewController.swift`, add the following properties to the top of your class:
+`ViewController.swift`で次のプロパティをクラスの一番上に追加します。
 >
 ```
 class ViewController: UIViewController {
 >
-    // MARK: - Properties
+    // MARK: - プロパティ
 >
     // 1
     var isDefaultStatusBar = true
@@ -310,19 +310,19 @@ class ViewController: UIViewController {
 }
 ```
 >
-Explaining the new properties we added:
+追加した新しいプロパティについて説明します。
 >
-1. `isDefaultStatusBar` keeps our `Bool` of whether we should show the default or light status bar. If default, the status bar color is black.
-1. We override the `preferredStatusBarStyle` property and use `isDefaultStatusBar` to set our view controller's status bar style.
+1.`isDefaultStatusBar`は、既定または軽量のステータスバーのどちらを表示するかを表す`Bool`を保持します。既定の場合はステータスバーの色は黒になります。
+1. `preferredStatusBarStyle`プロパティをオーバーライドして、`isDefaultStatusBar`を使い、ビューコントローラーのステータスバーのスタイルを設定します。
 >
-You might be wondering 'Why we need two properties to set the status bar style?'. Good question. Our `preferredStatusBarStyle` property is inherited from our super class and can't be set directly. Because of this, we need our `isDefaultStatusBar` variable to keep track of which status bar style `preferredStatusBarStyle` should display.
+「ステータスバーのスタイルを設定するのになぜ2つのプロパティが必要なんだ？」と思うかもしれません。良い質問です。`preferredStatusBarStyle`プロパティはスーパークラスが継承されているため直接設定できません。このため、どのステータスバーのスタイル`preferredStatusBarStyle`を表示すべきかを保存する`isDefaultStatusBar`変数が必要です。
 
 <!-- break -->
 
-To make sure our status bar is updated when our theme is toggled, we'll need to add the following code to our `setTheme(isDark:)` method.
+テーマがトグルされたときにステータスバーが更新されるようにするには、次のコードを`setTheme(isDark:)`メソッドに追加する必要があります。
 
 > [action]
-In `ViewController.swift`, update `setTheme(isDark:)`:
+`ViewController.swift`の`setTheme(isDark:)`を更新します。
 >
 ```
 func setTheme(isDark: Bool) {
@@ -334,12 +334,12 @@ func setTheme(isDark: Bool) {
 }
 ```
 
-## Implementing Our IBAction
+## IBActionの実装
 
-To toggle our theme each time our `UISwitch` is toggled, we'll need to connect our `setTheme(isDark:)` to our `themeToggled(_:)` method.
+`UISwitch`をトグルするたびにテーマを切り替えるには、`setTheme(isDark:)`を`themeToggled(_:)`メソッドに接続する必要があります。
 
 > [action]
-Call `setTheme(isDark:)` in `themeToggled(_:)`:
+`themeToggled(_:)`の`setTheme(isDark:)`を呼び出します。
 >
 ```
 @IBAction func themeToggled(_ sender: UISwitch) {
@@ -347,14 +347,14 @@ Call `setTheme(isDark:)` in `themeToggled(_:)`:
 }
 ```
 >
-Our theme will be switched from light to dark and vice versa each time our `UISwitch` is toggled. The theme will be set corresponding to the switch's `isOn` property.
+テーマは`UISwitch`がトグルされるたびに明るい色から暗い色に切り替わります。その逆も同様です。スイッチの`isOn`プロパティに応じてテーマが設定されます。
 
-## Initial Theme Setup
+## 初回テーマ設定
 
-To clean up, we'll need to make sure to set the initial theme state for our tip calculator. We can do this by calling our `setTheme(isDark:)` at the beginning of our view controller lifecycle.
+チップ計算機の最初のテーマの状態を設定して、きれいにする必要があります。`setTheme(isDark:)`をビューコントローラーライフサイクルの最初に呼び出すことで、これを実行できます。
 
 > [action]
-In `ViewController.swift`, change your view controller to the following:
+`ViewController.swift`でビューコントローラーを次のように変更します。
 >
 ```
 override func viewDidLoad() {
@@ -369,13 +369,13 @@ override func viewDidLoad() {
 }
 ```
 >
-We call `setTheme(isDark: false)` so that when our view controller's view are first setup, our initial theme will be set.
+`setTheme(isDark: false)`を呼び出して、ビューコントローラーのビューがセットアップされたらテーマが初期設定されるようにします。
 
-Let's test our code to see if it works!
+正しく機能するかコードをテストしましょう！
 
 > [action]
-Build and run your project. Toggle the `UISwitch` to switch between light and dark color themes. If everything goes well, you should be able to use your tip calculator in dark mode! Which theme do you like better?
+プロジェクトをビルドして実行します。`UISwitch`をトグルして、明るい色のテーマと暗い色のテーマを切り替えます。すべてうまく行けば、チップ計算機を暗いモードで使用できるはずです！ どちらのテーマがお好みですか？
 >
 ![Finished UI Dark](assets/finished_ui_dark.png)
 
-After implementing our theming feature, we've completed our tip calculator's functionality and design! In the next section, we'll review what we've learned and set you on a challenge to practice your new skills.
+テーマ機能を実装したら、チップ計算機の機能とデザインが完成です！ 次のセクションでは、学んだ内容を確認し、課題に取り組んで新しいスキルを練習します。

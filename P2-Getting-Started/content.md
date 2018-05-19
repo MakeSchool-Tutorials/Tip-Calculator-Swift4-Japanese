@@ -1,40 +1,40 @@
 ---
-title: "Getting-Started"
+title: "スタートする"
 slug: getting-started
 ---
 
-In this section, we'll get introduced to our new Xcode project and start working on implementing our tip calculator design.
+このセクションでは、新たなXcodeプロジェクトに出会い、チップ計算機のデザインを実装する作業を始めます。
 
-We'll get started by downloading a Xcode starter project. You can download the `.zip` file by [clicking here.](https://github.com/ocwang/TipCalculatorStarter/archive/master.zip)
+Xcodeのスタータープロジェクトをダウンロードすることから始めましょう。`zip`ファイルをダウンロードできます [こちらをクリックしてください。](https://github.com/ocwang/TipCalculatorStarter/archive/master.zip)
 
-# In Your Starter Project
+# スタータープロジェクト
 
-After downloading the starter project, open the project in Xcode. You should see something the following:
+スタータープロジェクトをダウンロードしたら、このプロジェクトをXcodeで開いてください。次のように表示されるはずです：
 
 ![Open Starter Project](assets/open_starter_project.png)
 
-Build and run the current starter project in a simulator or iPhone device of your choice.
+最新のスタータープロジェクトをシミュレーターまたはiPhoneデバイスでビルドし、実行してください。
 
 > [action]
-Run the new starter project to make sure there are no compilation errors. If all goes well, your project should run successfully and display an empty white screen (we haven't built anything yet!)
+コンパイルエラーがないことを確認するために、新しいスタータープロジェクトを実行してください。すべてうまく行くと、プロジェクトの実行に成功し、空っぽで真っ白の画面が表示されるはずです。（まだ何も作っていませんからね！）
 >
 ![Empty Screen](assets/white_screen.png)
 
-Next, let's take a look inside our starter project.
+次にスタータープロジェクトの中味を見てみましょう。
 
-## View Controller
+## ビューコントローラー
 
 <!-- TODO: considering adding a section about directory layout? -->
 
-First, we'll start with our view controller.
+まずはビューコントローラーから始めます。
 
 > [action]
-Using the _Project Navigator_, open the `ViewController.swift` source file. You should see the following code:
+プロジェクトナビゲーターを使って、`ViewController.swift`ソースファイルを開いてください。次のコードが表示されるはずです：
 >
 ```
 class ViewController: UIViewController {
 >
-    // MARK: - View Lifecycle
+    // MARK: - ライフサイクルを見る
 >
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,50 +42,50 @@ class ViewController: UIViewController {
 }
 ```
 
-Just boilerplate code, nothing is happening yet. We'll eventually write our tip calculator logic in here later.
+これは単なる定型文で、まだ何も起こっていません。やがてはここにチップ計算機のロジックを書くことになります。
 
-## Main Storyboard
+## 主要なストーリーボード
 
-Let's move onto our storyboard.
+Storyboardへと移動しましょう。
 
 > [action]
-Open `Main.storyboard` from your _Project Navigator_. You'll see the following:
+プロジェクトナビゲーターから、`Main.storyboard`を開いてください。次の内容が表示されます：
 >
 ![Starting Storyboard](assets/starting_storyboard.png)
 
-Right now there's an empty, white view controller. (The one we saw in our simulator remember?)
+今のところ、ビューコントローラーは空っぽで真っ白です。（シミュレーターで表示されたのを覚えていますか？）
 
-Let's review how our storyboard view controller is connected to our `.swift` file.
+Storyboardビューコントローラーがいかに`.swift`ファイルに接続されているかを見直しましょう。
 
 > [action]
-Click on the view controller representation in your storyboard. With your storyboard view controller selected, navigate to the _Class Inspector_ in the _Utilities area_.
+Storyboard内のビューコントローラーの表示をクリックしてください。ストーリーボードのビューコントローラーが選択された状態で、ユーティリティエリアのクラスインスペクターへ移動します。
 >
-You'll notice that the `ViewController.swift` source code is paired with the View Controller object in your `Main.storyboard`.
+`ViewController.swift`ソースコードは、`Main.storyboard`のビューコントローラーオブジェクトとペアになっていることに気づくでしょう。
 >
 ![Storyboard View Controller Class](assets/storyboard_vc_class.png)
 
-Next we'll take a look at our project's assets.
+次に、プロジェクトのアセットについて検討してみましょう。
 
 ## XCAssets
 
-Your project assets contain your media: images, movies, app icons, etc.
+プロジェクトのアセットには、画像、動画、アプリアイコンなど、各種メディアが含まれています。
 
 > [action]
-Open `Assets.xcassets` to see your project assets. ![Project Assets](assets/project_assets.png)
+プロジェクトアセットを参照するには`Assets.xcassets`を開いてください。![Project Assets](assets/project_assets.png)
 
-In your asset catalog, you should see an app icon that's already set for you and two folders containing pre-defined color sets for the different color themes we'll implement later.
+アセットのカタログには、すでに設定されているアプリのアイコンと、後で実装する別のカラーテーマ用にあらかじめ定義された色のセットを含んだ2つのフォルダがあるはずです。
 
-To pair with our custom colors in our asset catalog, your project also contains a `UIColor` extension that allows you to access each of the app's colors through code.
+アセットのカタログでカスタムカラーのペアを作るため、プロジェクトには、コードを通じてアプリの各色にアクセスできるようにしてくれる`UIColor`の拡張子が含まれています。
 
 > [action]
-Open `UIColor+TC.swift` from your _Project Navigator_. If you don't see it, you'll have to expand the `Supporting Files` folder in your _Project Navigator_. You should see the following:
+プロジェクトナビゲーターから`UIColor+TC.swift`を開いてください。これが見当たらない場合は、 プロジェクトナビゲーターで`Supporting Files`フォルダを拡張する必要があります。次のように表示されます。
 >
 ```
 import UIKit.UIColor
 >
 extension UIColor {
 >
-    // MARK: Theme Colors
+    // MARK: テーマの色
 >
     static var tcDarkBlue: UIColor {
         return UIColor(named: "tcDarkBlue")!
@@ -129,25 +129,25 @@ extension UIColor {
 }
 ```
 
-This file pairs each of the class variables to the custom color sets defined in our asset catalog.
+このファイルは、各クラス変数と、アセットカタログで定義されたカスタムカラーのセットとをペアにします。
 
-Once we start coding, we'll be able to access each respective color through the `UIColor` class variable:
+コーディングを開始すると、`UIColor`クラスの変数を通じて、各色にアクセスできるようになります：
 
 ```
 let selectedColor = UIColor.tcSeafoamGreen
 ```
 
-Notice that we prefix each of our custom colors with `tc` to avoid namespace conflicts and make our colors easier to find with Xcode autocomplete.
+カスタムカラーのそれぞれに接頭辞`tc`をつけることによって、ネームスペースの衝突を回避し、Xcodeのオートコンプリートで簡単に色を探せるようにします。
 
 > [info]
-In this project, your custom colors have been defined in your asset catalog, however this is just one of many ways for defining custom colors. You can also create custom colors programmatically or through _Interface Builder_.
+このプロジェクトでは、あなたのカスタムカラーはアセットカタログ内で定義されていますが、これはカスタムカラーを定義する数多くの方法のたった一つにすぎません。カスタムカラーの作成は、プログラムによって、またはインターフェースビルダーを通じて実施できます。
 
-## App Delegate
+## アプリの委託
 
-To wrap up our new project tour, let's briefly take a look at our _App Delegate_.
+新たなプロジェクトのツアーを終えるため、ちょっと _App Delegate_ を見てみましょう。
 
 > [action]
-Open `AppDelegate.swift` from your project navigator:
+プロジェクトナビゲーターから`AppDelegate.swift`を開きます：
 >
 ```
 import UIKit
@@ -157,10 +157,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 >
     var window: UIWindow?
 >
-    // MARK: - App Lifecycle
+    // MARK: - アプリのライフサイクル
 >
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // アプリケーションの起動後にカスタマイズするためポイントをオーバーライドします。
         return true
     }
 }
@@ -169,14 +169,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 <!-- break -->
 
 > [info]
-For this tutorial, you won't need to change or modify the _App Delegate_. However, it's helpful to know about it's purpose for when you start writing your own apps.
+このチュートリアルでは、 _App Delegate_ を変更したり修正したりする必要はありません。その一方で、自分のアプリを書き始めるときのために、目的を理解していると役に立ちます。
 
-Each iOS Xcode project must have an `AppDelegate.swift` file which is responsible for the app's lifecycle. The app delegate specifies what happens when app lifecycle events are triggered. Common example events are app launch, receiving a push notification, app termination, etc.
+各iOS Xcodeプロジェクトには、アプリのライフサイクルに関する責任を負う`AppDelegate.swift`ファイルが欠かせません。App Delegateは、アプリのライフサイクルイベントがトリガーされたときに何が起こるかを指定します。よくあるイベントの例は、アプリの立ち上げ、プッシュ通知の受信、アプリの終了などです。
 
-In our tip calculator's app delegate, we don't add any code other than the boilerplate `application(_:didFinishLaunchingWithOptions:)` method that comes by default in each Xcode project template.
+チップ計算機のApp Delegateでは、各Xcodeのプロジェクトテンプレートにデフォルトとしてついてくる常用文の`application(_:didFinishLaunchingWithOptions:)`のメソッド以外のコードは追加しません。
 
-## Wrapping Up
+## まとめ
 
-We've just taken a look at the files in our new Xcode starter project. Throughout this tutorial, we'll continue to build on this project to create our final tip calculator.
+先ほど、新しいXcodeスタータープロジェクトのファイルを参照したばかりです。このチュートリアルでは、最終的なチップ計算機を完成させるため、このプロジェクトの開発を続けていきましょう。
 
-Let's get started by diving into storyboard and creating our views for our UI.
+まずはStoryboardから始めて、UI用にビューを作成していきましょう。

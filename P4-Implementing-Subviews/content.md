@@ -1,246 +1,246 @@
 ---
-title: "Implementing Subviews"
+title: "サブビューの実装"
 slug: implementing-subviews
 ---
 
-In the previous section, we implemented a skeleton of each of the UI groups in storyboard. If you build and run your project, your app should look like the following:
+前のセクションでは、各UIグループのスケルトンをStoryboardに実装しました。プロジェクトをビルドして実行すると、アプリが次のように表示されます。
 
 ![Finished UI Skeleton](assets/finished_ui_groups.png)
 
-In this section, we'll finish building each of our _view groups_:
+このセクションでは、各ビューグループを完成させます。
 
-1. Header
-1. Tip Input Card
-1. Tip Output Card
-1. Reset Button
+1. ヘッダー
+1. チップ入力カード
+1. チップ出力カード
+1. リセットボタン
 
-To finish implementing each of our _view groups_, we'll need to the process below:
+各ビューグループの実装を完成するには、以下を行う必要があります。
 
-1. Add each of the correct `UIKit` objects
-1. Identify and set _auto-layout_ constraints for each subview
-1. Configure each subview's attributes to match the designs
-1. Create the appropriate `IBOutlets` and `IBActions`
+1. 正しい`UIKit`オブジェクトをそれぞれ追加
+1. 各サブビューに対して _Auto-layout_ 制約を特定して設定
+1. デザインに合わせて各サブビューの属性を構成
+1. 適切な`IBOutlets`と`IBActions`を作成
 
-Let's start by finishing the first UI group: our header.
+まずは最初のUIグループであるヘッダーを完成させていきましょう。
 
-# Header View
+# ヘッダービュー
 
-In our previous step, we've already added a base view (`UIView`) for our header. In it's current state, our header view looks like the following:
+前回の手順で既にヘッダーの基本ビュー (`UIView`) を追加しました。現在の状態では、ヘッダービューは次のように表示されます。
 
 ![Current Header View](assets/current_nav_bar.png)
 
-To finish implementing our header view, we'll need to identify and add the remaining subviews.
+ヘッダービューの実装を完了するには、残りのサブビューを特定して追加する必要があります。
 
 > [challenge]
-Using the design below, can you identify the views we'll need to finish building the UI for our header view?
+下のデザインを使用して、ヘッダービューのUIを完成させるのに必要なビューを特定できますか？
 >
 ![Header View Design](assets/nav_bar_design.png)
 
 <!-- break -->
 
 > [solution]
-We'll need the following view objects to build our header:
+ヘッダーを作成するには、次のビューオブジェクトが必要です。
 >
-- `UILabel`: title label
-- `UISwitch`: theme color switch
+-`UILabel`: タイトルラベル
+-`UISwitch`: テーマ色のスイッチ
 
-After identifying both of the view objects we'll need to add, we'll need to add them and set each of their respective constraints. Let's start with the title label!
+追加する必要がある両方のビューオブジェクトを特定したら、 これらを追加して、それぞれの制約を設定する必要があります。タイトルラベルの作業を始めましょう！
 
-## Title Label
+## タイトルラベル
 
-### Identifying Constraints
+### 制約の識別
 
-Before we starting adding constraints in storyboard, let's take a step back and think of all the constraints we'll need for our title label.
+Storyboardに制約を追加していく前に、一歩下がって、タイトルラベルに必要な制約をすべて割り出しましょう。
 
 > [challenge]
-Using the design below, identify each of the _auto-layout_ constraints for your title label. Write each of the constraints down on a sheet of paper.
+下のデザインを使って、タイトルラベルのために _Auto-layout_ の各制約を特定しましょう。各制約を紙に書き出します。
 >
-Hint: the red area represents the frame of the label.
+ヒント: 赤い領域はラベルのフレームを表しています。
 >
 ![Header View Label Dimensions](assets/nav_bar_label_dimensions.png)
 
-Check your answer with the solution below.
+あなたの答えを下の解答で確認しましょう。
 
 > [solution]
-Based on our design, our label will need the following constraints:
+私たちのデザインによると、ラベルには次の制約が必要です。
 >
 ![Header View Label Constraints](assets/nav_bar_label_constraints.png)
 >
-**Constraints**:
+**制約**:
 >
-- (Label) Leading Edge 24pts from Super View (Header View) Leading Edge
-- (Label) Bottom Edge 0pts from Super View Bottom Edge
-- (Label) Top Edge 0pts from Safe Area Top Edge
+- （ラベル）Super View (Header View) Leading EdgeからLeading Edge 24pts
+- （ラベル）Super View Bottom EdgeからBottom Edge 0pts
+- （ラベル）Safe Area Top EdgeからTop Edge 0pts
 
-### Adding Constraints
+### 制約を追加する
 
-After identifying our constraints, we can use _Interface Builder_ to add our new `UILabel` and it's constraints.
+制約を特定したら、 _Interface Builder_ を使って、新しい`UILabel`とその制約を追加できます。
 
 > [action]
-Open `Main.storyboard` and implement your title label and it's constraints:
+`Main.storyboard`を開いて、タイトルラベルとその制約を実装します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_nav_bar_label_w_constraints.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Drag a `UILabel` from the _Object Library_ and drop it on top of your header view (`UIView`).
-1. With your new `UILabel` selected, click the `Add New Constraints` button.
-1. Add the following first two constraints using the `Add New Constraints` popup:
-    - (Label) Leading Edge 24pts from Super View Leading Edge
-    - (Label) Bottom Edge 0pts from Super View Bottom Edge
-1. To add the final constraint, select your `UILabel` in the _Document Outline_.
-1. With your `UILabel` selected, hold control (ctrl) and click-drag to the _Safe Area_ object in the _Document Outline_.
-1. You should see a popup to add a new constraint. Select `Vertical Spacing`. Wait a second, our new `Vertical Spacing` constraint isn't not properly configured.
-1. Hover over the new `Vertical Spacing` and click on it. You should see it's attributes appear in the _Attributes Inspector_.
-1. In the _Attributes Inspector_, change the constraint's attributes:
-    - _Second Item_: Change from `Label.Bottom` to `Top`
-    - _Constant_: Change from `-85` to `0`
+1. `UILabel`を _Object Library_ からドラッグして、ヘッダービュー (`UIView`) の上にドロップします。
+1. 新しい`UILabel`を選択した状態で、`Add New Constraints`ボタンをクリックします。
+1. 次の最初の制約2つを、`Add New Constraints`ポップアップを使って追加します。
+    - （ラベル）Super View Leading EdgeからLeading Edge 24pts
+    - （ラベル）Super View Bottom EdgeからBottom Edge 0pts
+1. 最後の制約を追加するために、 _Document Outline_ の`UILabel`を選択します。
+1. `UILabel`を選択した状態で、Ctrlを押しながらクリックして _Document Outline_ の _Safe Area_ オブジェクトまでドラッグします。
+1. 新しい制約を追加するポップアップが表示されます。`Vertical Spacing`を選択します。ちょっと待ってください。新しい`Vertical Spacing`の制約は適切に構成されていません。
+1. 新しい`Vertical Spacing`にカーソルを重ねてクリックします。属性が属性インスペクタに表示されます。
+1. 属性インスペクタで制約の属性を変更します。
+    - _Second Item_: `Label.Bottom`から`Top`に変更
+    - _Constant_: `-85`から`0`に変更
 
 <!-- break -->
 
 > [info]
-Identifying and setting the _auto-layout_ constraints for each view object can be tricky for newbies. If you find yourself struggling, slow down and try to break down your layout problem into smaller chunks. As you continue to practice, working with constraints will become easier and easier.
+各ビュー オブジェクトの _Auto-layout_ の制約を特定し、設定するのは初心者には厄介かもしれません。うまく行かない場合は、ペースを落として、レイアウトの問題を小さな問題に分けてみてください。練習し続ければ、もっと簡単に制約を使えるようになるでしょう。
 
-Nice! We've added a title label to our header. If you build and run your project, you'll see the following:
+素晴らしい！ タイトルラベルをヘッダーに追加しました。プロジェクトをビルドして実行すると、次のように表示されます。
 
 ![Header Title Label Without Styling](assets/nav_bar_label_no_styling.png)
 
-But... it's still off. Our title label still doesn't look like our final design.
+それでも ... まだしっくりきません。私たちのタイトルラベルは、まだ最終デザインに近くありませんね。
 
-That's because we'll need to use the _Attribute Inspector_ to set the `UILabel` attributes to match our designs.
+これは、属性インスペクタを使用して、デザインに合った`UILabel`属性を設定しなければならないからです。
 
-### Configuring Attributes
+### 属性の設定
 
 > [action]
-In `Main.storyboard`, select your header view's title label. Navigate to the _Attributes Inspector_ in the _Utilities area_ and change the following attributes:
+`Main.storyboard`で、ヘッダービューのタイトル ラベルを選択します。 _Utilities_ エリアの属性インスペクタに移動して、次の属性を変更します。
 >
 - _Text_: Change from `Label` to `Tip Calculator` ![Set Header View Label Text](assets/set_nav_bar_label_text.png)
 - _Font_: Change from `System 17.0` to `System Bold 24.0` ![Set Header View Label Font](assets/set_nav_bar_label_font.png)
 - _Font Color_: Use the blue dropdown to change from `Default` to `tcCharcoal` ![Set Header View Text Color](assets/set_nav_bar_label_text_color.png)
 
-After configuring each of the attributes above, your title label should look like the following:
+上記の各属性を構成すると、タイトルラベルは次のようになります。
 
 ![Header View Label Styled](assets/nav_bar_label_w_styling.png)
 
-Looks pretty good huh? Let's move on to our `UISwitch`.
+かなりいい感じですね？ `UISwitch`に進みましょう。
 
-## Light/Dark Mode (Theme) Switch
+## ライト/ダークモード (テーマ) スイッチ
 
-Identify constraints. Add object and set constraints. Configure attributes. Rinse. Repeat.
+制約を特定します。オブジェクトを追加して制約を設定します。属性を構成します。さっぱり洗い流します。もう一度繰り返します。
 
-We'll going to repeat this process many times before this tutorial is over. Get used to this, as it's the same process you'll need to use if when you're building your own apps.
+このチュートリアルが終わるまで、このプロセスを何回も繰り返します。自分のアプリを開発するときも同じプロセスを行うことになるので、ぜひ慣れてください。
 
-Let's start by identifying the constraints needed for our `UISwitch`.
+まず、`UISwitch`に必要な制約を特定しましょう。
 
-### Identifying Constraints
+### 制約の識別
 
 > [challenge]
-Using the design below, identify each of the _auto-layout_ constraints for your theme switch. Write each of the constraints down on a sheet of paper.
+下のデザインを使って、テーマスイッチの _Auto-layout_ の各制約を特定します。制約を1つずつ紙に書き出します。
 >
-Hint: the red area represents the frame of the switch.
+ヒント: 赤い領域はスイッチのフレームを表しています。
 >
 ![Header View Switch Dimensions](assets/nav_bar_switch_dimensions.png)
 
-Check your answer with the solution below.
+あなたの答えを下の解答で確認しましょう。
 
 > [solution]
-Based on our design, our `UISwitch` will need the following constraints:
+設計に基づいて`UISwitch`は次の制約:
 >
 ![Header View Switch With Constraints](assets/nav_bar_switch_constraints.png)
 >
-**Constraints**:
+**制約**:
 >
-- (Switch) Trailing Edge 24pts from Super View (Header View) Trailing Edge
-- (Switch) Leading Edge ≥20pts from Label Trailing Edge
-- (Switch) Center vertically aligned with Label Center
+-（スイッチ）Super View (Header View) Trailing EdgeからTrailing Edge 24pts
+-（スイッチ）Label Trailing EdgeからLeading Edge ≥20pts
+-（スイッチ）Label CenterにCenter vertically aligned
 
-### Adding Constraints
+### 制約を追加する
 
-Let's go ahead and add these constraints to our `UISwitch`.
+これらの制約を`UISwitch`に追加していきましょう。
 
 > [action]
-Open `Main.storyboard` and implement your `UISwitch` and it's constraints:
+`Main.storyboard`を開いて、`UISwitch`とその制約を実装します。
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_switch_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_tip_percent_stack_view.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Drag a `UISwitch` from the _Object Library_ and drop it next to your header title label.
-1. With your  `UISwitch` selected, click the `Add New Constraints` button.
-1. Add the following two constraints using the `Add New Constraints` popup:
-    - (Switch) Trailing Edge 24pts from Super View Trailing Edge
-    - (Switch) Leading Edge 20pts from Label Trailing Edge
-1. Hover over the switch's leading edge constraint to the label and click on it. You should see it's attributes appear in the _Attributes Inspector_.
-1. Using the _Attributes Inspector_, change the constraint's _Relation_ attribute from `Equal` to `Greater Than or Equal`.
-1. Click on the `UISwitch` to select it again. (Make sure you're not selecting the constraint from the previous step.)
-1. With your switch selected, hold control (ctrl) and click-drag from the `UISwitch` to the `UILabel`.
-1. You should see a popup to add a new constraint. Select `Center Vertically` to vertically align your switch's center to the label's center.
+1. `UISwitch`を _Object Library_ からドラッグして、ヘッダータイトルラベルの横にドロップします。
+1. `UISwitch`を選択した状態で、`Add New Constraints`ボタンをクリックします。
+1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
+    -（スイッチ）Super View Trailing EdgeからTrailing Edge 24pts
+    -（スイッチ）Label Trailing EdgeからLeading Edge 20pts
+1. ラベルに対するスイッチの前辺の端の制約にカーソルを合わせて、これをクリックします。属性が属性インスペクタに表示されます。
+1. 属性インスペクタを使用して、制約の _Relation_ 属性を`Equal`から`Greater Than or Equal`に変更します。
+1. `UISwitch`をクリックして再び選択します。（1つ前の手順の制約を選択していないことを確認してください。）
+1. スイッチを選択した状態で、Ctrlを押しながらクリックして`UISwitch`から`UILabel`までドラッグします。
+1. 新しい制約を追加するポップアップが表示されます。`Center Vertically`を選択して、スイッチの中心をラベルの中心に縦方向に揃えます。
 
-Nice! We've added and set our constraints for our `UISwitch`. Now, let's configure the switch's attributes.
+素晴らしい！ 制約を追加して`UISwitch`に設定しました。では、スイッチの属性を構成しましょう。
 
-### Configuring Attributes
+### 属性の設定
 
 > [action]
-In `Main.storyboard`, select your header view's switch. Navigate to the _Attributes Inspector_ in the _Utilities area_ and change the following attributes:
+`Main.storyboard`で、ヘッダービューのスイッチを選択します。 _Utilities_ エリアの属性インスペクタに移動して、次の属性を変更します。
 >
 ![Switch Attributes](assets/switch_attrs.png)
 >
-**Attributes:**
+**属性:**
 >
-- _State_: Change from `On` to `Off`
-- _On Tint_: Change from `Default` to `tcSeafoamGreen`
+- _State_: `On`から`Off`に変更
+- _On Tint_: `Default`から`tcSeafoamGreen`に変更
 
-When you're done, your custom header view should look like the following:
+完了すると、カスタム ヘッダービューは次のようになります。
 
 ![Header View With Styling](assets/nav_bar_w_styling.png)
 
-## Adding Our IB Connections
+## IB 接続を追加する
 
-We're almost finished with implementing our first UI group! To finish up, we'll need to create our `IBOutlets` and `IBActions`.
+最初のUIグループの実装完了までもう少しです！ 仕上げに`IBOutlets`と`IBActions`を作成する必要があります。
 
-`IBOutlets` and `IBActions` allow our Swift code receive events and interact with our storyboard views.
+`IBOutlets`と`IBActions`により、Swiftコードでイベントを受け取ったり、Storyboardビューと対話したりできます。
 
-`IBOutlets` create an instance variable that we can reference in our Swift code. This allows us interact with our title label and switch programmatically.
+`IBOutlets`はSwiftコードで参照できるインスタンス変数を作成します。これによりタイトルラベルやスイッチと、プログラムを通じて対話できます。
 
-`IBActions` create a function that will execute code when triggered. These functions are triggered by user interaction with your UI elements. A common example is a user tapping a button. When the button is tapped, it triggers an `IBAction` that will run any code within it's corresponding function.
+`IBActions`は、トリガされるとコードを実行する関数を作成します。これらの関数は、ユーザーによるUI要素の操作によってトリガされます。よくある例は、ユーザーがボタンをタップした場合です。ボタンがタップされると、`IBAction`をトリガして、対応する関数内のコードを実行します。
 
-We'll need both of these connections later to implement our tip calculator logic.
+チップ計算機のロジックを実装するため、これらの接続の両方が後で必要になります。
 
-Let's get started by creating our first `IBOutlet` for our header view (`UIView`.)
+まずはヘッダービュー (`UIView`) 用に、最初の`IBOutlet`を作成しましょう。
 
 > [action]
-Open your `Main.storyboard` and `ViewController.swift` files side-by-side using the _Assistant Editor_:
+アシスタント エディタを使って`Main.storyboard`ファイルと`ViewController.swift`ファイルを並べて開きます。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/using_assistant_editor.mp4)
 >
-To create IB connections, we'll need to first open our storyboard and view controller source code side-by-side:
+IB 接続を作成するには、まずStoryboardを開いてビュー コントローラーソース コードを並べて確認します。
 >
-1. Open your `Main.storyboard` in your main editor.
-1. Hold down the option button and click on `ViewController.swift` file in your _Project Navigator_. This will open your view controller in your _Assistant Editor_.
-1. (Optional) Use your Xcode toolbar to hide the _Utilities area_ to create more space in your project.
+1. `Main.storyboard`をメインエディタで開きます。
+1. Optionボタンを押しながら、プロジェクトナビゲーターの`ViewController.swift`ファイルをクリックします。アシスタントエディタでビューコントローラーが開きます。
+1. (任意) Xcode ツールバーを使って _Utilities_ エリアを非表示にすることで、プロジェクト内のスペースを増やします。
 
-With our `Main.storyboard` and `ViewController.swift` files side-by-side, let's create an `IBOutlet` for our header.
+`Main.storyboard`ファイルと`ViewController.swift`ファイルを並べて、ヘッダー用の`IBOutlet`を作成しましょう。
 
 > [action]
-Create an `IBOutlet` for your header called `headerView`:
+`headerView`というヘッダーの`IBOutlet`を作成します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/header_view_iboutlet.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select your header view (`UIView`) in the _Document Outline_.
-1. With your header view selected, hold down ctrl and click-drag from the header view in your _Document Outline_ to your Swift code within the `ViewController` class definition.
-1. You should see a popup for creating a new IB connection. Set the name field as `headerView`.
-1. Click _Connect_ to create your new `IBOutlet`.
+1. _Document Outline_ でヘッダービュー (`UIView`) を選択します。
+1. ヘッダービューを選択した状態で、_Document Outline_ のヘッダービューから`ViewController`クラス定義内のSwiftコードへ、Ctrlを押しながらクリックしてドラッグします。
+1. 新しいIBコネクションを作成するためのポップアップが表示されます。nameフィールドを`headerView`と設定します。
+1. _Connect_ をクリックして、新しい`IBOutlet`を作成します。
 
-You should see a new `IBOutlet` instance variable in your `ViewController` class:
+新しい`IBOutlet`インスタンス変数が、`ViewController`クラスに表示されるはずです。
 
 ```
 class ViewController: UIViewController {
 
     @IBOutlet weak var headerView: UIView!
 
-    // MARK: - View Lifecycle
+    // MARK: - ライフサイクルを見る
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -248,36 +248,36 @@ class ViewController: UIViewController {
 }
 ```
 
-As you can see, we can now reference our header view as `headerView` in our Swift code.
+ご覧の通り、Swiftコードでヘッダービューを`headerView`として参照できます。
 
-Awesome! Repetition is the mother of learning. Let's do it again.
+素晴らしい！ 反復は学習の母です。もう一度試してみましょう。
 
 > [action]
-Create an `IBOutlet` for your header view's title label called `titleLabel`:
+ヘッダービューの`titleLabel`というタイトルラベルの`IBOutlet`を作成します。
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/title_label_iboutlet.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_tip_percent_stack_view.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select your title label (`UILabel`) in your storyboard view controller.
-1. With your header view selected, hold down ctrl and click-drag from the label to your Swift code within the `ViewController` class definition.
-1. You should see a popup for creating a new IB connection. Set the name field as `titleLabel`.
-1. Click _Connect_ to create your new `IBOutlet`.
+1. Storyboardビューコントローラーで、タイトルラベル (`UILabel`) を選択します。
+1. ヘッダービューを選択した状態で、ラベルから`ViewController`クラス定義内のSwiftコードへ、Ctrlを押しながらクリックしてドラッグします。
+1. 新しいIBコネクションを作成するためのポップアップが表示されるはずです。nameフィールドを`titleLabel`と設定します。
+1. _Connect_ をクリックして、新しい`IBOutlet`を作成します。
 
 <!-- break -->
 
 > [info]
-Notice that last time we created an `IBOutlet` by ctrl-dragged from our header view in the _Document Outline_. This time we created our `IBOutlet` by ctrl-dragged directly from the label's storyboard object. Both ways of creating `IBOutlets` are valid.
+前回は _Document Outline_ のヘッダービューからCtrlを押しながらドラッグして`IBOutlet`を作成しました。今回はラベルのStoryboard オブジェクトからCtrlを押しながらドラッグして`IBOutlet`を作成します。どちらの`IBOutlets`の作成方法も有効です。
 
-At this point, we've walked through creating an `IBOutlet` twice. It's your turn.
+この時点で、`IBOutlet`の作成方法を2回説明しました。あなたの番です。
 
 > [challenge]
-Create an `IBOutlet` for your `UISwitch` named `themeSwitch`. If you get stuck, go back and reference the steps we used to create the previous two `IBOutlets`.
+`themeSwitch`という名前の`UISwitch`用に`IBOutlet`を作成します。行き詰まったら、前に戻って、以前2つの`IBOutlets`を作成する際に使った手順を参照しましょう。
 
 <!-- break -->
 
 > [solution]
-After creating an `IBOutlet` for your switch, your `ViewController.swift` file should look like the following:
+スイッチ用に`IBOutlet`を作成すると、`ViewController.swift`ファイルは次のようになるはずです。
 >
 ```
 class ViewController: UIViewController {
@@ -286,7 +286,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var themeSwitch: UISwitch!
 >
-    // MARK: - View Lifecycle
+    // MARK: - ライフサイクルを見る
 >
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -294,34 +294,34 @@ class ViewController: UIViewController {
 }
 ```
 
-After checking your solution, let's move on to creating our first `IBAction`.
+解決策をチェックしたら、最初の`IBAction`の作成に移りましょう。
 
-We'll need to create an `IBAction` for our switch. This will allow us to execute code each time our switch is toggled from off to on and vice versa.
+スイッチ用の`IBAction`を作成する必要があります。これにより、スイッチが切り替えられるたびにコードを実行できるようになります。
 
 > [action]
-Open both your `Main.storyboard` and `ViewController.swift` file using the _Assistant Editor_. Create a new `IBAction` for your switch:
+`Main.storyboard`ファイルと`ViewController.swift`ファイルの両方をアシスタントエディタで開きます。スイッチ用に新しい`IBAction`を作成します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/switch_ibaction.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select your switch (`UISwitch`) in the _Document Outline_.
-1. With your switch selected, hold down ctrl and click-drag from the switch in your _Document Outline_ to your `ViewController` class.
-1. You should see a popup for creating a new IB connection. In the popup, change the _Connection_ type from `Outlet` to `Action`. Changing this property allows us to create a different type of IB connection.
-1. Set the name of our action as `themeToggled`.
-1. Change the _Type_ property from `Any` to `UISwitch`.
-1. Make sure the _Event_ property is set as `Value Changed`. If not, use the dropdown to set it to `Value Changed`.
-1. Click _Connect_ to create your new `IBAction`.
+1. _Document Outline_ でスイッチ (`UISwitch`) を選択します。
+1. スイッチを選択した状態で、Ctrlを押しながら _Document Outline_ から`ViewController`クラスへドラッグします。
+1. 新しいIBコネクションを作成するためのポップアップが表示されます。ポップアップで _Connection_ 型を`Outlet`から`Action`に変更します。このプロパティを変更すると、異なる種類のIBコネクションを作成できるようになります。
+1. アクションの名前を`themeToggled`に設定します。
+1. _Type_ プロパティを`Any`から`UISwitch`に変更します。
+1. _Event_ プロパティが`Value Changed`に設定されていることを確認します。設定されていない場合は、ドロップダウンを使って`Value Changed`に設定します。
+1. _Connect_ をクリックして、新しい`IBAction`を作成してください。
 
 <!-- break -->
 
 > [info]
-After creating your switch's `IBAction`, you can close the _Assistant Editor_. If don't have a lot of screen space, it's helpful to open and close the _Assistant Editor_ as you need it.
+スイッチの`IBAction`を作成したら、アシスタントエディタを閉じます。画面のスペースがあまりない場合は、必要に応じて _Assistant Editor_ を開いたり閉じたりしましょう。
 
-Let's give our new `IBAction` a test run to see that it's working correctly.
+新しい`IBAction`のテストを行って、正しく機能するか確認しましょう。
 
 > [action]
-Open `ViewController.swift` from your _Project Navigator_ and add the following code in your `themeToggled` function:
+プロジェクトナビゲーターから`ViewController.swift`を開いて、次のコードを`themeToggled`関数に追加します。
 >
 ```
 @IBAction func themeToggled(_ sender: UISwitch) {
@@ -333,666 +333,666 @@ Open `ViewController.swift` from your _Project Navigator_ and add the following 
 }
 ```
 
-After adding the code above we can test our `IBAction`.
+上記のコードを追加したら、`IBAction`をテストできます。`
 
 > [action]
-Build and run your project. Toggle your switch on and off a couple of times. If you look at your Xcode _Debugger area_ you should see the following print statements in your console each time you toggle your switch:
+プロジェクトをビルドして実行します。スイッチのオン・オフを数回切り替えます。Xcodeの _Debugger_ エリアを見ると、スイッチを切り替えるたびに次の出力ステートメントがコンソールに表示されるはずです。
 >
 ![Switch Console Print](assets/switch_console_print.png)
 
-We've finished implementing the UI and IB connections for our header view. Side-by-side, your `Main.storyboard` and `ViewController.swift` files should look like the following:
+ヘッダービューのUIとIBコネクションの実装が完了しました。`Main.storyboard`ファイルと`ViewController.swift`ファイルを並べると次のように表示されます。
 
 ![Finished Header Project Snapshot](assets/finished_header_project_snapshot.png)
 
-If you build and run your project, you app should look like:
+プロジェクトをビルドして実行すると、アプリは次のようになります。
 
 ![Finished Header App Snapshot](assets/finished_header_app_snapshot.png)
 
-If you're looking for more practice, good news! We'll need to repeat the same steps again for our input card, output card and reset button views. Onwards!
+もっと練習したい場合は朗報です！入力カード、出力カード、リセットボタンビューについて同じ手順を再び繰り返す必要があります。どんどん進めていきましょう！
 
 > [info]
-As you get more advanced, you'll learn about creating custom view objects that abstract all of it's subview components. Creating custom views makes your custom views re-usable and decouples your code. This is a little more advanced and out of the scope of this tutorial.
+もっと先に進むと、すべてのサブビューコンポーネントを抽象化するカスタムビューオブジェクトの作成について学習します。カスタムビューを作成すると、カスタムビューを再利用できるようになり、コードを分離できます。これはちょっと高度なので、このチュートリアルの対象範囲外です。
 
-# Input Card View
+# 入力カードビュー
 
-The next UI group we'll complete is our input card. Let's take another look at our design:
+次に実装するUIグループは入力カードです。デザインをもう一度見てみましょう。
 
 ![Input Card Design](assets/input_card_design.png)
 
-For our input card, we'll need to add the following UI components:
+入力カードについては、次のUIコンポーネントを追加する必要があります。
 
 ![Tip Input Subviews](assets/tip_input_subviews.png)
 
-We'll need two labels, a text field, and a segmented control. Next, let's think about how to use _auto-layout_ to build our design.
+2つのラベル、1つのテキストフィールド、1つのセグメンテッドコントロールが必要です。次に、 _Auto-layout_ を使ってデザインを構築する方法を考えましょう。
 
-## Identifying Constraints
+## 制約の識別
 
-To build our header view, we used constraints to create our dynamic view layout. This time, we'll introduce a new tool called `UIStackView`.
+ヘッダービューを作成するにあたって、制約を使って動的なビューレイアウトを作成しました。今回は`UIStackView`という新しいツールを紹介します。
 
-### Stack Views
+### スタックビュー
 
-`UIStackView` allows us to create horizontal or vertical stacks of views. This is especially useful for easily organizing rows or columns layouts.
+`UIStackView`を使うと、ビューの横方向または縦方向のスタックを作成できます。行や列のレイアウトを整理するのに便利です。
 
-Let's take a look at what that looks like:
+どんな感じか見てみましょう。
 
 ![Horizontal and Vertical Stack Views](assets/hor_and_ver_stack_views.png)
 
-In both cases, you can see that each stack view contains multiple subviews. The `UIStackView` automatically handles calculating the frame of each subview within it.
+両方とも、各スタックビューに複数のサブビューが用意されているのがわかります。`UIStackView`は、内部の各サブビューのフレームの計算を自動的に処理します。
 
-We'll use stack views to easily layout our input subviews without having to add the constraints ourselves.
+スタックビューを使用して、制約を自分で追加せずに、簡単に入力サブビューのレイアウトを作成します。
 
-Let's look at how we'll use a horizontal stack view to group our first row of views.
+横方向のスタックビューを使って、ビューの最初の行をグループ化する方法を見ていきましょう。
 
 ![Bill Amount Stack View](assets/bill_amount_stack_view.png)
 
-As you can see, both our _Bill Amount Title Label_ and _Bill Amount Text Field_ are added to a single `UIStackView`. The purple area in the image above shows the stack view's frame.
+ご覧の通り、 _Bill Amount_ タイトルラベルと _Bill Amount_ テキストフィールドの両方が1つの`UIStackView`に追加されています。上の画像の紫の部分は、スタックビューのフレームを示しています。
 
-Similarly, we can use another horizontal stack view to layout our _Tip Percent Title_ and _Tip Segmented Control_ subviews. Let's look at what the would look like:
+同様に、もう1つの横方向のスタックビューを使って、 _Tip Percent Title_ サブビューと _Tip Segmented Control_ サブビューをレイアウトできます。どんな感じになるか見てみましょう。
 
 ![Tip Percent Stack View](assets/tip_percent_stack_view.png)
 
-Each `UIStackView` calculates the frame of each subview within it. However, we'll still need to somehow define the frame of each `UIStackView`.
+各`UIStackView`は、その内部に含まれる各サブビューのフレームを計算します。その一方で、各`UIStackView`のフレームをどうにかして定義する必要があります。
 
-To position both of our horizontal stack views in the center of our input card, we'll use our existing knowledge of stack views and constraints.
+スタックビューと制約に関してわかっている知識を活用して、横方向のスタックビュー両方を入力カードの中央に配置します。
 
-First, we'll add a vertical stack view containing both horizontal stack views:
+最初に、横方向のスタックビュー両方を格納している、縦方向のスタックビューを追加します。
 
 ![Outer Stack View](assets/outer_stack_view.png)
 
-Next, we'll use constraints to dynamically center the outer stack view:
+次に、制約を使って外側のスタックビューを動的に中央に配置します。
 
 ![Outer Stack View Constraints](assets/outer_stack_view_constraints.png)
 
-We add the following constraints to our outer stack view:
+次の制約を外側のスタックビューに追加します。
 
-- (Outer Stack View) Leading Edge 22pts from Super View (Input Card) Leading Edge
-- (Outer Stack View) Trailing Edge 22pts from Super View Trailing Edge
-- (Outer Stack View) Center vertically aligned with Super View Center
+- （外側スタックビュー）Super View (Input Card) Leading EdgeからLeading Edge 22pts
+- （外側スタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+- （外側のスタックのビュー）Super View CenterにCenter vertically aligned
 
-We'll need to add a few more width constraints to guarantee each view is of the correct width.
+各ビューが正しい幅であることを保証するために、幅の制約をもういくつか追加しなければなりません。
 
-We'll start by adding an equal width to both inner (horizontal) stack views:
+まずは、両方の内側（水平）スタックビューに同等の幅を追加することから始めます。
 
 ![Input Card Equal Widths Constraints](assets/input_card_equal_widths.png)
 
-In the image above, we add the following two constraints:
+上の画像では、次の2つの制約を追加します：
 
-- (Inner Top Stack View) Equal Width to Outer Stack View Width
-- (Inner Bottom Stack View) Equal Width to Outer Stack View Width
+- （内側のトップスタックビュー）外側のスタックビューと同じ幅
+- （内側のボトムスタックビュー）外側のスタックビューと同じ幅
 
-As the name suggests, these two _Equal Widths_ constraints define the widths of the inner stack view to be the same as the outer stack view.
+名前の通り、これら2つの _Equal Widths_ の制約は、内側スタックビューの幅を外側スタックビューと同じになるように定義します。
 
-Last, we need to add a width constraint for our `UITextField` and `UISegmentedControl` respectively.
+最後に、`UITextField`と`UISegmentedControl`のそれぞれに幅の制約を追加する必要があります。
 
 ![Input Card Input Width Constraints](assets/input_card_input_width_constraints.png)
 
-Our width constraints:
+幅に関する制約：
 
-- (Bill Amount Text Field) 118pts Width
-- (Tip % Segmented Control) 173pts Width
+- （請求金額のテキストフィールド）Width 118pts
+- （チップ%のセグメント化されたコントロール）Width 173pts
 
-Whew! Those are the final constraints we'll need for our input card.
+フーッ！ 入力カードに必要な制約は、これで最後です。
 
-As you can see, the combination of stack views and constraints give developers a lot of power to create complex UI layouts.
+ご覧の通り、スタックビューと制約の組み合わせは、開発者に対して複雑なUIレイアウトを作成する高い能力を与えてくれます。
 
-Now that we've figured how we're going to implement the layout for our input card, let's start building!
+入力カードのレイアウトの実装方法の検討がついたので、実際に開発を始めましょう！
 
-## Adding Constraints
+## 制約を追加する
 
-As you can see, the layout for our input card is pretty complex. To make things easier, we'll break our implementation into smaller steps.
+ご覧の通り、入力カードのレイアウトはかなり複雑です。実装を小さなステップに分解することで簡単にしましょう。
 
-We'll start with the inner top stack view: the _Bill Amount Stack View_.
+内側のトップスタックビュー、 _Bill Amount Stack View_ から始めます。
 
-### Bill Amount Stack View
+### 請求額スタックビュー
 
-First, we'll need to add our stack view's sub-elements.
+まずはスタックビューのサブ要素を追加する必要があります。
 
 > [action]
-In `Main.storyboard`, add an `UILabel` and `UITextField` to your view controller:
+`Main.storyboard`で、「UILabel」と「UITextField」をビューコントローラーに追加してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_bill_amount_subviews.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Drag a `UILabel` from the _Object Library_ and drop it on top of your input card view (`UIView`).
-1. Drag a `UITextField` from the _Object Library_ and position it next to your previous label.
-1. Make sure both subviews are positioned horizontally side-by-side. This will be important when we create our stack view.
+1. `UILabel`を _Object Library_ からドラッグして、入力カードビュー（`UIView`）の上にドロップします。
+1. `UITextField`を _Object Library_ からドラッグして、以前のラベルの隣に配置します。
+1. 両方のサブビューが水平かつ隣り合わせに配置されているようにしてください。これはスタックビューを作成する際に重要となります。
 
-Next, let's create our first `UIStackView` from our two new views.
+次に、2つの新たなビューから、最初の`UIStackView`を作成しましょう。
 
 > [action]
-Create the _Bill Amount Stack View_ using the label and textfield:
+ラベルとテキストフィールドを使って _Bill Amount Stack View_ を作りましょう。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_bill_amount_stack_view.mp4)
 >
-1. Select your _Bill Amount Title Label_ (`UILabel`) in your storyboard.
-1. Hold down shift and click on your `UITextField`. This allows you to select multiple items at the same time.
-1. With both label and text field selected, click on the `Embed In Stack` button near the `Add New Constraints` button. It's located in the bottom right corner of your _Editor area_.
-1. (Optional) If you look in your _Document Outline_, you can see your new `UIStackView`. If you expand your stack view in your _Document Outline_ you can see each of the stack view's subviews.
+1. _Bill Amount Title Label_ （`UILabel`) をStoryboardから選択してください。
+1. シフトキーを押さえながら、`UITextField`をクリックしてください。これで複数の項目を同時に選択できるようになります。
+1. ラベルとテキストフィールドの両方が選択された状態で、`Add New Constraints`ボタンの近くの`Embed In Stack`ボタンをクリックしてください。 _エディタエリア_ の右下隅にあります。
+1. （任意） _Document Outline_ を見れば、新しい`UIStackView`を参照できます。 _Document Outline_ においてスタックビューを拡大すると、各ビューのサブビューを参照できます。
 
-Your storyboard should look like the following:
+Storyboardは次のように表示されるはずです。
 
 ![Bill Amount Stack View Unstyled](assets/bill_amount_stack_view_unstyled.png)
 
-Needs some work huh? We won't worry about the styling yet. Let's move onto creating the inner bottom stack view.
+少し調整作業が必要ですね。スタイリングについてはまだ考えなくてもいいです。次に、内側のボトムスタックを作成しましょう。
 
-### Tip Percent Stack View
+### チップ%のスタックビュー
 
-First, we'll add the _Tip Percent Stack View's_ subviews.
+まずは _Tip Percent Stack View_ のサブビューを追加します。
 
 > [action]
-In `Main.storyboard`, add an `UILabel` and `UISegmentedControl` to your view controller:
+`Main.storyboard`で、`UILabel`と`UISegmentedControl`をビューコントローラーに追加してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_tip_percent_subviews.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Drag a `UILabel` from the _Object Library_ and drop it below the first label.
-1. Drag a `UISegmentedControl` from the _Object Library_ and position it so that it's next to the new label and below the text field.
-1. Make sure both label and segmented control are positioned horizontally side-by-side. In addition, make sure that they're positioned below the previous stack view.
+1.  _Object Library_ から`UILabel`をドラッグして、最初のラベルの下にドロップします。
+1. `UISegmentedControl`を _Object Library_ からドラッグして、新しいラベルの隣、テキストフィールドの下に配置します。
+1. ラベルとセグメント化されたコントロールの両方が水平かつ隣り合わせに配置されるようにしましょう。さらに、以前のスタックビューの下に配置されるようにしてください。
 
-Now we'll move on to create our second inner stack view.
+さて、次は2つ目の内側のスタックビューの作成に移ります。
 
 > [action]
-Create the _Tip Percent Stack View_ using the label and segmented control:
+ラベルとセグメント化されたコントロールを使って _Tip Percent Stack View_ を作成します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_tip_percent_stack_view.mp4)
 >
-1. Select your _Tip Percent Title Label_ (`UILabel`) in your storyboard.
-1. Hold down shift and click on your `UISegmentedControl`. This allows you to select multiple items at the same time.
-1. With both label and segmented control selected, click on the `Embed In Stack` button near the `Add New Constraints` button. It's located in the bottom right corner of your _Editor area_.
-1. (Optional) If you look in your _Document Outline_, you can see your new `UIStackView`. If you expand your stack view in your _Document Outline_ you can see each of the stack view's subviews.
+1. Storyboardで _Tip Percent Title Label_ (`UILabel`) を選択してください。
+1. シフトキーを押さえながら、`UISegmentedControl`をクリックしてください。これで複数の項目を同時に選択できるようになります。
+1. ラベルとセグメント化されたコントロールの両方が選択された状態で、`Add New Constraints`ボタンの近くの`Embed In Stack`ボタンをクリックしてください。エディタエリアの右下隅にあります。
+1. （任意） _Document Outline_ を見れば、新しい`UIStackView`を参照できます。 _Document Outline_ においてスタックビューを拡大すると、各ビューのサブビューを参照できます。
 
-Your storyboard should look like the following:
+Storyboardは次のように表示されるはずです。
 
 ![Tip Percent Stack View Unstyled](assets/tip_percent_stack_view_unstyled.png)
 
-Both stack views should still be unstyled. We'll get to that once we finish adding all our constraints.
+スタックビューは両方ともスタイル設定を行なっていない状態のはずです。これには、制約の追加が済んだら取りかかります。
 
-Next, let's create our outer stack view.
+次に、外側のスタックビューを作成しましょう。
 
-### Outer Stack View
+### 外側のスタックビュー
 
 > [action]
-Create the _Outer Stack View_ using both inner (horizontal) stack views:
+両方の内側（水平）スタックビューを利用して外側のスタックビューを作成しましょう。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_outer_stack_view.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Collapse both inner stack views in the _Document Outline_.
-1. Select any inner stack view in the _Document Outline_.
-1. With the previous inner stack view selected, shift-click the other inner stack view to select both inner stack views simultaneously.
-1. With both inner stack views selected, click on the `Embed In Stack` button.
-1. (Optional) If you look in your _Document Outline_, you can see your new outer stack view and it's subviews.
+1. _Document Outline_ で内側のスタックビューを折り畳んでください。
+1. _Document Outline_ で内側のスタックビューを選択してください。
+1. 以前の内側のスタックビューが選択された状態で、別の内側のスタックビューをシフトを押さえながらクリックして、両方の内側のスタックビューを同時に選択してください。
+1. 両方の内側のスタックビューが選択された状態で、`Embed In Stack`ボタンをクリックしてください。
+1. （任意） _Document Outline_ で、新しいスタックビューとそのサブビューを閲覧できます。
 
-Your storyboard should now look like the following:
+現在、Storyboardは次のように表示されるはずです。
 
 ![Outer Stack View Unstyled](assets/outer_stack_view_unstyled.png)
 
-With our inner and outer stack view constraints created, we'll need to add a few more constraints so _auto-layout_ can determine each stack view's frame.
+内側と外側のスタックビューの制約が作成されたところで、 _Auto-layout_ が各スタックビューのフレームを決定できるようにするため、もう少し制約を追加する必要があります。
 
-Let's start with remaining outer stack view constraints.
+残りの外側のスタックビューの制約から始めましょう。
 
 > [action]
-Set the outer stack view's frame with the following constraints:
+外側のスタックビューのフレームに以下の制約を設定してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_outer_stack_view_constraints.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select the outer stack view in the _Document Outline_.
-1. With your outer stack view selected, click the `Add New Constraints` button.
-1. Add the following two constraints using the `Add New Constraints` popup:
-    - (Outer Stack View) Leading Edge 22pts from Super View (Input Card) Leading Edge
-    - (Outer Stack View) Trailing Edge 22pts from Super View Trailing Edge
-1. In the _Document Outline_, hold down control (ctrl) and click-drag from the outer stack view to it's super view (input card).
-1. In the popup, select `Center Vertically In Container` to create a new constraint. This will vertically align the outer stack view's center with it's super view's center.
+1. _Document Outline_ で、外側のスタックビューを選択してください。
+1. 外側のスタックビューが選択された状態で、`Add New Constraints`ボタンをクリックしてください。
+1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
+    - （外側のスタックビュー）Super View (Input Card) Leading EdgeからLeading Edge 22pts
+    - （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+1. _Document Outline_ で、コントロール（ctrl）キーを押さえながらクリックし、外側のスタックビューからスーパービュー（入力カード）へドラッグしてください。
+1. ポップアップが出たら、新たな制約を作成するために`Center Vertically In Container`を選択してください。そうすれば、外側のスタックビューの中心と、スーパービューの中心を、垂直に整列できます。
 
-Next, we'll add our equal width constraints to make sure the width of our outer and inner stack views are equal.
+次に、外側と内側のスタックビューの幅を同じにするため、等幅の制約を追加します。
 
-### Equal Widths Constraints
+### 等幅の制約
 
 > [action]
-Set equal widths constraints for each stack view:
+各スタックビューに等幅の制約を設定してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_stack_view_equal_widths_constraints.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Collapse both inner stack views in the _Document Outline_.
-1. Select the outer stack view in the _Document Outline_.
-1. With the outer stack view selected, shift-click the bottom inner stack view to select all three stack views simultaneously.
-1. With all stack views selected, click the `Add New Constraints` button.
-1. Select the `Equal Widths` checkbox and click `Add 2 Constraints` to create your equal width constraints.
+1. _Document Outline_ で内側のスタックビューを折り畳んでください。
+1. _Document Outline_ で、外側のスタックビューを選択してください。
+1. 3つのスタックビューすべてを同時に選択するために、外側のスタックビューが選択された状態で、下の内側のスタックビューを、シフトを押しながらクリックしてください。
+1. すべてのスタックビューが選択された状態で、`Add New Constraints`ボタンを押してください。
+1. 等幅の制約を作成するために、`Equal Widths`のチェックボックスを選択し、`Add 2 Constraints`をクリックしてください。
 
-Our progress so far:
+これまでの進歩：
 
 ![Stack View Equal Widths Unstyled](assets/stack_view_equal_widths_unstyled.png)
 
-Let's add our final width constraints for our text field and segmented control respectively.
+テキストフィールドとセグメント化されたコントロールのそれぞれに、幅に関する最後の制約を追加しましょう。
 
-### Fixed Width Constraints
+### 固定幅の制約
 
 > [action]
-Set a width constraint for the _Bill Amount Text Field_:
+ _Bill Amount Text Field_ に幅の制約を設定してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/text_field_width_constraint.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select the `UITextField` object in the _Document Outline_.
-1. With the text field selected, click the `Add New Constraints` button.
-1. Set a fixed width constraint of 118pts.
+1. _Document Outline_ で`UITextField`オブジェクトを選択してください。
+1. テキストフィールドが選択された状態で、`Add New Constraints`ボタンをクリックしてください。
+1. 固定幅の制約を118ptsに設定してください
 
-Finally, we'll need to add a fixed width constraint for our `UISegmentedControl`. Try to see if you can implement it by yourself.
+最後に、`UISegmentedControl`に固定幅の制約を追加する必要があります。自分で実装できるかどうか試してみましょう。
 
 > [challenge]
-Add a width constraint for your _Tip Percent Segmented Control_ object. Set the width to 173pts. If you have trouble or get stuck, look at the previous example of adding a width constraint to our text field.
+ _Tip Percent Segmented Control_ のオブジェクトに幅の制約を追加してください。幅を173ptsに設定してください。問題が生じたり、行き詰まってしまったら、テキストフィールドに幅の制約を追加した、前の例を見てください。
 
-Check your solution below.
+以下で解答を確認してください。
 
 > [solution]
-We set a width constraint for our _Tip Percent Segmented Control_ with the following:
+_Tip Percent Segmented Control_ の幅の制約を以下によって設定します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/segmented_control_width_constraint.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select the `UISegmentedControl` object in the _Document Outline_.
-1. With the segmented control selected, click the `Add New Constraints` button.
-1. Set a fixed width constraint of 173pts.
+1. _Document Outline_ で`UISegmentedControl`オブジェクトを選択してください。
+1. セグメント化されたコントロールが選択された状態で、`Add New Constraints`ボタンをクリックしてください。
+1. 固定幅の制約を173ptsに設定してください。
 
-We've come a long ways from where we first started. We've finished adding all of our stack views and each view's constraints.
+作業を始めてから、かなり遠くまでやってきました。スタックビューの追加をすべて終え、各ビューの制約も設定できました。
 
 ![Input Card Finished Constraints Unstyled](assets/input_card_finished_constraints_unstyled.png)
 
-As you can see, our input card is starting to look more and more like our design. Next, we'll work on configuring our input card view attributes.
+ご覧の通り、入力カードの外見は私たちのデザインに近づき始めています。次に、入力カードのビューの属性の構成に取り組みましょう。
 
-## Configuring Attributes
+## 属性の設定
 
-At this point, you should be familiar with setting the attributes of a storyboard object using _Interface Builder_.
+この時点ではもう、インターフェイスビルダーを使ってStoryboardオブジェクトの属性を設定する方法について慣れているはずです。
 
-We'll quickly go through one together for review and let you do the rest on your own.
+確認のため少し一緒に作業してみて、残りは一人で作業をしてもらいます。
 
-### Input Card Background Color
+### 入力カードの背景色
 
 > [action]
-Set the _Input Card's_ background color to `tcDarkBlue`:
+_Input Card_ の背景色を`tcDarkBlue`に設定してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/set_input_card_bg_color.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select the input card view (`UIView`).
-1. Open the _Attributes Inspector_ in the _Utilities area_.
-1. Find the _Background_ attribute and use the blue dropdown button to change it's value from `White Color` to `tcDarkBlue`.
+1. 入力カードビューを選択してください (`UIView`)。
+1. ユーティリティエリアで属性インスペクターを開いてください。
+1. _Background_ の属性を見つけ、青色のドロップダウンボタンを使って、その値を`White Color`から`tcDarkBlue`に変更してください。
 
-Now it's your turn.
+次はあなたの番です。
 
 > [challenge]
-Set each of the following attributes for each respective element:
+各要素に以下の属性を設定しましょう：
+>>
+**外側のスタックビュー：**
 >
-**Outer Stack View:**
+- _Spacing_： `0`から`35`に変更
 >
-- _Spacing_: Change from `0` to `35`
+**Bill Amount Title Label（内側のトップスタックビュー）：**
 >
-**Bill Amount Title Label (Inner Top Stack View):**
+- _Text_： `Label`から`Bill Amount`に変更
+- _Font_： `System 17.0`から`System 20.0`に変更
+- _Color_： `Default`から`tcWhite`に変更
+- _Alignment_： `---`から`Left Aligned`に変更
 >
-- _Text_: Change from `Label` to `Bill Amount`
-- _Font_: Change from `System 17.0` to `System 20.0`
-- _Color_: Change from `Default` to `tcWhite`
-- _Alignment_: Change from `---` to `Left Aligned`
+**Bill Amount Text Field（内側のトップスタックビュー）：**
 >
-**Bill Amount Text Field (Inner Top Stack View):**
+- _Alignment_： `---`から`Center Aligned`に変更
+- _Placeholder_： 空の状態から`$0.00`に変更
+- _Correction_： `Default`から`No`に変更します。
+- _Keyboard Type_：`Default`から`Decimal Pad`に変更
+- _Keyboard Look_： `Default`から`Light`に変更
+- _Tint_： `Default`から`tcHotPink`に変更
 >
-- _Alignment_: Change from `---` to `Center Aligned`
-- _Placeholder_: Change from empty to `$0.00`
-- _Correction_: Change from `Default` to `No`
-- _Keyboard Type_: Change from `Default` to `Decimal Pad`
-- _Keyboard Look_: Change from `Default` to `Light`
-- _Tint_: Change from `Default` to `tcHotPink`
+**Tip Percent Title Label（内側のボトムスタックビュー）：**
 >
-**Tip Percent Title Label (Inner Bottom Stack View):**
+- _Text_： `Label`から`Tip %`に変更
+- _Font_： `System 17.0`から`System 20.0`に変更
+- _Color_： `Default`から`tcWhite`に変更
+- _Alignment_： `---`から`Left Aligned`に変更
 >
-- _Text_: Change from `Label` to `Tip %`
-- _Font_: Change from `System 17.0` to `System 20.0`
-- _Color_: Change from `Default` to `tcWhite`
-- _Alignment_: Change from `---` to `Left Aligned`
+**Tip Percent Segmented Control（内側のボトムスタックビュー）：**
 >
-**Tip Percent Segmented Control (Inner Bottom Stack View):**
->
-- _Segments_: Change from `2` to `3`
-- _Tint_: Change from `Default` to `tcHotPink`
+- _Segments_： `2`から`3`に変更
+- _Tint_： `Default`から`tcHotPink`に変更
 
-The last attribute we'll need to set is the title for each segment our segmented control.
+設定が必要な最後の属性は、セグメント化されたコントロールの各セグメントのタイトルです。
 
 > [action]
-For each segment of your segmented control, set the title attribute to `15%`, `18%`, `20%` respectively:
+セグメント化されたコントロールの各セグメントに、タイトル属性をそれぞれ`15%`、`18%`、`20%`と設定してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/set_segmented_control_titles.mp4)
 
-Let's build and run our project to see our progress.
+プロジェクトをビルドし、実行して、どれぐらい進んだか確かめてみましょう。
 
 ![Input Card Styled](assets/input_card_styled.png)
 
-Bam! Our app matches our design (with exception of the rounded corners of course.)
+ビンゴ！　私たちのアプリとデザインが一致しました（もちろん、丸みのある角に関しては例外です。）
 
 > [info]
-Rounded corners (and shadows) make use of our view's layer property. We'll cover this later in this tutorial.
+丸い角（と影）は私たちのビューのレイヤーのプロパティを活用します。これは、このチュートリアルの後半で取り扱います。
 
-Let's continue by creating the IB connections needed for our input card.
+入力カードに必要なIBコネクションを作成して、次に進みましょう。
 
-## Adding Our IB Connections
+## IB 接続を追加する
 
-We've done this before with our header view. Let's get some more practice creating IB connections.
+これは以前にヘッダービューで行いました。IBコネクションを作成して、もっと練習を積みましょう。
 
-We'll do another together for review.
+復習のため、もう一つ一緒に行いましょう。
 
-Let's create an `IBOutlet` for our input card (`UIView`.)
+入力カードのために(`UIView`)`IBOutlet`を作成しましょう。
 
 > [action]
-Create an `IBOutlet ` for the input card view:
+入力カードビューのために`IBOutlet`を作成します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/input_card_ibaction.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Open `Main.storyboard` in your _Editor area_.
-1. Option-click on `ViewController.swift` in your _Project Navigator_ to open it in your _Assitant Editor_.
-1. (Optional) Hide the _Utilities area_ to make more screen space for the _Assistant Editor_.
-1. Select the input card view (`UIView`).
-1. With your input card selected, hold down control and click-drag from the input card to your `ViewController` class.
-1. In the popup, set the _Name_ field to `inputCardView` and click connect to create your new outlet.
+1. エディタエリアにおいて`Main.storyboard`を開きます。
+1. プロジェクトナビゲーターでオプションを押しながら`ViewController.swift`をクリックし、アシスタントエディタでこれを開いてください。
+1. （オプション）ユーティリティエリアを非表示にして、アシスタントエディタ用のスペースをもっと確保しましょう。
+1. 入力カードビューを選択してください (`UIView`)。
+1. 入力カードが選択された状態で、コントロールキーを押しながらクリックし、入力カードから`ViewController`クラスへドラッグしてください。
+1. ポップアップで、 _Name_ のフィールドを`inputCardView`に設定し、Connectをクリックして新しいアウトレットを作成します。
 
 <!-- break -->
 
 > [challenge]
-Now it's your turn to practice. If you find yourself stuck, look back on how we implemented our previous `IBOutlets` to refresh your memory.
+次は、自分で練習する番です。行き詰まったら、以前に`IBOutlets`をどのように実装したかを見直して、記憶をリフレッシュしてください。
 >
-Create the following `IBOutlets`:
+以下の`IBOutlets`を作成します：
 >
-- `UITextField` named `billAmountTextField`
-- `UISegmentedControl` named `tipPercentSegmentedControl`
+- `billAmountTextField`という名の`UITextField`
+- `tipPercentSegmentedContro`という名の`UISegmentedControl`
 
-Finally, we'll need to create an `IBAction` for our segmented control.
+最後に、セグメント化されたコントロールのために`IBAction`を作成する必要があります。
 
 > [challenge]
-Try implementing an `IBAction` for your `UISegmentedControl`. Set the _Name_ as `tipPercentChanged` and check that the _Event type_ is `Value Changed`. If you get stuck, you can look back in the tutorial or check the solution (only if you're really stuck!)
+`UISegmentedControl`用に`IBAction`を実装してみましょう。 _Name_ を`tipPercentChanged`と設定して、 _Event Type_ が`Value Changed`になっていることを確認してください。行き詰まったら、チュートリアルを見直すか、解答を確認してください（本当に行き詰まったときだけにしましょう！）
 
 <!-- break -->
 
 > [solution]
-Creating an `IBAction` is similar to creating an `IBOutlet`:
+`IBAction`の作成は、`IBOutlet`の作成に似ています：
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/segmented_control_ibaction.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select your segmented control (`UISegmentedControl`) in the _Document Outline_.
-1. With your segmented control selected, hold down ctrl and click-drag from the segmented control in your _Document Outline_ to your `ViewController` class.
-1. You should see a popup for creating a new IB connection. In the popup, change the _Connection_ type from `Outlet` to `Action`.
-1. Set the name of our action as `tipPercentChanged`.
-1. Change the _Type_ property from `Any` to `UISegmentedControl`.
-1. Make sure the _Event_ property is set as `Value Changed`. If not, use the dropdown to set it to `Value Changed`.
-1. Click _Connect_ to create your new `IBAction`.
+1. _Document Outline_ でセグメント化されたコントロールを選択してください(`UISegmentedControl`)。
+1. セグメント化されたコントロールを選択した状態で、ctrl を押しながらクリックして、＿Document Outline＿のセグメント化されたコントロールを、`ViewController`クラスへドラッグしてください。
+1. 新しいIBコネクションを作成するためのポップアップが表示されます。ポップアップで _Connection_ 型を`Outlet`から`Action`に変更します。
+1. アクションの名前を`tipPercentChanged`に設定します。
+1. _Type_ のプロパティを`Any`から`UISegmentedControl`に変更してください。
+1. _Event_ のプロパティが`Value Changed`に設定されていることを確認してください。そうでない場合は、ドロップダウンを使って、`Value Changed`に設定してください。
+1. _Connect_ をクリックして、新しい`IBAction`を作成してください。
 
-When you're done, your storyboard and Swift code should look like the following:
+作業が完了すると、StoryboardとSwiftのコードは次のような状態になっているはずです。
 
 ![Input Card IB Connections](assets/input_card_ib_connections.png)
 
-If everything looks right, on to the next! If something's off, let's go back in the tutorial and make sure we didn't accidentally skip any steps.
+すべて順調そうなら、次へ進みましょう！ 何かがおかしいようなら、チュートリアルに戻って、うっかり手順を飛ばしてしまわなかったかどうか確認してください。
 
 <!-- TODO: add custom textfield, but don't do that here -->
 
-# Output Card View
+# 出力カードビュー
 
-We've gone through the process of implementing each of our subviews for two of the four UI groups. We'll need to do it once again. This time we'll be more hands-off to give you practice doing it yourself.
+4つのUIグループのうちの2つに関して、各サブビューを実装するプロセスをこなしてきました。これをもう一度行う必要があります。今回は自分で試してみて、練習をしましょう。
 
-Let's take another look at our design:
+デザインをもう一度見てみましょう。
 
 ![Output Card Design](assets/output_card_design.png)
 
-For our output card, we'll need to add the following UI components:
+出力カードについては、次のUIコンポーネントを追加する必要があります。
 
 ![Tip Output Subviews](assets/tip_output_subviews.png)
 
-We'll need to add four new labels. Next, let's think about how we'll layout our views.
+新しいラベルを4つ追加する必要があります。次に、どのようにビューをレイアウトするか考えてみましょう。
 
-## Identifying Constraints
+## 制約の識別
 
-Similar to our input card, we'll use a combination of stack views and constraints to implement our layout.
+入力カードと同じように、スタックビューと制約の組み合わせを使ってレイアウトを実装します。
 
 ![Output Outer Stack View](assets/output_outer_stack_view.png)
 
-First, we'll have two horizontal stack views:
+まず、2つの水平スタックビューがあります。
 
-- (Inner Top Stack View) _Tip Amount Title Label_ and _Tip Amount Label_
-- (Inner Bottom Stack View) _Total Amount Title Label_ and _Total Amount Label_
+- （内側のトップスタックビュー）チップ額タイトルラベルおよびチップ額ラベル
+- （内側のボトムスタックビュー）総額タイトルラベルおよび総額ラベル
 
-Next, we'll create a outer (vertical) stack view from the two inner stack views.
+次に、2つの内側のスタックビューから、外側の（垂直）スタックビューを作成します。
 
-Just like the input card's outer stack view, we'll add the following constraints to set the frame of the outer stack view:
+入力カードの外側のスタックビューとちょうど同じように、以下の制約を追加して、外側のスタックビューのフレームを設定します。
 
-- (Outer Stack View) Leading Edge 22pts from Super View (Output Card) Leading Edge
-- (Outer Stack View) Trailing Edge 22pts from Super View Trailing Edge
-- (Outer Stack View) Center vertically aligned with Super View Center
+- （外側のスタックビュー）Super View (Output Card) Leading EdgeからLeading Edge 22pts
+- （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+- （外側のスタックのビュー）Super View CenterにCenter vertically aligned
 
-Finally, we'll add a few more constraints to make sure our subview widths are the correct size:
+最後に、サブビューの幅が正しいサイズになるように、さらにいくつかの制約を追加します。
 
-- (Inner Top Stack View) Equal Width to Outer Stack View Width
-- (Inner Bottom Stack View) Equal Width to Outer Stack View Width
-- (Tip Amount Title Label) 110pts Width
-- (Total Amount Title Label) 110pts Width
+- （内側のトップスタックビュー）外側のスタックビューと同じ幅
+-（内側のボトムスタックビュー）外側のスタックビューと同じ幅
+- （チップ額タイトルラベル）Width 110pts
+- （総額タイトルラベル）Width 110pts
 
 > [info]
-Look back on how we implemented the input card for more details if you're wondering why we've added any of the constraints.
+こういった制約を追加したのはなぜなのかと不思議に思っている場合、詳しくは入力カードの実装方法を見直してみましょう。
 
-## Adding Constraints
+## 制約を追加する
 
-We've already had practice with using stack views and constraints. This time, try practicing on your own. If you get stuck, look back on how we implemented the layout for our input card.
+スタックビューと制約を使う練習はすでにこなしました。今度は自分で練習する番です。行き詰まったら、入力カードのレイアウトをどう実装したか振り返ってみましょう。
 
 > [challenge]
-Create the inner top stack view with two `UILabel` views.
+つの`UILabel`ビューを持つ内側のトップスタックビューを作成しましょう。
 
 <!-- break -->
 
 > [solution]
 >
-1. Drag two `UILabel` objects side-by-side from the _Object Library_.
-1. Select both labels and create a horizontal stack view.
+1. _Object Library_ から、隣り合わせになるように2つの`UILabel`のオブジェクトをドラッグしてください。
+1. 両方のラベルを選択して、水平なスタックビューを作成してください。
 
-We'll also need to create the inner bottom stack view.
+内側のボトムスタックビューも作成する必要があります。
 
 > [challenge]
-Create the inner bottom stack view with two `UILabel` views.
+2つの`UILabel`ビューを持つ内側のボトムスタックビューを作成しましょう。
 
 <!-- break -->
 
 > [solution]
 >
-1. Drag two `UILabel` objects side-by-side from the _Object Library_. Make sure both labels are below the previous stack view.
-1. Select both labels and create a horizontal stack view.
+1. _Object Library_ から、隣り合わせになるように2つの`UILabel`のオブジェクトをドラッグしてください。両方のラベルが以前のスタックビューより下にあることを確認してください。
+1. 両方のラベルを選択して、水平なスタックビューを作成してください。
 
-Next, let's create our outer stack view.
+次に、外側のスタックビューを作成しましょう。
 
 > [challenge]
-Create the _Outer Stack View_ using both inner (horizontal) stack views.
+両方の内側（水平）スタックビューを利用して外側のスタックビューを作成しましょう。
 
 <!-- break -->
 
 > [solution]
 >
-1. Collapse and select both inner stack views in the _Document Outline_.
-1. With both inner stack views selected, click on the `Embed In Stack` button to create your outer stack view.
+1. _Document Outline_ で内側のスタックビューを両方折り畳んでください。
+1. 両方の内側のスタックビューを選択した状態で、`Embed In Stack`ボタンをクリックして、外側のスタックビューを作成してください。
 
-Your storyboard should now look like the following:
+現在、Storyboardは次のように表示されるはずです。
 
 ![Output Card Outer Stack View Unstyled](assets/output_card_outer_stack_view_unstyled.png)
 
-Next, let's add the constraints for our outer stack view.
+次に、外側のスタックビューに制約を追加しましょう。
 
 > [challenge]
-Set the outer stack view's frame with the following constraints:
+外側のスタックビューのフレームに以下の制約を設定してください。
 >
-- (Outer Stack View) Leading Edge 22pts from Super View (Output Card) Leading Edge
-- (Outer Stack View) Trailing Edge 22pts from Super View Trailing Edge
-- (Outer Stack View) Center vertically aligned with Super View Center
+- （外側のスタックビュー）Super View (Output Card) Leading EdgeからLeading Edge 22pts
+- （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+- （外側のスタックのビュー）Super View CenterにCenter vertically aligned
 
 <!-- break -->
 
 > [solution]
 >
-1. Select the outer stack view in the _Document Outline_.
-1. With your outer stack view selected, click the `Add New Constraints` button.
-1. Add the following two constraints using the `Add New Constraints` popup:
-    - (Outer Stack View) Leading Edge 22pts from Super View (Input Card) Leading Edge
-    - (Outer Stack View) Trailing Edge 22pts from Super View Trailing Edge
-1. In the _Document Outline_, hold down control (ctrl) and click-drag from the outer stack view to it's super view (input card).
-1. In the popup, select `Center Vertically In Container` to create a new constraint. This will vertically align the outer stack view's center with it's super view's center.
+1. _Document Outline_ で、外側のスタックビューを選択してください。
+1. 外側のスタックビューが選択された状態で、`Add New Constraints`ボタンをクリックしてください。
+1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
+    - （外側のスタックビュー）Super View (Input Card) Leading EdgeからLeading Edge 22pts
+    - （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+1. _Document Outline_ で、コントロール（ctrl）キーを押さえながらクリックし、外側のスタックビューからスーパービュー（入力カード）へドラッグしてください。
+1. ポップアップが出たら、新たな制約を作成するために`Center Vertically In Container`を選択してください。そうすれば、外側のスタックビューの中心と、スーパービューの中心を、垂直に整列できます。
 
-To finish up, we'll add the remaining width constraints.
+仕上げに、幅に関する残りの制約を追加します。
 
 > [challenge]
-Set each of the width constraints for each respective view:
+各ビューに幅の制約を設定しましょう：
 >
-- (Inner Top Stack View) Equal Width to Outer Stack View Width
-- (Inner Bottom Stack View) Equal Width to Outer Stack View Width
-- (Tip Amount Title Label) 110pts Width
-- (Total Amount Title Label) 110pts Width
+- （内側のトップスタックビュー）外側のスタックビューと同じ幅
+-（内側のボトムスタックビュー）外側のスタックビューと同じ幅
+- （チップ額タイトルラベル）Width 110pts
+- （総額タイトルラベル）Width 110pts
 
 <!-- break -->
 
 > [solution]
-To create both equal width constraints:
+等幅の制約を作成する：
 >
-1. Collapse both inner stack views in the _Document Outline_.
-1. Select the outer stack view in the _Document Outline_.
-1. With the outer stack view selected, shift-click the bottom inner stack view to select all three stack views simultaneously.
-1. With all stack views selected, click the `Add New Constraints` button.
-1. Select the `Equal Widths` checkbox and click `Add 2 Constraints` to create your equal width constraints.
+1. _Document Outline_ で内側のスタックビューを折り畳んでください。
+1. _Document Outline_ で、外側のスタックビューを選択してください。
+1. 3つのスタックビューすべてを同時に選択するために、外側のスタックビューが選択された状態で、下の内側のスタックビューを、シフトを押しながらクリックしてください。
+1. すべてのスタックビューが選択された状態で、`Add New Constraints`ボタンを押してください。
+1. 等幅の制約を作成するために、`Equal Widths`のチェックボックスを選択し、`Add 2 Constraints`をクリックしてください。
 >
-To create each title label's fixed width constraint:
+各タイトルラベル用に固定幅の制約を作成する：
 >
-1. Select the `UILabel` object in the _Document Outline_. Make sure you're selecting the correct label.
-1. With the label selected, click the `Add New Constraints` button.
-1. Set a fixed width constraint of 110pts.
-1. Repeat the previous steps for the remaining title label.
+1. _Document Outline_ で`UILabel`オブジェクトを選択してください。必ず正しいラベルを選択してください。
+1. ラベルを選択した状態で、`Add New Constraints`ボタンを押してください。
+1. 固定幅の制約を110ptsに設定してください。
+1. 残りのタイトルラベルについても前の手順を繰り返してください。
 
-Whew! That was a lot of work in a short time. Nice job! When you're finished adding all stack views and view constraints your storyboard should look like the following:
+フーッ！ 短い時間でたくさん作業をしました。よくできました！ スタックビューとビューの制約をすべて追加すると、あなたのStoryboardは次のように表示されるはずです：
 
 ![Output Card Finished Constraints Unstyled](assets/output_card_finished_constraints_unstyled.png)
 
-Next, we'll configure our output card view attributes so that it matches our designs.
+次に出力カードビューの属性を構成して、デザインと一致するようにします。
 
-## Configuring Attributes
+## 属性の設定
 
 > [challenge]
-Set each of the following attributes for each respective element. Remember, if you get stuck you can look back to the previous steps in the tutorial for reference.
+以下の属性を各要素に対して設定してください。行き詰まったら、チュートリアルの前の手順を参考に見直すことができるのをお忘れなく。
 >
-**Output Card View:**
+**出力カードビュー：**
 >
-- _Background_: Change from `White Color` to `tcWhite`
+- _Background_: `White Color`から`tcWhite`に変更
 >
-**Outer Stack View:**
+**外側のスタックビュー：**
 >
-- _Spacing_: Change from `0` to `35`
+- _Spacing_： `0`から`35`に変更
 >
-**Tip Amount Title Label (Inner Top Stack View):**
+**Tip Amount Title Label （内側のトップスタックビュー）：**
 >
-- _Text_: Change from `Label` to `Tip Amount`
-- _Font_: Change from `System 17.0` to `System Light 20.0`
-- _Color_: Change from `Default` to `tcCharcoal`
-- _Alignment_: Change from `---` to `Left Aligned`
+- _Text_： `Label`から`Tip Amount`に変更します
+- _Font_：`System 17.0`から`System Light 20.0`に変更
+- _Color_：`Default`から`tcCharcoal`に変更します
+- _Alignment_： `---`から`Left Aligned`に変更
 >
-**Tip Amount Label (Inner Top Stack View):**
+**Tip Amount Label（内側のトップスタックビュー）：**
 >
-- _Text_: Change from `Label` to `$0.00`
-- _Font_: Change from `System 17.0` to `System Medium 20.0`
-- _Color_: Change from `Default` to `tcBlack`
-- _Alignment_: Change from `---` to `Right Aligned`
+- _Text_： `Label」から`$0.00`に変更
+- _Font_： `System 17.0`から`System Medium 20.0`に変更
+- _Color_： `Default`から`tcBlack`に変更
+- _Alignment_： `---`から`Right Aligned`に変更
 >
-**Total Amount Title Label (Inner Bottom Stack View):**
+**Total Amount Title Label（内側のボトムスタックビュー）：**
 >
-- _Text_: Change from `Label` to `Total`
-- _Font_: Change from `System 17.0` to `System Light 20.0`
-- _Color_: Change from `Default` to `tcCharcoal`
-- _Alignment_: Change from `---` to `Left Aligned`
+- _Text_： `Label`から`Total`に変更します
+- _Font_：`System 17.0`から`System Light 20.0`に変更
+- _Color_： `Default`から`tcCharcoal`に変更します
+- _Alignment_：`---`から`Left Aligned`に変更
 >
-**Total Amount Label (Inner Bottom Stack View):**
+**Total Amount Label （内側のボトムスタックビュー）：**
 >
-- _Text_: Change from `Label` to `$0.00`
-- _Font_: Change from `System 17.0` to `System Medium 20.0`
-- _Color_: Change from `Default` to `tcBlack`
-- _Alignment_: Change from `---` to `Right Aligned`
+- _Text_： `Label`から`$0.00`に変更
+- _Font_： `System 17.0`から`System Medium 20.0`に変更
+- _Color_： `Default」から`tcBlack`に変更
+- _Alignment_： `---`から`Right Aligned`に変更
 
-Let's build and run our project to see our progress.
+プロジェクトをビルドし、実行して、どれぐらい進んだか確かめてみましょう。
 
 ![Output Card Styled](assets/output_card_styled.png)
 
-Our app is really starting to come along! Let's finish by creating the IB connections needed for our output card.
+アプリがようやく形になってきました！ 出力カードに必要なIBコネクションを作成して、作業を終えましょう。
 
-## Adding Our IB Connections
+## IB 接続を追加する
 
 > [challenge]
-Add the following IB connections. If you find yourself stuck, look back on how we implemented our previous `IBOutlets` to refresh your memory.
+以下のIBコネクションを追加してください。行き詰まったら、以前に`IBOutlets`をどのように実装したかを見直して、記憶をリフレッシュしてください。
 >
-Use the diagram below for reference:
+以下の図表を参考に使ってください：
 >
 ![Tip Output Subviews](assets/tip_output_subviews.png)
 >
-Create the following `IBOutlets`:
+以下の`IBOutlets`を作成します：
 >
-- `UIView` named `outputCardView`
-- `UILabel` named `tipAmountTitleLabel`
-- `UILabel` named `tipAmountLabel`
-- `UILabel` named `totalAmountTitleLabel`
-- `UILabel` named `totalAmountLabel`
+- `outputCardView`と呼ばれる`UIView`
+- `tipAmountTitleLabel`と呼ばれる`UILabel`
+- `tipAmountLabel`と呼ばれる`UILabel`
+- `totalAmountTitleLabel`と呼ばれる`UILabel`
+- `totalAmountLabel`と呼ばれる`UILabel`
 
-When you're done, your storyboard and Swift code should look like the following:
+作業が完了すると、StoryboardとSwiftのコードは次のような状態になっているはずです。
 
 ![Output Card IB Connections](assets/output_card_ib_connections.png)
 
-# Reset Button
+# リセットボタン
 
-Let's finish our last UI group: the reset button. Unlike the other UI groups, we won't need to add any subviews or extra constraints. We'll just need to styling our button and add it's IB connections.
+最後のUIグループであるリセットボタンを完成させましょう。他のUIグループと異なり、サブビューや余計な制約を追加する必要がありません。単純にボタンのスタイリングを済ませて、IBコネクションを追加するだけです。
 
-## Configuring Attributes
+## 属性の設定
 
 > [challenge]
-You know the drill. Set each of the following attributes for the reset button:
+どうしたらいいか知っていますよね。リセットボタンに以下の属性をそれぞれ設定してください：
 >
-**Output Card View:**
+**出力カードビュー：**
 >
-- _Type_: Change from `System` to `Custom`
-- _Title_: Change from `Button` to `RESET`
-- _Font_: Change from `System 15.0` to `System Bold 13.0`
-- _Text Color_: Change from `Default` to `tcWhite`
+- _Type_： `System`から`Custom`に変更
+- _Title_： `Button`から`RESET`に変更
+- _Font_： `System 15.0`から`System Bold 13.0`に変更
+- _Text Color_： `Default`から`tcWhite`に変更
 
-Your reset button should look like the following when you're done:
+作業が完了すると、リセットボタンは次のような状態になっているはずです。
 
 ![Reset Button Styled](assets/reset_button_styled.png)
 
-## Creating IB Connections
+## IB 接続の作成
 
-Last, we'll need to add the button's IB connections.
+最後にボタンのIBコネクションを追加する必要があります。
 
 > [challenge]
-Use the _Assistant Editor_ to add the following IB connections to your `ViewController` class:
+アシスタントエディタを使って、以下のIBコネクションを`ViewController`クラスに追加してください：
 >
-1. Create an `IBOutlet` for the reset button named `resetButton`.
-1. Create an `IBAction` for the reset button with the name `resetButtonTapped` with _Event type_ of `Touch Up Inside`.
+1. `resetButton`という名前のリセットボタンに、`IBOutlet`を作成してください。
+1. _Event Type_ が`Touch Up Inside`で、`resetButtonTapped`という名前のリセットボタン用に`IBAction`を作成してください。
 
-When you're done, your storyboard and view controller source code should look like the following:
+作業が完了すると、Storyboardとビューコントローラーのコードは次のような状態になっているはずです。
 
 ![Reset Button IB Connections](assets/reset_button_ib_connections.png)
 
-### Testing Our IBAction
+### IBActionのテスト
 
-Let's make sure that our `IBAction` is working as expected.
+`IBAction`が予想通りに動作していることを確認しましょう。
 
 > [action]
-Add a print statement in your `resetButtonTapped` function to test that it's working:
+`resetButtonTapped`関数にprintステートメントを追加し、きちんと作動していることをテストします：
 >
 ```
 @IBAction func resetButtonTapped(_ sender: UIButton) {
@@ -1000,10 +1000,10 @@ Add a print statement in your `resetButtonTapped` function to test that it's wor
 }
 ```
 
-Build and run your project. Tap the reset button a couple of times and verify that your print statement is being output to the debug console. Each time you tap the reset button, you should see the following:
+プロジェクトをビルドして実行します。リセットボタンを二度ほどタップして、printステートメントがデバックコンソールに出力されていることを確認してください。リセットボタンをタップするたびに、次のように表示されます。
 
 ![Reset Button Debug Print](assets/reset_button_debug_print.png)
 
-# Conclusion
+# 結論
 
-That's a wrap! We've learned a ton about implementing complex layouts with _auto-layout_, constraints and stack views. In the process, we've gotten a lot of practice and implemented the majority of our UI. In the next section, we'll work on implementing the logic for our tip calculator.
+これでおしまいです！ _Auto-layout、_ 制約、スタックビューで複雑なレイアウトを実装する方法について、多くを学びました。この過程でたくさん練習を積んで、私たちのUIの大部分を実装できました。次のセクションでは、チップ計算機のロジックの実装について学びます。

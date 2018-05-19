@@ -1,452 +1,452 @@
 ---
-title: "UI Layout"
+title: "UIレイアウト"
 slug: ui-layout
 ---
 
-We'll start building our app by implementing the UI in _Interface Builder_. For reference, here are the tip calculator designs:
+_インターフェイスビルダー_ でUIを実装することで、アプリの開発を始めます。参考までに、以下はチップ計算機のデザインです：
 
 ![Design Breakdown](assets/tc_view_breakdown.png)
 
-# Creating Views
+# ビューを作成
 
-We'll get started by creating our header view with a `UIView`.
+まずは、ヘッダービューを`UIView`で作成することから始めます。
 
 > [info]
-`UIKit` has it's own header-like bar called the `UINavigationBar`. To keep things simple, we'll start from scratch and create our own header view instead of using iOS's `UINavigationBar`.
+`UIKit`には`UINavigationBar`と呼ばれる、ヘッダーバーに似た独自のバーがあります。シンプルに作業できるようにするため、iOSの`UINavigationBar`を使用する代わりに、イチから独自のヘッダービューを作成します。
 
 <!-- break -->
 
 > [action]
-Open `Main.storyboard` from your project navigator. You should see your single view controller. ![Starting Storyboard](assets/starting_storyboard.png)
+プロジェクトナビゲーターから`Main.storyboard`を開いてください。シングルビューコントローラーが表示されるはずです。![Starting Storyboard](assets/starting_storyboard.png)
 
-Next, we'll add a `UIView` and reposition/resize it to be our header view.
-
-> [action]
-Create a header view by dragging an `UIView` object from the _Object Library_ to the top of the view controller. Don't worry too much about the perfect size and position for now. We'll handle that later.
->
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_custom_nav_bar.mp4)
-
-The new `UIView` object that we just added is going to be our custom header view. We'll add other subviews onto it later.
-
-You might notice, that our header view is a little hard to see because it's the same color as the view controller's root view: white. Let's change the color of our root view to add some contrast.
+次に、`UIView`を追加し、これがヘッダービューになるように位置とサイズを変更します。
 
 > [action]
-Change the view controller's root view to off-white:
+`UIView`オブジェクトをオブジェクトライブラリーからビューコントローラーのトップへとドラッグしてヘッダービューを作成してください。今のところは、完璧なサイズや位置については、あまり悩まないでください。これは後で取り扱います。
 >
-1. Select the view controller's root view by either clicking on it in your storyboard or selecting it in the document outline. If you don't see it in the _Document Outline_, you might have to expand the `View Controller Scene` tree. Make sure you're not selecting the header view by accident. ![Select Root View](assets/select_root_view.png)
-1. With the root view still selected, open the _Attributes Inspector_ in the _Utilities area_. ![Open Attributes Inspector](assets/open_attributes_inspector.png)
-1. Next, click on the blue dropdown button beside the active color for the `Background Color` field. ![Click Background Color Dropdown](assets/click_bg_color_dropdown.png)
-1. Finally, select the `Off-White` color under the _Named Colors_ subheader in the dropdown menu. ![Select Off-White Background Color](assets/select_off_white.png)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
 
-We've changed the _background color_ attribute of the root view to a different color. The `Off White` color we chose was pre-defined in our `Assets.xcasset` asset catalog.
+たった今追加した新しい`UIView`オブジェクトが、カスタムヘッダービューになります ここには後で他のサブビューを追加します。
 
-Before we add more views or configure more properties, let's learn about the iOS coordinate system and the frame attribute of `UIView` and it's subclasses. We'll need to learn about the iOS coordinate system to properly position and size our views.
+ヘッダービューの色がビューコントローラーのルートビューと同じ白色なので、少し見づらいと思いませんか。ルートビューの色を変更して、コントラストを与えましょう。
 
-# iOS Coordinate System
+> [action]
+ビューコントローラーのルートビューをオフホワイトに変更しましょう：
+>
+1. Storyboardの中でクリックするか、Document Outlineで選択することによって、ビューコントローラーのルートビューを選択します。 _Document Outline_ に表示されない場合は、`View Controller Scene`のツリーを拡大しなければならないかもしれません。間違ってヘッダービューを選択していないことを確認してください。![Select Root View](assets/select_root_view.png)
+1. ルートビューを選択した状態で、ユーティリティエリアの属性インスペクターを開いてください。![Open Attributes Inspector](assets/open_attributes_inspector.png)
+1. 次に、`Background Color`フィールドで、有効になっている色の横にある、青のドロップダウンボタンをクリックしてください。![Click Background Color Dropdown](assets/click_bg_color_dropdown.png)
+1. 最後に、 ドロップダウンメニューの _Named Colors_ のサブヘッダーに含まれている`Off-White`色を選択してください。![Select Off-White Background Color](assets/select_off_white.png)
 
-You can think of your phone screen as a coordinate system with it's origin in the top-left corner.
+ルートビューの背景色の属性を異なる色に変更しました。 選択した`Off White`色は、`Assets.xcasset`のアセットカタログで予め定義されていました。
+
+もっとビューを追加したり、もっと多くのプロパティを構成する前に、iOS座標系システムや`UIView`のフレーム属性とそのサブクラスについて学びましょう。ビューの位置とサイズを適切に設定するには、iOS座標系システムについて学ぶ必要があります。
+
+# iOSの座標系
+
+電話のスクリーンを、左上隅を起点とする座標系システムであるとみなすことができます。
 
 ![iOS Coordinate System](assets/ios_coord_system.png)
 
-As we've previously discussed, view can be represented as rectangles drawn on our device's screen. This rectangle can be represented by it's starting point (top-left corner of the rectangle) along with it's size (width and height). Let's look at an example:
+以前に述べたように、ビューはデバイスの画面上に描かれた長方形として表すことができます。この長方形は、その起点（長方形の左上隅）とサイズ（幅と高さ）で表すことができます。例を見てみましょう。
 
 ![Coord Example](assets/coord_example.png)
 
 <!-- break -->
 
 > [challenge]
-In the image above, what is the red view's starting point? What about it's size?
+上の画像では、赤色のビューの起点はどこですか？ サイズはどうでしょうか？
 
 <!-- break -->
 
 > [solution]
-As you can see from the numbered X and Y axis, the view rectangle starts at the point (27, 48) in the iOS coordinate system and has a width of 50pts and a height of 35pts.
+数字がついたX軸とY軸から分かるように、ビューの長方形はiOS座標系システムの点（27, 48）から開始しており、50ptsの幅と35ptsの高さを有しています。
 
-In Swift, we have the `CGPoint` and `CGSize` data types to represent coordinate points and sizes respectively. A `CGPoint` value is a pair of X and Y values. A `CGSize` value is a pair of width and height values.
+Swiftにおいては、`CGPoint`と`CGSize`のデータのタイプがあり、それぞれ座標点とサイズを表しています。A `CGPoint`の値は、XとYの値のペアです。A `CGSize`の値は、幅と高さの値のペアです。
 
-Additionally, these two data types can be combined into `CGRect` data type (X, Y, width, height) that represents a rectangle represented by it's point and size properties.
+さらに、これら2つのデータタイプは、該当の点とサイズのプロパティによって表される長方形を表す「CGRect」データタイプ（X、Y、幅、高さ）と組み合わせることができます。
 
-Each `UIView` has a property called it's `frame` of type `CGRect`. You can use each view's frame property to manipulate it's position and size.
+各`UIView`は`CGRect`タイプの`フレーム`と呼ばれるプロパティを持っています。各ビューのフレームのプロパティを使って、その位置やサイズを操作できます。
 
 > [info]
-At some point, you'll come across another view property named `bounds` that's also a `CGRect`. The `frame` of a view represents the view's rectangle in it's super view's coordinate system while it's `bound` property refers to the rectangle using the view's top-left corner as the origin of it's coordinate system. In other words, the `bounds` property of a view will always have an (x, y) of (0, 0) and retain it's size.
+ある時点で、同じく`CGRect`である`bound`と呼ばれるもう一つのビューのプロパティに出くわすでしょう。ビューの`フレーム`は、スーパービューの座標系システムにおけるビューの長方形を表しますが、`bound`プロパティは、ビューの左上隅を座標系システムの起点として使用している長方形を指します。つまり、ビューの`bound`プロパティは常に（0,0）の（x,y）となり、サイズを維持します。
 >
 ![Frame vs Bounds](assets/frame_vs_bounds.png)
 
-With our new knowledge, let's properly re-position and re-size our header view.
+新たな知識を得た今、ヘッダービューの位置とサイズをもう一度適切に設定してみましょう。
 
-## Setting The Header View Rect
+## ヘッダービューの長方形の設定
 
-Looking back at our design, we can determine the `CGRect` of our header view.
+デザインを見直して、ヘッダービューの`CGRect`を決定することができます。
 
 > [challenge]
-What should the `CGRect` (x, y, width, height) of our header view be?
+ヘッダービューの`CGRect`（x, y, 幅, 高さ）はどうあるべきでしょうか。
 >
 ![Header View Dimensions](assets/nav_bar_dimensions.png)
 
 <!-- break -->
 
 > [solution]
-The _frame_ of our header view is (0, 0, 375, 105).
+ヘッダービューのフレームは、（0, 0, 375, 105）です。
 
-Let's change our current header view's frame in storyboard.
+現在のヘッダービューのフレームをStoryboardで変更しましょう。
 
 > [action]
-In `Main.storyboard` perform the following:
+`Main.storyboard`で以下を実行してください：
 >
-1. Select the header view (UIView) in _Interface Builder_
-1. With the header view selected, open the _Size Inspector_ in the _Utilities area_.
-1. Find the view's `Frame Rectangle` fields. Change the X, Y, Width and Height values in the size inspector to the value of the rect in the solution above.
+1. インターフェイスビルダーにおいてヘッダービュー(UIView)を選択してください。
+1. ヘッダービューが選択された状態で、ユーティリティエリアにおいてサイズインスペクターを開きます。
+1. ビューの`Frame Rectangle`フィールドを見つけてください。サイズインスペクターのX、Y、幅、高さの値を、以上の解答の長方形の値にを変更してください。
 >
 ![Fixed Header View](assets/fix_nav_bar_rect.png)
 >
-Let's see if our changes worked! Build and run the app in the iPhone 8 simulator by clicking the run button in the toolbar.
+変更がうまく動作するか確認しましょう！ ツールバーの実行ボタンをクリックすることで、iPhone 8のシミュレーター上でアプリをビルドし、実行します。
 
-You should see the custom header view against your off-white root view in the simulator. Nothing fancy yet!
+シミュレーターでは、オフホワイト色のルートビューに対して、カスタムヘッダービューが表示されるはずです。まだまだ魅力に欠けていますね！
 
 ![Fixed Header Simulator](assets/fixed_nav_bar_simulator.png)
 
-But what happens if we run our app in a simulator with a different size screen?
+ですが、画面のサイズが異なるシミュレーターでアプリを実行するとどうなるのでしょうか？
 
-# Handling Different Screen Sizes
+# 異なる画面サイズの取り扱い
 
-Let's revisit our previous diagram explaining a view's frame within the iOS coordinate system.
+iOSの座標系システム内でビューのフレームを説明している前の図表をもう一度検討してみましょう。
 
 ![Header View Dimensions](assets/nav_bar_dimensions.png)
 
-What would happen if our app was ran across multiple different screen sizes?
+複数の異なる画面サイズでアプリが実行されると何が起こるのでしょうか？
 
 ![Fixed Header View With Different Screen Sizes](assets/fixed_nav_bar_diff_screens.png)
 
-As you can see, the frame of the `UIView` needs to be different for each device with a different screen size.
+ご覧の通り、`UIView`のフレームは、異なる画面サイズを持つ各デバイスによって違っている必要があります。
 
 > [challenge]
-Can you think of some ways of how we could solve this problem?
+何かこの問題を解決する方法をいくつか思いつきませんか？
 
-## Introducing Auto-Layout
+## 自動レイアウトの導入
 
-One way we could solve different frames for each screen size is by programmatically calculating and setting each view's frame. However, that would be super messy and lead to us having to write a lot of code just make sure each view is the right size for each screen.
+各画面サイズによって異なるフレームを解決する方法の一つとしては、プログラムで計算をし、各ビューのフレームを設定することです。ですが、これはかなり面倒ですし、各ビューが各画面に適したサイズになるようにするためだけにたくさんのコードを書かなくてはならない状態になってしまいます。
 
-To solve this problem, Apple created a relative positioning tool called _Auto-Layout_. With _Auto-Layout_, we define constraints.
+この問題を解決するために、Appleは _Auto-Layout_ と呼ばれる、相対的に位置を設定するツールを作成しました。 _Auto-Layout_ を使って、制約を定義します。
 
-Constraints are rules where you can define the relative positioning or size between two views. _Auto-Layout_ will then calculate all the math and set our view's frame so that all of the constraints (rules) are followed. This allows us to build dynamic view layouts that re-position and re-shape for any screen size.
+制約とは、2つのビューの間の相対的な位置またはサイズを定義できるルールです。 _Auto-Layout_ はすべての制約（ルール）が守られるようにするため、計算をすべて行い、ビューのフレームを設定してくれます。これにより、どんな画面サイズの場合でも位置と形状を再び調整する、ダイナミックなビューのレイアウトを開発できるようになります。
 
-For example, we could give our example view the following constraints:
+例えば、私たちの見本のビューに以下の制約を与えることができます：
 
-- Top: 20pts from Super View (Root View) Top Edge
-- Leading (Left): 40pts from  Super View (Root View) Leading Edge
-- Trailing (Right): -80pts from  Super View (Root View) Trailing Edge
-- Bottom: -380pts from bottom
+- Top：Super View (Root View) Top Edgeから20pts
+- Leading (Left)： Super View (Root View) Leading Edgeから40pts
+- Trailing (Right)： - Super View (Root View) Trailing Edgeから80pts
+- Bottom：Bottomから-380pts
 
 > [info]
-Note the positive and negative values that are based on the direction of the iOS coordinate system.
+iOS座標系システムの方向に基づいた正と負の値に注意してください。
 
 ![Constraints Example](assets/constraints_example.png)
 
-Now if the screen changes, let's see how our view will react:
+さて、画面が変わると、ビューはどう反応するのか見てみましょう：
 
 ![Constraints Example](assets/constraints_example_diff_screens.png)
 
-See how auto-layout calculates the view's frame based on our constraints for each different screen size?
+異なる画面サイズそれぞれの制約に基づいて、Auto-layoutがビューのフレームを計算しているのがわかりますね？
 
-If instead, we wanted give the view a fixed width or height, we can also add constraints as fixed constants. Let's give our example view a new set of constraints:
+もしその代わり、固定の幅または高さを与えたい場合は、固定定数の制約を追加することもできます。私たちのビューの例に、新しい制約を与えてみましょう：
 
-- Top: 20pts from Super View (Root View) Top Edge
-- Leading (Left): 40pts from  Super View (Root View) Leading Edge
-- Width: 150pts
-- Height: 200pts
+- Top：Super View (Root View) Top Edgeから20pts
+- Leading (Left)： Super View (Root View) Leading Edgeから40pts
+- Width：150pts
+- Height：200pts
 
 ![Fixed Size Constraints Example](assets/fixed_size_constraint_example.png)
 
-Auto-layout and constraints give us an easy way to build dynamic view layouts for any iOS device.
+Auto-layoutと制約によって、どんなiOSデバイスでもダイナミックなビューレイアウトを簡単に作成できるようになります。
 
-## Determining Constraints
+## 制約を決定する
 
-Let's set our first constraints by changing our header view in _Interface Builder_ to make use of constraints.
+制約を活用するため、インターフェースビルダーのヘッダービューを変更することにより、最初の制約を設定しましょう。
 
 > [challenge]
-What constraints should we set for our header view? ![Header View Dimensions](assets/nav_bar_dimensions.png)
+ヘッダービューにはどんな制約を設定すべきでしょうか？ ![Header View Dimensions](assets/nav_bar_dimensions.png)
 
 <!-- break -->
 
 > [solution]
-Our header view would have the following constraints:
+ヘッダービューには、以下の制約があるでしょう：
 >
-- Top: 0 from Super View (Root View) Top Edge
-- Leading (Left): 0 from Super View (Root View) Leading Edge
-- Trailing (Right): 0 from Super View (Root View) Trailing Edge
-- Height: 105 fixed constant
+- Top：Super View (Root View) Top Edgeから0
+- Leading (Left)： Super View (Root View) Leading Edgeから0
+- Trailing (Right)： Super View (Root View) Trailing Edgeから0
+- Height: 105 固定数
 
-Looks pretty good. Let's look at our header view with these constraints across each device:
+なかなかの出来栄えです。各デバイスにまたがるこれらの制約を持った、私たちのヘッダービューを見てみましょう：
 
 ![Header View With Fixed Height Constraint](assets/nav_bar_w_fixed_height_constraint.png)
 
-Hold on. Not so fast. With the introduction of the iPhone X, the sensor housing (the top notch) requires to add some additional thought to our header view frame.
+待ってください。そんなに急がないで。iPhone Xの導入により、センサーハウジング（上部の切り欠き部分）とヘッダービューのフレームに関してもう少し注意しなくてはなりません。
 
 ![Header View Fixed Height Problem](assets/nav_bar_fixed_height_problem.png)
 
-Because the top notch, we'll need to make calculate the header view's height based on the bottom of the top notch for the iPhone X.
+この上部の切り欠き部分を理由に、ヘッダービューの高さを、iPhone Xの上部切り欠き部分の下部に基づいて計算する必要があります。
 
-To help us handle this, Apple has provided us with the _Safe Area_.
+これに対応するため、Appleはセーフエリアを提供しています。
 
-## Safe Area
+## 安全地帯
 
-The _Safe Area_ provides us with valuable layout information to help us properly create constraints for our views. In our case, the top _Safe Area_ provides us with the bottom of the _Status Bar_ for each device:
+セーフエリアは、私たちのビューに対応する制約を正しく作成する助けとなる、貴重なレイアウト情報を提供してくれます。私たちの場合では、各デバイスに関して、上部のセーフエリアが、下部のステータスバーを与えてくれます：
 
 ![Safe Area](assets/safe_area.png)
 
-Revise our original constraints, we'll need to replace our height constraint with a bottom constraint that is -85 from the top _Safe Area_. Now our header view dynamically calculate it's layout correctly across each device.
+元々の制約を修正するには、高さの制約をセーフエリアから-85の下部の制約と置き換える必要があります。これで、ヘッダービューはダイナミックに各デバイスでのレイアウトを正確に計算してくれます。
 
 ![Header View Correct Height](assets/nav_bar_correct_height.png)
 
-It might be a little hard to see, but the height of the header view is slightly bigger for the iPhone X because of it's top notch.
+少し見にくいかもしれませんが、上部切り欠きを理由に、ヘッダービューはiPhone Xの場合には少し高くなります。
 
-With our correct constraints, let's set them in _Interface Builder_.
+正しい制約を使って、インターフェイスビルダーで設定しましょう。
 
-## Setting Our First Constraints
+## 初めての制約の設定
 
-Let's set our constraints in _Interface Builder_. First we'll start by adding our top, leading (left) and trailing (right) constraints.
+インターフェイスビルダーで制約を設定しましょう。まずは、top、leading (left)、そしてtrailing (right)の制約を追加することから始めます。
 
 > [action]
-Open `Main.storyboard` from your _Project Navigator_. Select your header view (`UIView`) and add the following constraints:
+プロジェクトナビゲーターから、`Main.storyboard`を開いてください。ヘッダービュー (`UIView`) を選択して、以下の制約を追加してください：
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/edge_constraints_nav_bar.mp4)
 >
-With our header view selected, we click on the _Add New Constraints_ button and set each of the edge constraints:
+ヘッダービューを選択した状態で、_Add New Constraints_ ボタンをクリックし、各エッジの制約を設定します：
 >
-- _Top Edge_ of header view 0pts to _Top Edge_ of root view
-- _Leading (Left) Edge_ of header view 0pts to _Leading (Left) Edge_ of root view
-- _Trailing (Right) Edge_ of header view 0pts to _Trailing (Right) Edge_ of root view
+- ヘッダービューの _Top Edge_ 0ptsから、ルートビューの _Top Edge_ へ
+- ヘッダービューの _Leading (Left) Edge_ 0ptsから 、ルートビューの _Leading (Left) Edge_ へ
+- ヘッダービューの _Trailing (Right) Edge_ 0ptsからルートビューの _Trailing (Right) Edge_ へ
 
-Currently, our header view has a incomplete set of constraints. We haven't added a constraint to define the view's height yet. If we run the app now, we won't see our header view because it's height will be 0. Xcode and _Interface Builder_ try to warn us of this:
+現時点では、私たちのヘッダービューの制約は不完全です。ビューの高さを定義する制約をまだ追加していません。今アプリを実行すると、ヘッダービューの高さが0になるので、ヘッダービューは表示されません。Xcodeとインターフェイスビルダー は、このことについて警告しようとしています：
 
 ![Constraint Errors](assets/constraint_errors.png)
 
-You'll notice above:
+以上では次のことがわかるでしょう：
 
-1. a red error arrow that lists missing constraints in your document outline
-1. red highlights around the custom header view in your storyboard
-1. a warning in the Xcode project status bar
+1. Document Outlineで、欠けている制約をリスト化する赤色のエラー矢印
+1. Storyboardのカスタムヘッダービューの回りに表示される赤のハイライト
+1. Xcodeプロジェクトステータスバーにおける警告
 
-Let's add the final constraint to define the header view's height.
+ヘッダービューの高さを定義する最後の制約を追加しましょう。
 
 > [action]
-Add a constraint from the bottom edge of the header view to the top edge of the _Safe Area_: ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/nav_bar_safe_area_constraint.mp4)
+ヘッダービューのボトムエッジからセーフエリアのトップエッジに制約を追加します： ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/nav_bar_safe_area_constraint.mp4)
 >
-To add the constraint in the video, follow the steps below:
+ビデオで制約を追加するには、以下の手順に従ってください：
 >
-1. Select the header view (`UIView`) in the _Document Outline_.
-1. With the header view selected, hold down the control button (ctrl) and click-drag from the header view to the _Safe Area_ view in your _Document Outline_.
-1. Once you let go, you'll see a pop-up with the options to add a new constraint. Select _Vertical Spacing_. This will set a vertical spacing constraint from the top edge of our header view to the top edge of the _Safe Area_.
-1. (Optional) If you'd like to adjust the constraint, you can click on it and adjust it's values in the _Size Inspector_.
+1. _Document Outline_ でヘッダービュー (`UIView`) を選択します。
+1. _Document Outline_ で、ヘッダービューが選択された状態で、コントロール（Ctrl）ボタンを押さえたまま、ヘッダービューからセーフエリアビューへとクリックし、ドラッグしてください。
+1. ドラッグすると、新しい制約を追加するオプションのあるポップアップが表示されます。「Vertical Spacing」を選択します。これは、ヘッダービューのトップエッジから、セーフエリアのトップエッジへ行間の制約を設定します。
+1. （オプション）制約を調整したい場合は、クリックして、サイズインスペクターで値を調整することができます。
 
-Congrats, we've added our first set of constraints to our header view. Try running your app in multiple different simulators and see if our header view properly adjusts it's frame to each device.
+おめでとうございます。ヘッダービューに最初の制約のセットを追加しました。アプリを複数の異なるシミューレーターで実行してみて、ヘッダービューがそのフレームを各デバイスに合わせて正しく調整するかどうか確認してください。
 
 ![Auto-Layout Header View Multiple Devices](assets/dynamic_nav_bar_diff_devices.png)
 
-It works! Next, we'll dive deeper into _auto-layout_ and the different kind of constraints that are available to use.
+うまく行きました！ 次に、 _Auto-layout_ と様々な種類の利用可能な制約に取り組みましょう。
 
-# Different Types of Constraints
+# 異なるタイプの制約
 
-To properly setup constraints for our header view, we've only used one type of constraints but there are many different types of constraints that you can use to build complex UI layouts. Before setting up constraints for any of our other fews, let's look at common constraints we can use to build dynamic layouts with _auto-layout_.
+ヘッダービューの制約を適切に設定するにあたって、一種類の制約を使っただけですが、複雑なUIレイアウトを作成するために使える、様々な種類の制約が数多く用意されています。他に制約を設定する前に、ダイナミックなレイアウトを構築するために自動レイアウトによって使用することのできる共通の制約を見てみましょう。
 
-## Relative Positioning
+## 相対的位置決め
 
-First, let's review our relative positioning constraint. Relative positioning allows to position a view relative to another view. For example, we can create a constraint that positions the blue view 45pts from the trailing (right) side of the red view:
+まずは相対的な位置を決める制約を検討してみましょう。相対的な位置決めにより、あるビューの位置を、別のビューと相対的に決めることができます。例えば、青いビューを赤いビューのトレイリング（右）側から45ptsの場所に配置するという制約を作成できます：
 
 ![Relative Positioning Positive](assets/relative_positioning_positive.png)
 
-Positive and negative values (relative to the iOS coordinate system) denote the direction of the constraint. For example, we can instead add a constraint that positions the blue view -75pts from the trailing (right) side of the red view:
+正の値や負の値（iOS座標系システムと相対）は、制約の方向性を示します。例えば、青のビューを赤のビューのトレイリング（右）側から-75ptsの場所に配置するという制約を作成できます：
 
 ![Relative Positioning Negative](assets/relative_positioning_negative.png)
 
 > [info]
-When you're creating relative positioning constraints, you'll need to keep in mind which view's edge the constraint is starting from, the other view's edge where the constraint is ending at and the position or negative value (direction) of the constraint.
+相対的な位置決めの制約を作成している時は、どちらのビューのエッジから制約が開始するのか、制約が終わる他のビューのエッジ、及び制約の位置または負の値(方向)に留意しておく必要性があります。
 
-When you're setting your relative positioning constraints, make sure you're aware of what they're relative to. For example, let's set the blue view 20pts below the red view:
+相対的な位置決めの制約を設定するときは、何に対して相対的なのか注意しましょう。例えば、青のビューを赤いビューの20pts下に設定しましょう：
 
 ![Relative Positioning Top Edge](assets/relative_positioning_top_edge.png)
 
-But is that what we wanted? In the case above, we set our blue view to have a constraint of 20pts below the red view but relative to the wrong edge of the red view!
+ですが、私たちが求めていたのはこれですか？ 上の場合では、青のビューに対して、赤のビューの20pts下となる制約を設定していますが、赤のビューの間違ったエッジに相対しています！
 
-This is probably what we really intended:
+おそらく、私たちが実際に思い描いていたのは次の通りですね：
 
 ![Relative Positioning Bottom Edge](assets/relative_positioning_bottom_edge.png)
 
-As you can see, it's a very common mistake to accidentally set constraints relative to the wrong edge or sometimes even the wrong view!
+ご覧の通り、誤って、違うエッジに相対して制約を設定したり、ときには違うビューに制約を設定したりというのは非常によくある間違いです！
 
 > [info]
-It's also important to take the _Safe Area_ into consideration when setting a view relative to the root view. If you're setting the top edge of your view to the top edge of the root view, you'll need to verify that you don't accidentally set it to the top edge of the _Safe Area_ instead, or vice versa.
+ルートビューと相対的にビューの設定をするときには、セーフエリアを考慮することも重要です。ビューのトップエッジをルートビューのトップエッジに設定している場合、代わりにこれを間違って＿セーフエリア＿のトップエッジに設定したり、その逆をしたりしていないことを確認する必要があります。
 
-## Constant Size (Height or Width)
+## 一定のサイズ (高さまたは幅)
 
-As we briefly discussed earlier, it's also possible to set fixed constant constraints. These are used to set a fixed width or height of a view. For example, we can give a view a fixed width and height of 100pts:
+先ほどにも少し述べましたが、固定された定数の制約を設定することもできます。これらは、ビューの固定幅や高さを設定するために使用されます。例えば、あるビューに固定幅と高さ100ptsを与えることができます：
 
 ![Fixed Size Constraints](assets/fixed_size_constraints.png)
 
-In this case, the red view will always remain the same size (100x100) regardless of changing screen sizes.
+この場合、画面サイズが変化しているのにもかかわらず、赤いビューは常に同じサイズ（100x100）を保ちます。
 
 > [info]
-If you run into a situation where you've added your constraints but don't see your view, you might have forgotten to add certain constraints. Remember, each view's frame must be able to be determined by it's auto-layout constraints.
+制約を追加したのに、ビューが見えないという状況に陥った場合、何か制約を追加し忘れたのかもしれません。各ビューのフレームはAuto-layoutの制約によって決定可能な状態でなくてはならないことを忘れないでください。
 >
-In the previous example, if we forgot to add the height constraint, our view wouldn't show up because the height of it's frame is 0.
+前の例では、高さの制約の追加を忘れた場合、フレームの高さが0となるため、ビューは表示されません。
 
-## Center (With Offset) In Superview
+## スーパービューの中心 (オフセット付き)
 
-Another positioning constraint we can use is aligning center axes vertically or horizontally. For example, we can create a constraint that vertically aligns the blue view's center to red views:
+位置関係の制約として他に使えるのは、中心軸を垂直または水平に整列するものです。例えば、青いビューの中心を赤いビューに垂直に整列させる制約を作成できます：
 
 ![Centers Vertically Aligned](assets/centers_vertically_aligned.png)
 
-Or we horizontally align the two views:
+または、2つのビューを水平に整列させます：
 
 ![Centers Horizontally Aligned](assets/centers_horizontally_aligned.png)
 
-You can also choose to offset (positive or negative to determine direction) from the superview:
+また、スーパービューから相殺する（方向を決定する正または負の）選択をすることができます：
 
 ![Centers Vertically Aligned Offset](assets/centers_vertically_aligned_offset.png)
 
-## Aspect Ratio
+## 縦横比
 
-Aspect ratio constraints are also available. You can set the height to be a ratio of the width or vice versa. This can be useful if you want to make sure the view is always a square (1:1 aspect ratio) or if you decide that the height will always be 1/2 of the width (1:2 aspect ratio.)
+アスペクト比の制約も利用可能です。高さを幅の比率に設定したり、その逆もできます。これはビューが常に真四角（1:1 縦横比）であることを確認したい場合や、高さが常に幅の1/2であると決定した場合（1:2 縦横比）に便利になります。
 
-In the following example, we set the aspect ratio to (1:3) where the height is a third of the width:
+以下の例では、縦横比を（1:3）に設定し、高さを幅の1/3にします：
 
 ![Aspect Ratio](assets/aspect_ratio.png)
 
-## Equal (Ratio) To Other Constraint
+## 他の制約に等しい (比率)
 
-The last constraint that we'll cover is the ability to set constraints relative to the ratio of another constraint. This is useful when we want certain views to size themselves relative to other views. For example, we can set the height of the blue view to be (1:2), or half, of the red view:
+最後に取り扱う制約は、別の制約の比率と相対的に瀬谷区を設定する能力です。これはある特定のビューのサイズを、別のビューと相対的に決定したい場合に便利です。例えば、青色のビューの高さを、赤色のビューの半分（1:2）に設定することができます。
 
 ![Relative Rati0](assets/relative_ratio.png)
 
-In our tip calculator, we'll use this constraint to size the input and output cards to be of equal heights.
+チップ計算機では、入力カードと出力カードのサイズを同じ高さにするために、この制約を使用します。
 
-# Setting Auto-Layout For Our View Grouping
+# ビューグルーピングに自動レイアウトを設定
 
-Let's take an other look at our design:
+デザインをもう一度見てみましょう：
 
 ![TC Design](assets/tc_design_reference.png)
 
-Next, we're going to setup the main views (and their constraints) for each UI group. In other words, we'll add the objects and constraints below:
+次に、各UIグループのメインビュー（とその制約）を設定します。つまり、以下のオブジェクトと制約を追加するということです：
 
 ![UI Groups With Dimensions](assets/ui_groups_with_dimensions.png)
 
-## Implementing Our Constraints
+## 制約の実装
 
-We've already finished implementing the foundation for our header view. We'll repeat a similar process for each of our remaining UI groups.
+すでにヘッダービューの土台の実装は済んでいます。残りの各UIグループに関しても、同様のプロセスを繰り返します。
 
-With our header complete, let's move on to implementing the tip input card.
+ヘッダーが完成したので、チップ入力カードの実装に移りましょう。
 
-### Input Card View
-
-> [action]
-Open `Main.storyboard`. Add a new `UIView` and set the following constraints:
->
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_input_card_w_constraints.mp4)
->
-Step by step:
->
-1. Drag a `UIView` from the _Object Library_ onto the root view.
-1. Click the `Add New Constraints` button at the bottom right corner of the _Interface Builder Editor_ window.
-1. Set the following constraints:
-    - (Input Card) _Top Edge_ 24pts from Header View _Bottom Edge_
-    - (Input Card) _Leading (Left) Edge_ 15pts from Super View (Root View) _Leading (Left) Edge_
-    - (Input Card) _Trailing (Right) Edge_ 15pts from Super View _Trailing (Right) Edge_
-
-At this point, you'll see an _auto-layout_ error because your new (input card) view is missing a height constraint. Ignore this warning for now, we'll fix this soon.
-
-Next, we'll add our output card and it's constraints.
-
-### Output Card View
+### 入力カードのビュー
 
 > [action]
-In storyboard, add a new `UIView` and set the following constraints:
+`Main.storyboard`を開いてください。新たな`UIView`を追加して、次の制約を設定してください：
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
 >
-Step by step:
+ステップバイステップ：
 >
-1. Drag a `UIView` from the _Object Library_ onto the view controller's root view, below the input card.
-1. Click the `Add New Constraints` button at the bottom right corner of the _Interface Builder Editor_ window.
-1. Set the following constraints:
-    - (Output Card) _Top Edge_ 24pts from Input Card _Bottom Edge_
-    - (Output Card) _Leading Edge_ 15pts from Super View _Leading Edge_
-    - (Output Card) _Trailing Edge_ 15pts from Super View _Trailing Edge_
+1. _Object Library_ からルートビューへ`UIView`をドラッグします。
+1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
+1. 以下の制約を設定してください：
+    - （入力カード）Header View _Bottom Edge_から_Top Edge_ 24pts
+    - （入力カード）Super View (Root View) _Leading (Left) Edge_から_Leading (Left) Edge_ 15pts
+    - （入力カード）Super View _Trailing (Right) Edge_から_Trailing (Right) Edge_ 15pts
 
-We'll also add an equal height constraints between both input and output card views.
+新たな（入力カード）ビューの高さの制約が欠けているため、この時点で_Auto-layout_エラーが表示されます。今のところはこの警告を無視してください。すぐに修正します。
 
-> [action]
-Add an equal heights constraint between both input and output cards:
->
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_cards_equal_height_constraint.mp4)
->
-Step by step:
->
-1. Select the output card view.
-1. With the output card selected, hold down shift and then click on the input card view. This will allow you to select both card views.
-1. Click the `Add New Constraints` button at the bottom right corner of the _Interface Builder Editor_ window.
-1. In the popup prompt, select `Equal Heights` and add the selected constraint.
+次に、出力カードとその制約を追加します。
 
-Xcode should still show an _auto-layout_ error because we haven't added enough constraints for it determine the height of each card view. Ignore this warning for now, this will be fixed once we add our reset button.
-
-### Reset Button
+### 出力カードビュー
 
 > [action]
-In storyboard, add a new `UIButton` and set the following constraints:
+Storyboardで新しい`UIView`を追加して、以下の制約を設定してください：
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_reset_button_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Drag a `UIButton` from the _Object Library_ onto the view controller's root view, below the output card.
-1. Click the `Add New Constraints` button at the bottom right corner of the _Interface Builder Editor_ window.
-1. Set the following constraints:
-    - (Reset Button) _Top Edge_ 24pts from Output Card _Bottom Edge_
-    - (Reset Button) _Leading Edge_ 15pts from Super View _Leading Edge_
-    - (Reset Button) _Trailing Edge_ 15pts from Super View _Trailing Edge_
-    - (Reset Button) _Bottom Edge_ 24pts from Super View _Bottom Edge_
-    - (Reset Button) _Height_ of 60pts
+1. _Object Library_ から、`UIView`を入力カードの下のビューコントローラーのルートビューへドラッグしてください。
+1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
+1. 以下の制約を設定してください：
+    - （出力カード）Input Card _Bottom Edge_から_Top Edge_ 24pts
+    - （出力カード）Super View _Leading Edge_から_Leading Edge_ 15pts
+    - （出力カード）Super View _Trailing Edge_から_Trailing Edge_ 15pts
 
-By default, our button has a clear background color. To make our reset button easier to see, let's change it's background color from `Clear` to `tcDarkBlue`.
+入力カードビューと出力カードビューの間にも、同じ高さの制約を追加します。
 
 > [action]
-Change the _Background color_ of the reset button:
+入力カードと出力カードの間で、等しい高さの制約を追加してください：
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/set_reset_button_bg_color.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. Select the _Reset Button_.
-1. With the _Reset Button_ selected, navigate to the _Attributes Inspector_ in the _Utilities area_.
-1. Scroll down until you find the `Background` field. This field allows you to set the button's background color.
-1. Locate the blue dropdown button and set the button's background color from `Clear` to `tcDarkBlue`.
+1. 出力カードビューを選択してください。
+1. 出力カードが選択された状態で、シフトキーを押さえながら、入力カードビューをクリックしてください。これにより、両方のカードのビューを選択できるようになります。
+1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
+1. ポップアップのプロンプトで、`Equal Heights`を選択して、選択された制約を追加してください。
+
+各カードビューの高さを決定するのに十分な制約を追加していないため、 _Xcode_ はまだ _Auto-layout_ エラーを表示するはずです。今のところはこの警告を無視してください。リセットボタンを追加したら修正します。
+
+### リセットボタン
+
+> [action]
+Storyboardで新しい`UIButton`を追加し、以下の制約を設定してください：
+>
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+>
+ステップバイステップ：
+>
+1. _Object Library_ から、`UIButton`を出力カードの下にあるビューコントローラーのルートビューへドラッグします。
+1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
+1. 以下の制約を設定してください：
+    - （リセットボタン）Output Card _Bottom Edge_ から _Top Edge_ 24pts
+    - （リセットボタン）Super View _Leading Edge_ から _Leading Edge_ 15pts
+    - （リセットボタン）Super View _Trailing Edge_ から _Trailing Edge_ 15pts
+    - （リセットボタン）Super View _Bottom Edge_ から _Bottom Edge_ 24pts
+    - (リセットボタン)高さ60ポイント
+
+デフォルトで、ボタンにはクリアーな背景色が施されています。リセットボタンを見やすくするために、背景色を`Clear`から`tcDarkBlue`へ変更しましょう。
+
+> [action]
+リセットボタンの _Background color_ の変更：
+>
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+>
+ステップバイステップ：
+>
+1. リセットボタンを選択します。
+1. _Reset Button_ が選択された状態で、ユーティリティエリアの属性インスペクターへ移動します。
+1. `Background`フィールドを見つけるまで、スクロールダウンしてください。このフィールドでは、ボタンの背景色を設定できます。
+1. ブルーのドロップダウンボタンを見つけ、ボタンの背景色を`Clear`から`tcDarkBlue`に変更してください。
 
 <!-- break -->
 
 > [info]
-Our _auto-layout_ warning is gone! After adding our reset button and it's constraints, _auto-layout_ can calculate the height of each input/output card using the equal heights constraint.
+_Auto-layout_ の警告が消えました！ リセットボタンとその制約を追加した後で、等しい高さの制約を使うことで、 _Auto-layout_ は各入力/出力カードの高さを計算できます。
 
-We've finished implementing the main view for each of our respective UI groups. For each group, we added the appropriate `UIView` object and set it's corresponding constraints.
+各UIグループのメインビューの実装が終わりました。各グループに適切な`UIView`オブジェクトを追加し、それに対応する制約を設定しました。
 
-Before moving on, let's test that everything looks as expected.
+次に進む前に、すべてが期待通りに表示されるかどうかテストしてみましょう。
 
-# Testing Our Constraints
+# 制約をテストする
 
-To catch bugs or missteps early, it's always good to build and run your code often. Let's go ahead and do that now to test that our constraints are working correctly.
+早い段階でバグや間違いを見つけるには、コードを頻繁にビルドし実行するのがいつでも良い方法です。制約が適切に動作するかどうかテストしてみましょう。
 
 > [action]
-In the toolbar, click the _Run_ button.
+ツールバーで、 _Run_ ボタンをクリックしてください。
 
-If everything goes as expected, you should see the following in your simulator:
+すべてが期待通りに行けば、シミュレーターでは次のように表示されるはずです。
 
 ![Finished UI Groups](assets/finished_ui_groups.png)
 
-Try running our project on different simulators. You'll notice that our view dynamically adjust and re-size for any screen size:
+色々なシミュレーターでプロジェクトを実行してみましょう。どんな画面サイズの場合でも、ダイナミックに調整とリサイズが行われることに気づくでしょう：
 
 ![Finished UI Groups Different Devices](assets/finished_ui_groups_diff_devices.png)
 
-## Conclusion
+## 結論
 
-In this section, we learned about how to layout our UI; first with frames and later with _auto-layout_. We learned about constraints and their importance in building dynamic view layouts for multiple devices. And finally, we put our knowledge into practice by implementing a scaffolding for our tip calculator design.
+このセクションでは、UIレイアウトの方法について学びました。最初はフレーム、そして次に _Auto-layout_ を使いました。複数のデバイスでダイナミックなビューのレイアウトを構築するにあたり、制約について、及びその重要性について学びました。最後に、 チップ計算機のデザインの土台を実装することで、知識を実際に活用しました。
 
-In the next section, we'll build off of our UI by fully implementing and styling each of our UI groups.
+次のセクションでは、各UIグループをフルに実装して、スタイルを決めることで、UIを開発します。

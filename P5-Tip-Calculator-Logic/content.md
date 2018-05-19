@@ -1,55 +1,55 @@
 ---
-title: "Tip Calculator Logic"
+title: "ヒント電卓のロジック"
 slug: tip-calculator-logic
 ---
 
-At this point, we've finished building our tip calculator's UI. However, if we launch our app and try to use it, nothing happens. Hmm... not particularly useful.
+この時点で、チップ計算機のUIの作成を完了しました。でもアプリを起動しても何も起こりません。うーん。これでは役に立ちませんね。
 
-To prevent one star reviews, let's make our tip calculator work by writing code that:
+1つ星の評価を付けられないようにするため、次のコードを書いてチップ計算機が機能するようにしましょう。
 
-1. takes the user's input
-1. calculates the correct outputs
-1. updates the UI with the output data
+1. ユーザーの入力を取得
+1. 正しい出力を計算
+1. 出力データでUIを更新
 
-Let's start by figuring out how to access our user's original bill amount as input!
+まず、ユーザーが入力した元の請求額にアクセスする方法を考えましょう！
 
-# Reading Bill Amount Input
+# 入力された請求額を読み出す
 
-To calculate our output, we'll first need the user to input their original bill amount.
+出力を計算するには、最初にユーザーに元の請求額を入力してもらう必要があります。
 
 ![Bill Amount Input](assets/bill_amount_input.png)
 
-When the user taps on the _Bill Amount Text Field_, the decimal pad keyboard will be displayed for user input. However, after the user is done typing their bill amount, there's no way for them to dismiss the keyboard.
+ユーザーが _Bill Amount_ のテキストフィールドをタップすると、ユーザーの入力用のテンキーが表示されます。ですが、請求額を入力した後にキーボードを消せません。
 
-We'll fix this first, by implementing a _Calculate Button_ that will appear right above the keyboard.
+まずはこれを直しましょう。キーボードの右上に _Calculate_ ボタンを実装します。
 
 > [info]
-To keep things simple, there's a bit of _magic_ that happens behind these scene for our soon-to-be calculate button. We've abstracted the majority into a custom `UITextField` subclass which will replace our current `UITextField`. Even if you don't fully understand how our calculate button is being displayed, bear with us for now!
+シンプルにするために、もうすぐ完成するcalculateボタンの背後でちょっとした魔法を使います。大部分は特製の`UITextField`サブクラスに抽象化しました。これは現在の`UITextField`に取って代わります。Calculateボタンがどうして表示されるのかを完全に理解していなくても、今のところは大丈夫です！
 
-## Adding a Calculate Button
+## 計算ボタンを追加する
 
 > [action]
-Open `BillAmountTextField.swift` from your _Project Navigator_. You should see the following:
+プロジェクトナビゲーターから`BillAmountTextField.swift`を開きます。次のように表示されます。
 >
 ![Bill Amount Text Field Swift Code](assets/bill_amount_text_field_swift.png)
 
-The biggest thing to note, is that `BillAmountTextField.swift` is a custom subclass of `UITextField`. Our custom text field has an _input accessory view_, or a view that will be positioned just above the keyboard.
+注意すべき最大の点は、`BillAmountTextField.swift`が`UITextField`のカスタム サブクラスだということです。カスタム テキストフィールドには _input accessory_ ビュー、すなわちキーボードのすぐ上に配置されるビューがあります。
 
-Don't worry too much about the code in this file for now. In short, it creates our _Calculate Button_, positions it within the's text field's _input accessory view_. We'll see that in a second.
+このファイルのコードについては今の時点ではあまり心配しないで大丈夫です。簡単に言うと、 _Calculate_ ボタンを作成して、テキストフィールドの _input accessory_ ビューの中に配置します。すぐにわかります。
 
-To use our subclass, we'll need to replace our current `UITextField` with our `BillAmountTextField` subclass.
+サブクラスを使用するには、現在の`UITextField`を`BillAmountTextField`サブクラスで置き換える必要があります。
 
 > [action]
-Open `Main.storyboard` and set `BillAmountTextField` as our _Bill Amount Text Field's_ custom class:
+`Main.storyboard`を開いて`BillAmountTextField`を _Bill Amount_ テキストフィールドのカスタムクラスとして設定します。
 >
-1. Select the _Bill Amount Text Field_ using the _Document Outline_. ![Select Text Field](assets/select_text_field.png)
-1. With the text field still selected, open the _Identity Inspector_ in the _Utilities area_. ![Open Identity Inspector](assets/open_identity_inspector.png)
-1. In the _Identity Inspector_, find the _Class_ field and set it to `BillAmountTextField`. As you start typing, auto-complete should complete the class you're looking for. If it doesn't, something's gone wrong! ![Set Text Field Class](assets/set_text_field_class.png)
+1. _Document Outline_ を使って _Bill Amount_ テキストフィールドを選択します。![Select Text Field](assets/select_text_field.png)
+1. テキストフィールドを選択した状態でユーティリティエリアの _Identity Inspector_ を開きます。![Open Identity Inspector](assets/open_identity_inspector.png)
+1. _Identity Inspector_ で _Class_ フィールドを見つけて、`BillAmountTextField`に設定します。入力し始めると、オートコンプリートで探しているクラスが入力されます。うまく動作しないのならば、何かがおかしいということです！ ![Set Text Field Class](assets/set_text_field_class.png)
 
-Next, we'll need to update our text field's corresponding `IBOutlet` in our Swift code.
+次に、Swiftコードでテキストフィールドに対応する`IBOutlet`を更新する必要があります。
 
 > [action]
-Open `ViewController.swift` and find the `IBOutlet` for your text field. Update your type of `billAmountTextField` from `UITextField` to `BillAmountTextField`:
+`ViewController.swift`を開いてテキストフィールドの`IBOutlet`を見つけてください。`billAmountTextField`の型を`UITextField`から`BillAmountTextField`に更新します。
 >
 ```
 class ViewController: UIViewController {
@@ -63,22 +63,22 @@ class ViewController: UIViewController {
 }
 ```
 
-That's it! We've set our text field to a custom `UITextField` subclass. Let's test our changes.
+That's it! テキストフィールドをカスタム`UITextField`サブクラスに設定しました。変更をテストしましょう。
 
 > [action]
-Build and run your project. Tap on and select your `billAmountTextField`. The keyboard should slide up and you should see the following:
+プロジェクトをビルドして実行します。`billAmountTextField`をタップして選択します。キーボードが上にスライドして、次が表示されるはずです。
 >
 ![Finished Custom Text Field](assets/finished_custom_text_field.png)
 
-Do you see it? Right above the keyboard, you can see our new calculate button!
+表示されましたか？ キーボードのすぐ上に、新しいCalculateボタンが表示されます!
 
-## Calculate Button Action
+## ボタンの動作を計算する
 
-Next, we'll need to figure out a way to execute code when the _Calculate Button_ is tapped.
+次に、 _Calculate_ ボタンがタップされたらコードを実行する方法を突き止める必要があります。
 
-Open `BillAmountTextField.swift` from your _Project Navigator_.
+プロジェクトナビゲーターから`BillAmountTextField.swift`を開きます。
 
-Look for the `calculateButtonAction` property:
+`calculateButtonAction`プロパティを探します。
 
 ```
 class BillAmountTextField: UITextField {
@@ -92,7 +92,7 @@ class BillAmountTextField: UITextField {
 }
 ```
 
-`calculateButtonAction` is a optional closure of type `(() -> Void)?`. Next, if you look for the `calculateButtonTapped(_:)` function, you'll see that `calculateButtonAction` is called each time the _Calculate Button_ is tapped:
+`calculateButtonAction`は`(() -> Void)?`型のオプショナルのクロージャです。次に、`calculateButtonTapped(_:)`関数を探すと、 _Calculate_  ボタンがタップされるたびに`calculateButtonAction`が呼び出されるのが分かります。
 
 ```
 class BillAmountTextField: UITextField {
@@ -105,19 +105,19 @@ class BillAmountTextField: UITextField {
 }
 ```
 
-By setting the `calculateButtonAction` property of our custom text field, we can pass a closure that is executed each time the _Calculate Button_ is tapped.
+カスタム テキスト フィールドの`calculateButtonAction`プロパティを設定することで、 _Calculate_ ボタンがタップされるたびに実行されるクロージャを渡せます。
 
 > [info]
-You might be scratching your head, wondering how `calculateButtonTapped(_:)` is set up to be called each time the _Calculate Button_ is tapped. We won't dive into too much details in this tutorial, but in short we've setup the equivalent `IBAction` programmatically with the following line of code:
+頭をかきながら、どういう仕組みで _Calculate_  ボタンがタップされるたびに`calculateButtonTapped(_:)`が呼び出されるのだろうと不思議に思っているかもしれません。このチュートリアルでは詳しく掘り下げませんが、簡単に言うと、次のコード行で同等の`IBAction`をプログラムによりセットアップしました。
 >
 ```
 let calculateButton = UIBarButtonItem(title: "Calculate Tip", style: .done, target: self, action: #selector(calculateButtonTapped))
 ```
 
-Let's work on setting `calculateButtonAction` to execute a closure with a print statement.
+`calculateButtonAction`の設定に取り組んで、printステートメントを持つクロージャを実行できるようにしましょう。
 
 > [action]
-Open `ViewController.swift`. Add the following code to `viewDidLoad`:
+`ViewController.swift`を開きます。次のコードを`viewDidLoad`に追加します。
 >
 ```
 override func viewDidLoad() {
@@ -131,19 +131,19 @@ override func viewDidLoad() {
 }
 ```
 >
-Step-by-step:
+ステップバイステップ：
 >
-1. We set the `calculateButtonAction` variable of our `billAmountTextField` object to a new closure. To refresh your memory, a closure is a nameless function.
-1. Within the closure, we can set any code we want to be executed when the closure is called. In this case, we add a simple print statement.
+1. `billAmountTextField`オブジェクトの`calculateButtonAction`変数を新しいクロージャに設定します。思い出してください。クロージャは無名関数です。
+1. クロージャ内でクロージャが呼び出されたときに実行したいコードを設定できます。この場合、シンプルなprintステートメントを追加します。
 
 <!-- break -->
 
 > [info]
-**What is the `viewDidLoad` function and what does it do?**
+**`viewDidLoad`関数とその機能とは？**
 >
-`viewDidLoad` is one of many view controller lifecycle functions. These functions are inherited from the `UIViewController` object. Each lifecycle function defines important events such as a view controller appearing or disappearing from screen. In particular, `viewDidLoad` is called when the view controller's view hierarchy (the root view and it's subviews) are loaded into memory.
+`viewDidLoad`は多数あるビューコントローラーライフサイクル関数の1つです。これらの関数は`UIViewController`オブジェクトから継承されています。各ライフサイクル関数は、ビューコントローラーの画面上への表示・非表示など、重要なイベントを定義します。具体的には、`viewDidLoad`は、ビューコントローラーのビュー階層 (rootビューとそのサブビュー) がメモリに読み込まれると呼び出されます。
 >
-Other common view controller lifecycle functions include:
+他の一般的なビュー コントローラーライフサイクル関数には次のようなものがあります。
 >
 ```
 func viewWillAppear(_ animated: Bool) // Called when the view is about to made visible. Default does nothing
@@ -157,25 +157,25 @@ func viewDidDisappear(_ animated: Bool) // Called after the view was dismissed, 
 func viewDidLayoutSubviews() // Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
 ```
 >
-For our case, `viewDidLoad` is useful for calling any setup code that we want to happen the first time the view controller's view loads.
+この場合では、ビューコントローラーのビューが読み込まれたら最初に実行したいセットアップコードを呼び出すにあたって、`viewDidLoad`は便利です。
 
-Let's test that the closure we've set in our `viewDidLoad` method is called after tapping the _Calculate Button_.
+`viewDidLoad`メソッドで設定したクロージャが、 _Calculate_ ボタンをタップすると呼び出されるか検証しましょう。
 
 > [action]
-Build and run your project:
+プロジェクトをビルドして実行します。
 >
-1. Tap on and select your `billAmountTextField`.
-1. Tap on the _Calculate Button_ above your keyboard.
+1. `billAmountTextField`をタップして選択します。
+1. キーボードの上の _Calculate_ ボタンをタップします。
 >
-After tapping the _Calculate Button_ a couple times, check that the print statement appears in your debug console.
+_Calculate_ ボタンを数回タップしたら、デバッグ コンソールに表示されるprint ステートメントを確認します。
 >
 ![Calculate Button Console Print](assets/calculate_button_console_print.png)
 
-Nice! So far, we've successfully executing our print statement each time the _Calculate Button_ is tapped. Last, let's change our print statement to print out the actual bill amount that the user has input in the _Bill Amount Text Field_.
+素晴らしい！ ここまでは、 _Calculate_ ボタンがタップされるたびにprint ステートメントがきちんと実行されています。最後に、 _Bill Amount_  テキストフィールドにユーザーが入力した請求額を出力するように、printステートメントを変更しましょう。
 
-## Accessing Text Field Input
+## テキストフィールドの入力部分にアクセスする
 
-Just like all our other view objects, the `UITextField` is a class with many instance variables and functions. Since our `BillAmountTextField` is a custom subclass of `UITextField` it inherits all of it's instance functions and variables.
+他のビューオブジェクトと同様、`UITextField`は多くのインスタンス変数と関数を持つクラスです。`BillAmountTextField`は`UITextField`のカスタムサブクラスなので、インスタンス関数と変数をすべて継承します。
 
 ```
 open class UITextField : UIControl, UITextInput, NSCoding, UIContentSizeCategoryAdjusting {
@@ -193,12 +193,12 @@ open class UITextField : UIControl, UITextInput, NSCoding, UIContentSizeCategory
 }
 ```
 
-Looking at the class definition of `UITextField`, you can see that accessing the text within a text field is a simple as reading it's `text` variable.
+`UITextField`のクラス定義を見ると、テキストフィールド内のテキストにアクセスするのは`text`変数を読み取るのと同じぐらいシンプルだということが分かります。
 
-Let's try it out!
+試してみましょう！
 
-> [action]
-Change the code in your `viewDidLoad` to the following:
+> [action]> [action]
+`viewDidLoad`のコードを次のように変更します。
 >
 ```
 override func viewDidLoad() {
@@ -213,35 +213,35 @@ override func viewDidLoad() {
 }
 ```
 >
-Notice in the code above, we use the `guard` keyboard to make sure `text` is a non-nil value. If the `text` value of our `billAmountTextField` is `nil`, the `guard` statement will return and the rest of the code in our closure won't be executed.
+上記のコードでは、`guard`キーボードを使用して`text`はnil以外の値となるようにしていることに注目してください。`billAmountTextField`の`text`値が`nil`の場合は、`guard`ステートメントが処理を戻し、クロージャの残りのコードは実行されません。
 >
-Let's test our code again.
+もう一度コードをテストしましょう。
 >
-1. Tap on and select your `billAmountTextField`.
-1. Type a bill amount on the decimal pad keyboard.
-1. Tap on the _Calculate Button_.
-1. Check that the correct bill amount is printed in your debug console.
+1. `billAmountTextField`をタップして選択します。
+1. テンキーで請求額を入力します。
+1. _Calculate_ ボタンをタップします。
+1. デバッグコンソールに正しい請求額が出力されるのを確認します。
 >
 ![Bill Amount Console Print](assets/bill_amount_console_print.png)
 
-As you can see, the correct bill amount now prints in our debug console!
+ご覧の通り、正しい請求額がデバッグコンソールに出力されます！
 
-# Calculating Tip
+# チップの計算
 
-Now that we've successfully read our user's bill amount input, we're going to implement the logic to calculate our outputs (tip amount + total amount.)
+ユーザーが入力した請求額を正しく読み取れたので、出力（チップ額 + 総額）を計算するロジックを実装します。
 
-To calculate our outputs, we'll need to do the following:
+出力を計算するには、次を行う必要があります。
 
-1. Convert bill amount input from `String` to `Double`. The _Bill Amount_ value should be rounded to the 2 nearest decimal places.
-1. Calculate the tip amount by multiplying the bill amount and tip percent. The tip amount should also be rounded to the 2 nearest decimal places.
-1. Calculate the total amount by adding together the bill and tip amounts.
+1. 請求額の入力値を`String`から`Double`に変更します。 _Bill Amount_ 値は小数点以下2桁に四捨五入されます。
+1. 請求額にチップの割合を掛けてチップ額を計算します。チップ額も小数点以下2桁に四捨五入されます。
+1. 請求額とチップ額を合計して総額を計算します。
 
-First, let's convert our bill amount input value from a `String` to a `Double`. We can do this using Swift's built-in type initializers.
+最初に、請求額の入力値を`String`から`Double`に変換します。これは、Swiftに内蔵される型のイニシャライザを使用して実行できます。
 
-Let's take a a look:
+さあ確認してみましょう。
 
 > [action]
-Open `ViewController.swift` and change `viewDidLoad` to the following:
+`ViewController.swift`を開いて、`viewDidLoad`を次のように変更します。
 >
 ```
 override func viewDidLoad() {
@@ -259,12 +259,12 @@ override func viewDidLoad() {
 }
 ```
 
-As you can see, Swift provides us with type initializers that allow us to easily convert from one type to another. In this case, we use the `Double(_:)` initializer to convert our `billAmountText` value from `String` to `Double`. If the string is an invalid value that can't be converted to a double, our initializer will fail and return nil.
+ご覧の通り、Swiftには型を簡単に別の型に変換できる型のイニシャライザが用意されています。この場合、`Double(_:)`イニシャライザを使って`billAmountText`の値を`String`から`Double`に変換します。文字列がDoubleに変換できない無効な値の場合は、イニシャライザは処理に失敗し、nilを返します。
 
-Next, let's clean up our bill amount input by rounding the value to the nearest two decimal places. We can use the `rounded()` function on type `Double` like the following:
+次に、値を小数点以下2桁に四捨五入して、入力された請求額をわかりやすくします。次のように`rounded()`関数を`Double`型に対して使用できます。
 
 > [action]
-Sanitize the bill amount value by rounding to the nearest 2 decimal places:
+請求額値を小数点以下2桁に四捨五入して、サニタイズします。
 >
 ```
 override func viewDidLoad() {
@@ -284,15 +284,15 @@ override func viewDidLoad() {
 }
 ```
 
-With our correctly formatted bill amount, we can calculate the tip amount of the bill. To start, let's use a fixed tip percent of 15%. While we're at it, let's also sanitize our tip amount by rounding to the nearest 2 decimal places.
+正しくフォーマットされた請求額を使って、チップ額を計算できます。まず最初に、チップの割合は15%としましょう。チップ額も小数点以下2桁に四捨五入して、サニタイズしましょう。
 
 > [info]
-In the future, we'll use the segmented control to allow the user to select a dynamic tip percent.
+将来的には、セグメンテッドコントロールを使用して、ユーザーが動的なチップの割合を選択できるようにします。
 
 <!-- break -->
 
 > [action]
-Calculate and sanitize the tip amount:
+チップ額を計算してサニタイズします。
 >
 ```
 override func viewDidLoad() {
@@ -318,10 +318,10 @@ override func viewDidLoad() {
 }
 ```
 
-To wrap up our logic, we can calculate our total amount by adding together our tip and bill amounts.
+ロジックを完成させるために、チップと請求額を合計して総額を計算します。
 
 > [action]
-Calculate the total amount:
+総額を計算します。
 >
 ```
 override func viewDidLoad() {
@@ -351,23 +351,23 @@ override func viewDidLoad() {
 }
 ```
 
-Let's test our logic to see if it's working as expected.
+ロジックをテストして、想定通り動作するか確かめましょう。
 
 > [action]
-Build and run your project. Test a couple values and verify that the print statements in the debug console are correct.
+プロジェクトをビルドして実行します。いくつか値を検証して、デバッグ コンソールのprintステートメントが正しいことを確認しましょう。
 >
 ![Total Amount Print Console](assets/total_amount_print_console.png)
 
-# Setting The Output Card
+# 出力カードの設定
 
-We'll need to update the UI with the output values that we've calculated. But first, we'll need to dismiss the keyboard so it isn't covering the output card.
+計算した出力値でUIを更新する必要があります。ですが、まずはテンキーを消して、出力カードが見えるようにしましょう。
 
 > [action]
-In `ViewController.swift`, add the following lines of code in `viewDidLoad`:
+`ViewController.swift`で、次のコード行を`viewDidLoad`に追加します。
 >
 ```
 billAmountTextField.calculateButtonAction = {
-    // dismiss keyboard if it's displayed
+    // 表示されているならキーボードを片付けます
     if self.billAmountTextField.isFirstResponder {
         self.billAmountTextField.resignFirstResponder()
     }
@@ -376,11 +376,11 @@ billAmountTextField.calculateButtonAction = {
 }
 ```
 
-If you build and run your project again. Now, after tapping the _Calculate Button_, the keyboard will be dismissed.
+再びプロジェクトをビルドして実行します。 _Calculate_ ボタンをタップするとテンキーが消えます。
 
-Now that our output card is no longer being hidden, we can work on updating the UI.
+出力カードが見えるようになったので、UIの更新に取り組みましょう。
 
-If you take a look at the `UILabel` class definition, you'll see the following:
+`UILabel`クラス定義を見ると次のようになっています。
 
 ```
 class UILabel : UIView, NSCoding, UIContentSizeCategoryAdjusting {
@@ -396,17 +396,17 @@ class UILabel : UIView, NSCoding, UIContentSizeCategoryAdjusting {
 }
 ```
 
-To update the text that a `UILabel` displays, we can use the `text` property of each `UILabel`. Let's update our `calculateButtonAction` closure so that it sets the output card's tip amount and total amount labels.
+`UILabel`が表示するテキストを更新するには、各`UILabel`の`text`プロパティを使用できます。`calculateButtonAction`が出力カードのチップ額と送金額のラベルを設定するよう、クロージャを更新しましょう。
 
 > [action]
-In `ViewController.swift`, update your code update the output card's labels:
+`ViewController.swift`でコードを更新して、出力カードのラベルを更新します。
 >
 ```
 override func viewDidLoad() {
     super.viewDidLoad()
 >
     billAmountTextField.calculateButtonAction = {
-        // dismiss keyboard if it's displayed
+        // 表示されているならキーボードを片付けます
         if self.billAmountTextField.isFirstResponder {
             self.billAmountTextField.resignFirstResponder()
         }
@@ -424,7 +424,7 @@ override func viewDidLoad() {
 >
         let totalAmount = roundedBillAmount + roundedTipAmount
 >
-        // Update UI
+        // UI を更新する
         self.billAmountTextField.text = String(format: "%.2f", roundedBillAmount)
         self.tipAmountLabel.text = String(format: "%.2f", roundedTipAmount)
         self.totalAmountLabel.text = String(format: "%.2f", totalAmount)
@@ -432,24 +432,24 @@ override func viewDidLoad() {
 }
 ```
 >
-The code we just added, updates the UI by setting each corresponding label's `text` property to a formatted string.
+たった今追加したコードは、対応する各ラベルの`text`プロパティにフォーマットされた文字列を設定して、UIを更新します。
 >
-Build and run your project. Input a bill amount and tap the _Calculate Button_. If it works, you should see your tip and bill amounts show up on the output card!
+プロジェクトをビルドして実行します。支払額を入力して _Calculate_ ボタンをタップします。正しく機能すれば、チップ額と請求額が出力カードに表示されます！
 >
 ![Set Output Labels](assets/set_output_labels.png)
 
-# Refactoring Our Calculate Logic
+# 計算ロジックをリファクタリング
 
-Before moving on, let's refactor some of our existing code. Right now, the majority of our logic for calculating the tip and bill amounts are in our `calculateButtonAction` closure.
+次に進む前に、現在のコードの一部をリファクタリングしましょう。今のところ、チップと支払額の計算ロジックの大半は`calculateButtonAction`クロージャにあります。
 
-Let's move our logic out into it's own function so it can be re-used.
+ロジックを関数に移して、再利用できるようにしましょう。
 
 > [action]
-In `ViewController.swift`, create a new function for calculating tip:
+`ViewController.swift`でチップ計算用の新しい関数を作成します。
 >
 ```
 func calculate() {
-    // dismiss keyboard
+    // キーボードを片付けます
     if self.billAmountTextField.isFirstResponder {
         self.billAmountTextField.resignFirstResponder()
     }
@@ -467,17 +467,17 @@ func calculate() {
 >
     let totalAmount = roundedBillAmount + roundedTipAmount
 >
-    // Update UI
+    // UI を更新する
     self.billAmountTextField.text = String(format: "%.2f", roundedBillAmount)
     self.tipAmountLabel.text = String(format: "%.2f", roundedTipAmount)
     self.totalAmountLabel.text = String(format: "%.2f", totalAmount)
 }
 ```
 
-Next, let's change our `calculateButtonAction` closure to use our `calculate` method.
+次に、`calculateButtonAction`クロージャを変更して、`calculate`メソッドを使用するようにします。
 
 > [action]
-In `ViewController.swift`, change `viewDidLoad` to the following:
+`ViewController.swift`で`viewDidLoad`を次のように変更します。
 >
 ```
 override func viewDidLoad() {
@@ -489,18 +489,18 @@ override func viewDidLoad() {
 }
 ```
 
-We've separated our logic into it's own function. This will help us as we implement our `UISegmentedControl`.
+ロジックを独自の関数に移動できました。これは`UISegmentedControl`を実装するのに役立ちます。
 
-# Setting Tip Percent
+# チップのパーセントの設定
 
-Our UI is being correctly updated when we calculate our tip. Next, let's go back and implement our `UISegmentedControl`.
+チップを計算するとUIが正しく更新されます。次に、`UISegmentedControl`に戻ってその実装に取り組みましょう。
 
-Currently, our view controller contains an `IBAction` that is triggered each time the user selects a new segment of the `UISegmentedControl`. When this `IBAction` is triggered, we want to re-calculate our tip using the new selected tip percent.
+現在ビュー コントローラーには、ユーザーが`UISegmentedControl`の新しいセグメントを選択するたびにトリガされる`IBAction`が格納されています。この`IBAction`がトリガされると、新しく選択されたチップの割合を使ってチップを再計算します。
 
-First, let's update our `IBAction` to calculate the tip whenever a segment is selected.
+最初に、あるセグメントが選択されるとチップを計算するように`IBAction`を更新しましょう。
 
 > [action]
-In `ViewController.swift`, update `tipPercentChanged(_:)` to the following:
+`ViewController.swift`で`tipPercentChanged(_:)`を次のように更新します。
 >
 ```
 @IBAction func tipPercentChanged(_ sender: UISegmentedControl) {
@@ -508,14 +508,14 @@ In `ViewController.swift`, update `tipPercentChanged(_:)` to the following:
 }
 ```
 
-Next, we'll update our calculate function to use the correct tip percent of the `UISegmentedControl`.
+次に、calculate 関数を更新して、`UISegmentedControl`の正しいチップの割合を使用するようにします。
 
 > [action]
-In `ViewController.swift`, change the `calculate()` function to the following:
+`ViewController.swift`で`calculate()`関数を次のように変更します。
 >
 ```
 func calculate() {
-    // dismiss keyboard
+    // キーボードを片付けます
     if self.billAmountTextField.isFirstResponder {
         self.billAmountTextField.resignFirstResponder()
     }
@@ -544,39 +544,39 @@ func calculate() {
 >
     let totalAmount = roundedBillAmount + roundedTipAmount
 >
-    // Update UI
+    // UI を更新する
     self.billAmountTextField.text = String(format: "%.2f", roundedBillAmount)
     self.tipAmountLabel.text = String(format: "%.2f", roundedTipAmount)
     self.totalAmountLabel.text = String(format: "%.2f", totalAmount)
 }
 ```
 >
-In the code above, we use the `selectedSegmentIndex` of our segmented control with a `switch` statement to determine the correct tip percent. `tipPercent` is then used to correctly calculate our tip.
+上記のコードでは、セグメンテッドコントロールの`selectedSegmentIndex`と`switch`ステートメントを使用してチップの正しい割合を求めます。`tipPercent`を使用してチップを正しく計算します。
 
-Let's test out our new changes!
+新たな変更をテストしましょう！
 
 > [action]
-Build and run your project. Use different combinations of bill amounts and tip percents and see if the output card updates correctly.
+プロジェクトをビルドして実行します。請求額とチップの割合を変えて、出力カードが正しく更新されることを確認しましょう。
 
-# Reset Button
+# リセットボタン
 
-To finish up our logic, let's implement our reset functionality.
+ロジックの仕上げとしてリセット機能を実装しましょう。
 
-Similar to our `calculate` logic, let's separate our reset logic into it's own function.
+`calculate`ロジックと同様に、リセットのロジックを独自の関数に分割しましょう。
 
-In our reset logic, we'll want to reset our tip calculator to it's initial state. We'll need to remember to do the following:
+リセットロジックでは、チップ計算機を初期状態にリセットします。次のタスクを忘れずに実行しましょう。
 
-- Set the text field's `text` value to `nil`
-- Set the segmented control's `selectedSegmentIndex` to `0`
-- Set both output labels on the output card back to `$0.00`
+- テキストフィールドの`text`値を`nil`に設定
+- セグメンテッドコントロールの`selectedSegmentIndex`を`0`に設定
+- 出力カードの両方の出力ラベルを`$0.00`に戻す
 
 > [challenge]
-Try implementing the logic above in a function called `clear()`.
+上のロジックを`clear()`という関数に実装してみましょう。
 
 <!-- break -->
 
 > [solution]
-Your new `clear()` function should be the following:
+新しい`clear()`関数は次のようになります。
 >
 ```
 func clear() {
@@ -587,10 +587,10 @@ func clear() {
 }
 ```
 
-Next, we'll need to update the `IBAction` of our reset button.
+次に、リセット ボタンの`IBAction`を更新する必要があります。
 
 > [action]
-In `ViewController.swift`, update your `resetButtonTapped(_:)` method with the following:
+`ViewController.swift`で、次のように`resetButtonTapped(_:)`メソッドを更新します。
 >
 ```
 @IBAction func resetButtonTapped(_ sender: UIButton) {
@@ -598,14 +598,14 @@ In `ViewController.swift`, update your `resetButtonTapped(_:)` method with the f
 }
 ```
 
-Last, when our `calculate` gets invalid input, let's also reset the calculator's state.
+最後に、`calculate`が無効な入力を取得したら、計算ツールの状態もリセットしましょう。
 
 > [action]
-Change `calculate()` to the following:
+`calculate()`を次のように変更します。
 >
 ```
 func calculate() {
-    // dismiss keyboard
+    // キーボードを片付けます
     if self.billAmountTextField.isFirstResponder {
         self.billAmountTextField.resignFirstResponder()
     }
@@ -621,10 +621,10 @@ func calculate() {
 }
 ```
 
-# Conclusion
+# 結論
 
-It works! In this section, we've taken our UI and IB connections and implemented the logic behind our tip calculator.
+うまく行きました！ このセクションでは、UIとIBコネクションを使ってチップ計算機のロジックを実装しました。
 
-We started by retrieving the user's input from the _Bill Amount Text Field_. Next, we used the user's input to calculate bill's tip and total amounts. To finish up, we updated our UI by setting each respective label on our _Output Card_.
+最初に、ユーザーの入力を _Bill Amount_ テキストフィールドから取得しました。次に、ユーザーの入力を使ってチップと合計金額を計算しました。仕上げに、出力カードに各ラベルを設定して、UIを更新しました。
 
-In the next section, we'll finish the remaining styling and functionality of our tip calculator!
+次のセクションでは、チップ計算機の残りのスタイリングと機能を仕上げます！

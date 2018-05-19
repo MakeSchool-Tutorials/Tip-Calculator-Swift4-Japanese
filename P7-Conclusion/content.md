@@ -1,58 +1,58 @@
 ---
-title: "Conclusion"
+title: "結論"
 slug: conclusion
 ---
 
-Well done! You've finished your second iOS tutorial.
+よくできました! 2つ目のiOSチュートリアルを修了しました。
 
 ![Finished App](assets/finished_app.png)
 
-Along the way, you've picked up some new skills:
+その過程でいくつかの新しいスキルを学びました。
 
-- how to visually breakdown designs into views
-- how to identify and use view components in UIKit
-- how to create UI layouts with auto-layout, constraints and stack views
-- how to programmatically get and set class properties
+- デザインをビューに視覚的に分けていく方法
+- UIKitのビューコンポーネントを識別し、使用する方法
+- Auto Layout、制約、スタックビューでUIレイアウトを作成する方法
+- プログラミングを通じてクラスプロパティを取得・設定する方法
 
-We've also got to review the basics:
+また、基本を復習しました。
 
-- navigating Xcode files using the _Project Navigator_
-- using the _Assistant Editor_ to display files side-by-side
-- creating `IBOutlet` and `IBAction` connections with _Interface Builder_
+- プロジェクトナビゲーターを使ってXcodeファイルを移動
+- アシスタントエディタを使用してファイルを並べて表示
+- `IBOutlet`接続と`IBAction`接続を _Interface Builder_ で作成
 
-Another app built. You're well on your way to becoming an awesome iOS developer.
+新しいアプリを作成しました。あなたは、すばらしいiOS開発者になる道を着々と進んでいます。
 
-Stop and take a moment to appreciate how far you've come!
+ここで少し休憩して、今までの道のりを振り返って祝いましょう！
 
-# A Challenge Approaches
+# チャレンジが近づく
 
-You're not done yet. After you finish soaking in the feel-good emotions, it's time to put your skills to the test.
+まだ終わりではありません。いい気分に浸って楽しんだら、スキルを試す番です。
 
-## The Challenge
+## 課題
 
-If you're from another country, or just an avid traveller, you'll know that many countries don't have a custom of tipping. In these countries, our tip calculator won't do us much good.
+別の国の出身あるいは旅が大好きな人なら、チップの風習がない国は多くあることを知っているはず。そうした国ではチップ計算機は大して役に立ちません。
 
-So instead, you're going to build a _Currency Exchange Calculator_ that you can use when you're traveling abroad. To build our _Currency Exchange Calculator_ app, we'll use make of the same skills and concepts we learned during this tutorial.
+なので、海外旅行をするときに便利な通貨両替計算ツールを作成します。通貨両替計算アプリを構築するために、このチュートリアルで学んだスキルと概念を活用します。
 
-As always, try completing this challenge as much on your own as possible. If you do get stuck, you can always refer back to this tutorial for help!
+いつものように、できるだけ自力でこの課題を達成しましょう。行き詰まった場合は、いつでもこのチュートリアルを見なおしてください！
 
-## App Design
+## アプリのデザイン
 
 ![Currency Exchange Design](assets/currency_xc_design.png)
 
-Above is an example design you can use to build your _Currency Exchange Calculator_. It's based off a [popular currency convertor](https://itunes.apple.com/us/app/currency-converter/id628148586?mt=8) on the App Store. Feel free to get creative and add your own style into the app design.
+上はデザイン例です。これを使って通貨両替計算を作成しましょう。この例はApp Storeで [人気の通貨換算ツール](https://itunes.apple.com/us/app/currency-converter/id628148586?mt=8) を元にしています。自由に創造性を発揮して、自分のスタイルをアプリのデザインに加えてください。
 
-## Specs
+## 仕様
 
-Just like your _Tip Calculator_, your _Currency Exchange Calculator_ app will involve reading user input and converting it to a different value.
+チップ計算機と同様に、通貨両替計算ツールアプリはユーザーの入力を読み取って別の値に変換します。
 
-Your app should take a input of U.S. dollars and immediately convert it into a currency of your choice. Some popular currencies you can consider using include the following: Euro, Yen, Rupee, Bitcoin.
+アプリに米ドルを入力するとすぐに、選択した通貨へ換算します。広く利用されている通貨にはユーロ、円、ルピー、ビットコインなどがあります。
 
-Notice that there aren't any text fields or segmented controllers in the design above. Each number is a button that should change the input and output of the currency convertor.
+上のデザインにはテキストフィールドもセグメンテッドコントローラーもないことに気づきましたか。各数字はボタンで、通貨換算ツールの入力と出力を変更します。
 
-If you'd like a better idea of how the app works, go ahead and download the free version of this [popular currency convertor](https://itunes.apple.com/us/app/currency-converter/id628148586?mt=8) on the App Store. You should **not** need to purchase anything to download this app.
+このアプリのしくみをもっとよく知りたい場合は、App Storeでこの[人気の通貨換算ツール] の無料版をダウンロードしてください (https://itunes.apple.com/us/app/currency-converter/id628148586?mt=8)。このアプリをダウンロードするのに何も購入する必要は**ありません**。
 
 > [info]
-For your exchange calculation, find the currency conversion rate online and hard-code it into your app.
+為替の計算では、両替レートをオンラインで見つけて、アプリにハードコーディングします。
 
-Good luck the challenge! Remember, you can look back on the tutorial or your previous code if you get stuck.
+チャレンジの幸運を祈ります！ 行き詰まったらチュートリアルを見返したり、過去のコードを見直したりできるのをお忘れなく。

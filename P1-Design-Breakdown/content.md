@@ -1,142 +1,144 @@
 ---
-title: "Design Breakdown"
+title: "デザインの分析"
 slug: design-breakdown
 ---
 
-Before we jump into Xcode, we'll first take some time to review and breakdown our tip calculator design. We'll learn to visually break apart designs into smaller chunks that we can code one at a time.
+Xcodeに取りかかる前に、まずはチップ計算機のデザインを検討して分解する時間を取ります。デザインを、少しずつコードが書ける、視覚的に小さなかたまりに分解する方法を学びましょう。
 
 ![Design Breakdown](assets/design_breakdown.png)
 
 > [info]
-In this tutorial, we'll often refer to the terms _UI_ (user interface) and _view_. Both terms refer to building the app's user interface, or the visual elements on the screen that the user interacts with.
+このチュートリアルでは、 _UI_ （ユーザーインターフェース）やビューという用語をよく使います。どちらの用語も、アプリのユーザーインターフェース、またはユーザーが交流する画面上の視覚的な要素を指しています。
 
-# Reviewing Our Design
+# デザインをレビュー
 
-Let's take another look at the designs for the tip calculator app that we're going to build:
+これから開発するチップ計算機のデザインをもう一度見てみましょう：
 
 ![Light Flow](assets/light_flow.png)
 
-Listing the steps for each screen above (left to right):
+以上の各画面に関する手順を掲載しています（左から右）：
 
-1. Empty state when a user first opens the app or taps the reset button.
-2. User inputs a bill amount into bill amount field using the iOS keyboard.
-3. After hitting the _Calculate_ button or selecting a tip percentage, dismiss the keyboard and show the tip amount and total bill amount.
+1. ユーザーが初めてアプリを開くか、リセットボタンをタップした時の空の状態。
+2. ユーザーは、iOSキーボードを利用して請求額を請求額フィールドに入力します。
+3. _Calculate_ ボタンを押した後、 またはチップの割合を選択した後に、キーボードを非表示にし、チップの額と請求書総額を表示します。
 
-The user also can toggle the app's color theme from light-mode to dark-mode using the switch in the top-right corner. In dark-mode, our tip calculator will look like:
+ユーザーはまた、右上隅のスイッチを使って、ライトモードからダークモードへとアプリの色のテーマをトグルすることもできます。ダークモードでは、チップ計算機は次のように表示されます：
 
 ![Dark Flow](assets/dark_flow.png)
 
-We've reviewed our app designs. Next, let's learn to visually breakdown our design into smaller parts.
+私たちのアプリのデザインを検討しました。次に、デザインを視覚的に小さな要素へ分解する方法を学びましょう。
 
-# Design Breakdown
+# デザインの分析
 
-Implementing an app design without any planning can be overwhelming. It's hard to know where to start.
+計画なしでアプリのデザインを実装しようとすると、途方に暮れてしまうかもしれません。どこから始めたらいいかというのは、知るのが困難です。
 
-Instead, let's take our designs and visually break down elements into smaller groups that we can implement one at a time.
+代わりに、デザインの要素を、少しずつ実装できる小さなグループへと視覚的に分解していきましょう。
 
 ![Design Breakdown Groups](assets/design_breakdown_groups.png)
 
-If you're doing this process on your own, it's helpful to use pen and paper.
+自分一人でこのプロセスに取り組む場合は、ペンと紙を使うと便利です。
 
-At this point, you might be thinking, "Why did we group each of the UI elements in the way we did?" Why not any of the other following options?
+この時点で、「なぜああいう方法で各UI要素をグループ化したのだろう？」と思っているかもしれませんね。次のような他のオプションではダメなのでしょうか？
 
 ![Other Grouping Options](assets/alternate_ui_groups.png)
 
-To answer this question, we'll have to learn about the basic UI building block, _UIView_.
+この質問に答えるには、UIの基本的な構成要素である、_UIView_ について学ぶ必要があります。
 
-## What Is A UIView?
+## UIViewとは何ですか？
 
-The _UIView_ class is an object that represents a rectangular area on your iPhone screen. Your entire UI (with few exceptions), is built from multiple _UIView_ objects.
+_UIView_ クラスは、iPhone画面上の長方形の領域を表すオブジェクトです。UI全体は（例外は多少あれど）、複数の _UIView_ オブジェクトから構築されています。
 
-To better understand this, let's take a look at Square Cash, an app that allows you to send and recieve money.
+この点の理解を深めるため、金銭の送受信をするアプリ、Square Cashを検討してみましょう。
 
 ![Square Cash UIView Breakdown](assets/square_cash_uiviews.png)
 
-As you can see, the whole screen has a base `UIView` (blue color) that we've named the root view. This will usually be the root view of the respective active `UIViewController`.
+ご覧の通り画面全体に、ルートビューという名前を付けた、ベースの`UIView`（青）があります。これは通常、有効な各`UIViewController`のルートビューになります。
 
-On top of the root, you can add subviews. These subviews are `UIView` objects or `UIView` subclasses. In the _Square Cash_ app, the UI consists of buttons and labels but there are many other type of UI objects `UIKit` provides.
+ルートの上にサブビューを追加することができます。これらのサブビューは`UIView`オブジェクトまたは`UIView`サブクラスです。 _Square Cash_ アプリの場合、UIはボタンとラベルから構成されていますが、`UIKit`が提供する他の種類のUIオブジェクトも多くあります。
 
 > [info]
-**What is UIKit?**
+**UIKitとは何か**
 >
-`UIKit` is a framework that provides pre-built objects and functionality that you can use to build iOS apps. This includes a lot of under-the-hood functionality (handling your app's lifecycle and resource management) as well as commonly used UI components (buttons and labels.)
+`UIKit`は、あらかじめ開発されたオブジェクトと、iOSアプリの開発に使用できる機能を提供するフレームワークです。これには、たくさんの内蔵機能（アプリのライフサイクルやリソース管理を取り扱う）や、一般的に使用されるUIコンポーネント（ボタンやラベル）が含まれています。
 
 <!-- break -->
 
 > [challenge]
-Identify each of the `UIView` objects in the tip calculator design. You can reference the design below:
+各`UIView`オブジェクトをチップ計算機のデザイン内で特定しましょう。以下のデザインを参照することができます：
 >
 ![Tip Calculator Design](assets/tc_design_reference.png)
 
 <!-- break -->
 
 > [solution]
-If you break down the tip calculator design into it's individual subviews you should get the following:
+チップ計算機のデザインを個々のサブビューに分解すると、次のようになるはずです：
 >
 ![Tip Calculator View Breakdown](assets/tc_view_breakdown.png)
 >
-You'll notice many new UI components that we're using from UIKit. Each of these UI objects either are or inherit from `UIView`. We'll formally introduce each of these UI objects later in this tutorial.
+UIKitから使っている新しいUIコンポーネントが数多くあることに気づくでしょう。これらの各UIオブジェクトは、`UIView`か、またはこれから継承されたものです。これらのUIオブジェクトそれぞれについて、チュートリアルの後半で正式に紹介します。
 
-## Grouping Subviews
+## サブビューのグループ化
 
-It's common to organize our subviews in groups. Although you can technically group subviews however you'd like, usually groups are based on how you plan to position and layout your UI (more on this later.)
+サブビューをグループで整理するのはよくあることです。厳密にはサブビューを好きなようにグループ化できるのですが、一般的にグループは、UIの配置とレイアウトの計画方法に基づきます（これに関しては後ほど扱います）。
 
-Using our _Square Cash_ example, you might group each of the subviews in the following manner:
+_Square Cash_ の実例を使って、 以下の方法で各サブビューをグループ化することができます：
 
 ![Square Cash Groups](assets/square_cash_groups.png)
 
-This makes it easier to re-position entire groups of views. i.e. repositioning the entire header up or down a few pixels
+これは、ビューのグループ全体の再配置を簡単にします。例えば、ヘッダー全体を吸うピクセル単位で上下に再配置するなどです。
 
-Let's apply the steps we just took with the _Square Cash_ app to our own tip calculator design.
+_Square Cash_ アプリで踏んだ手順を、チップ計算機に適用しましょう。
 
 > [challenge]
-Group each of the view elements together using where you left off from the previous challenge. Check your answer in the solution when you're done. You can reference the design below:
+
+
+前回の課題で終了した部分を使って、ビューの各要素をグループ化しましょう。終わったら、あなたの答えと解答を確認しましょう。以下のデザインを参照することができます：
 >
 ![Tip Calculator Design](assets/tc_design_reference.png)
 
 <!-- break  -->
 
 > [solution]
-You should have grouped each of the individual view objects from the previous challenge as follows:
+前回の課題の個々のビューオブジェクトは、次のようにグループ化されているはずです：
 >
 ![Tip Calculator View Grouped](assets/tc_view_grouped.png)
 
 <!-- TODO: better explanation of how we grouped these elements together -->
 
-# Introducing UI Objects From UIKit
+# UIKitからUIオブジェクトの導入
 
-In the previous section we identified each of the UIView objects and grouped them into 4 main groups:
+前のセクションでは、各UIViewオブジェクトを特定し、4つの主なグループへとグループ化しました：
 
-1. Header - displays app title and theme switch
-1. Tip Input - provides UI elements for user input
-1. Tip Output - displays output of tip calculator
-1. Reset Button - resets calculator to starting state
+1. ヘッダー - アプリのタイトルとテーマのスイッチを表示します
+1. チップ入力 - ユーザー入力のためのUI要素を提示します
+1. チップ出力 - チップ計算機の出力を表示します
+1. リセットボタン - 最初の状態に計算機をリセットします
 
-Now, we'll go through and introduce all of the UI components we'll use from UIKit. These UI objects are meant to be basic building blocks to create your app's UI.
+次に、UIKitから使用するすべてのUIコンポーネントを一つずつ紹介していきましょう。これらのUIオブジェクトは、あなたのアプリのUIを作成する基本的な構成要素となるために設計されています。
 
-## Header
+## ヘッダー
 
-The header is a custom view on the view controller's root view.
+ヘッダーとは、ビューコントローラーのルートビュー上のカスタムビューです。
 
 ![Header Overview](assets/header_overview.png)
 
-As you can see, the header is a `UIView` placed on top of the root view. Additionally, it has two subviews place on top of the header view itself: a label and switch.
+ご覧の通り、ヘッダーはルートビューの一番上に置かれた`UIView`です。さらに、ヘッダービューそのものの上に、2つのサブビューがあります。ラベルとスイッチです。
 
 ### UILabel
 
-`UILabel` directly subclasses `UIView` and is used to display text on the iOS device's screen.
+`UILabel`は直接`UIView`をサブクラス分けし、iOSデバイスの画面上でテキストを表示するのに使われます。
 
 ![Header Title Label](assets/header_title_label.png)
 
-The `UILabel` class can be configured from it's many properties. (i.e. text, font, text color, number of lines, etc.)
+`UILabel`クラスは、多くのプロパティによって構成することができます （テキスト、フォント、テキストカラー、行数など）。
 
 <!-- In our case, we'll use an off-black (#4A4A4A) text color and bold font weight of `San Francisco`, the default system font created by Apple. -->
 
-In our case, we use this label to display title text for our tip calculator app.
+この場合は、このラベルを使用してチップ計算機アプリのタイトルテキストを表示します。
 
 ### UISwitch
 
-The `UISwitch` object is a subclass of `UIControl`, which is a subclass of `UIView`.
+`UISwitch`オブジェクトは`UIControl`のサブクラスで、このサブクラスは`UIView`のサブクラスです。
 
 ```
 class UISwitch : UIControl, NSCoding { ... }
@@ -144,97 +146,97 @@ class UISwitch : UIControl, NSCoding { ... }
 class UIControl : UIView { ... }
 ```
 
-All UI objects that we'll use from `UIKit` will inherit from the `UIView` class.
+`UIKit`から使用するすべての UI オブジェクトは、`UIView`クラスから継承されます。
 
-A switch is the default UI component for toggling between an on and off state. You can think of it as the iOS version of a light switch.
+スイッチは、オンとオフの状態の間をトグルするためのデフォルトのUIコンポーネントです。これは、照明のスイッチのiOS版だと考えるといいでしょう。
 
 ![Header Switch](assets/header_switch.png)
 
-When toggled on, the switch will change the color theme of the app from light to dark.
+オンにトグルされると、スイッチはアプリのテーマの色を明るい色から暗い色に変更します。
 
 ![Header Dark Theme](assets/header_dark.png)
 
-## Tip Input
+## チップの入力
 
-The next group of views allows the user to provide input to calculate the bill amount and tip percentage for the bill.
+次のビューのグループにより、ユーザーは請求額と請求書に対するチップの割合を計算するための数値を入力できるようになります。
 
 ![Tip Input Outline](assets/tip_input_outline.png)
 
-As with the header view, we'll break down this group of UI components into it's individual components.
+ヘッダービューと同じく、このUIコンポーネントのグループを個々のコンポーネントへと分解します。
 
 ### UILabel
 
-We've already covered the `UILabel` class, so we won't cover it again.
+すでに`UILabel`クラスは紹介したので、もう一度繰り返すことはしません。
 
 > [challenge]
-Identify the `UILabel`(s) objects on the tip input card view.
+チップ入力カードビューで`UILabel`オブジェクトを特定します。
 
 <!-- break -->
 
 > [solution]
-Both labels are on the left-side on the tip input card view: ![Input Title Labels](assets/tip_input_labels.png)
+ラベルは両方とも、チップ入力カードビューの左側にあります： ![Input Title Labels](assets/tip_input_labels.png)
 
 ### UITextField
 
-The `UITextField` provides a text field where the user can input text with the iOS keyboard.
+`UITextField`は、ユーザーがiOSのキーボードを使ってテキストを入力できるテキストフィールドを提供します。
 
 ![Tip Input Text Field](assets/tip_input_text_field.png)
 
-When a user taps a text field, the text field will become active (referred to as the first responder) and the device keyboard will appear.
+ユーザーがテキストフィールドをタップすると、テキストフィールドはアクティブになり（最初の反応として参照されます）、デバイスのキーボードが表示されます。
 
 ![Active Text Field](assets/tc_active_text_field.png)
 
-We'll need the text field for the user to input their bill amount.
+ユーザーが請求金額を入力するテキストフィールドが必要になります。
 
 ### UISegmentedControl
 
-Similar to the switch, the `UISegmentedControl` class provides a UI object that allows the user to toggle between different options. The main different being that a segmented control can have 2+ different states, while a switch can only toggle in-between an on and and off state.
+`UISegmentedControl`クラスはスイッチと似ていて、ユーザーが異なるオプション間でトグルできるようにするUIオブジェクトを提供しています。 主な違いは、セグメント化されたコントロールは2つ以上の異なるステートを有することができる一方で、スイッチはオンとオフのステート間でトグルできるだけだということです。
 
-In addition to 2+ toggle states, switches can also have each option name labeled. Let's take a look at the segmented control we'll use in our tip calculator.
+2つ以上のトグルのステートに加えて、スイッチは各オプション名にラベル付けできます。チップ計算機で使用する、セグメント化されたコントロールを見てみましょう。
 
 ![Tip Percentage Segmented Control](assets/tip_input_segmented_control.png)
 
-Our tip calculator will need a segmented control so that the user can choose the tip percentage they want to use for calculating gratuity.
+チップ計算機にはセグメント化されたコントロールが必要になります。これは、チップの計算に使いたい割合をユーザーが選択できるようにするためです。
 
-## Tip Output
+## チップの出力
 
-The tip output group provides the output tip amount and total bill amount of the tip calculator.
+チップ出力グループは、チップ計算機の出力チップ及び請求総額を提示します。
 
 ![Output Outline](assets/tc_output_outline.png)
 
-We've already introduced all of the UI objects in this group.
+すでにこのグループのUIオブジェクトをすべて紹介しました。
 
 > [challenge]
-Identify all of the different UIKit objects in the tip output group.
+チップ出力グループの異なるUIKitオブジェクトすべてを特定してください。
 
 <!-- break -->
 
 > [solution]
-The entire tip output group is made up of a card view that is a `UIView` with 4 `UILabel` for each respective title and amount.
+チップ出力グループ全体は`UIView`のカードビューによって構成されており、これには各タイトルと金額の`UILabel`が4つ含まれています。
 >
 ![Tip Output Views](assets/tip_output_views.png)
 
-## Reset Button
+## リセットボタン
 
-Next, we'll introduce the last UIKit object that we'll need for our tip calculator: `UIButton`.
+次に、チップ計算機に必要な最後のUIKitオブジェクト`UIButton`を紹介します。
 
 ![Reset Outline](assets/tc_reset_outline.png)
 
-Simple enough, this grouping will consist only of a single element: a button.
+このグループ化は非常に簡単で、含まれている唯一の構成要素はボタンだけです。
 
 ### UIButton
 
-The `UIButton`, along with labels, are one of the most common objects for building your UI. A user can interact with a button by tapping it and triggering an event. This event can be tied to calling a function and running code.
+`UIButton`は、ラベルと同じく、UIを作成するのに最もよく使われるオブジェクトです。ユーザーはタップしたり、イベントを引き起こすことで、ボタンとやりとりすることができます。このイベントは、関数の呼び出しとコードの実行につなげることができます。
 
 ![Reset Button](assets/reset_button.png)
 
-Our reset button will allow a user to clear the current input from our tip calculator and reset it to a empty state.
+リセットボタンによって、ユーザーはチップ計算機から現在の入力内容を消して、空の状態にリセットできます。
 
 > [info]
-You don't need to memorize all of the UIKit objects we've just covered. Just remember that there are pre-made UI components that you can use to build your UI. If you're trying to build any type of visual element, check `UIKit` to see if there's a base UI object you can use to build off of.
+たった今習ったばかりのUIKitオブジェクトについて、すべて暗記する必要はありません。UI開発に使える既成のUIコンポーネントがあることを覚えておきましょう。どんな種類のビジュアル要素を構築するのであれ、土台として使えるベースUIオブジェクトがあるかどうか、`UIKit`を確認してみましょう。
 
-# Reviewing What We've Learning
+# 学習内容をおさらい
 
-We've reviewed and learned about many new UI objects in `UIKit`. You'll use these objects as basic building blocks for creating various UI for your app. If you're ever looking for a comphrensive guide of all of the UIKit objects, you can reference Apple's developer docs by [clicking here](https://developer.apple.com/documentation/uikit/views_and_controls).
+`UIKit`の多くの新しいUIオブジェクトについて検討し、学んできました。これらのオブジェクトを、アプリの様々なUIを作成するための構成要素として使用します。UIKitオブジェクト全部を紹介する包括的なガイドを探すのであれば、Appleの開発者向け文書を参照することができます[こちらをクリックしてください](https://developer.apple.com/documentation/uikit/views_and_controls)。
 
-Moving forward, we'll start building tip calculator in Xcode and look at how to use each of these UI components.
+もっと先へ進んで、Xcodeでチップ計算機の開発を始めて、これらのUIコンポーネントのそれぞれの使い方を検討していきます。
