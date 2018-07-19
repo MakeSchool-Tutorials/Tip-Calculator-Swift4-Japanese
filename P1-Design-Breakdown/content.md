@@ -48,11 +48,7 @@ Xcodeに取りかかる前に、まずはチップ計算機のデザインを検
 
 _UIView_ クラスは、iPhone画面上の長方形の領域を表すオブジェクトです。UI全体は（例外は多少あれど）、複数の _UIView_ オブジェクトから構築されています。
 
-<<<<<<< HEAD
 この点の理解を深めるため、金銭の送受信をするアプリ、Square Cashを検討してみましょう。
-=======
-To better understand this, let's take a look at Square Cash, an app that allows you to send and receive money.
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 ![Square Cash UIView Breakdown](assets/square_cash_uiviews.png)
 
@@ -63,11 +59,7 @@ To better understand this, let's take a look at Square Cash, an app that allows 
 > [info]
 **UIKitとは何か**
 >
-<<<<<<< HEAD
 `UIKit`は、あらかじめ開発されたオブジェクトと、iOSアプリの開発に使用できる機能を提供するフレームワークです。これには、たくさんの内蔵機能（アプリのライフサイクルやリソース管理を取り扱う）や、一般的に使用されるUIコンポーネント（ボタンやラベル）が含まれています。
-=======
-`UIKit` is a framework that provides pre-built objects and functionality that you can use to build iOS apps. This includes a lot of under-the-hood functionality (handling your app's lifecycle and resource management) as well as commonly used UI components (buttons and labels).
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 <!-- break -->
 
@@ -87,11 +79,7 @@ UIKitから使っている新しいUIコンポーネントが数多くあるこ�
 
 ## サブビューのグループ化
 
-<<<<<<< HEAD
 サブビューをグループで整理するのはよくあることです。厳密にはサブビューを好きなようにグループ化できるのですが、一般的にグループは、UIの配置とレイアウトの計画方法に基づきます（これに関しては後ほど扱います）。
-=======
-It's common to organize our subviews in groups. Although you can technically group subviews however you'd like, usually groups are based on how you plan to position and layout your UI (more on this later).
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 _Square Cash_ の実例を使って、 以下の方法で各サブビューをグループ化することができます：
 
@@ -142,11 +130,7 @@ _Square Cash_ アプリで踏んだ手順を、チップ計算機に適用しま
 
 ![Header Title Label](assets/header_title_label.png)
 
-<<<<<<< HEAD
 `UILabel`クラスには、多くのプロパティがあります（テキスト、フォント、テキストカラー、行数など）。
-=======
-The `UILabel` class can be configured from it's many properties. (i.e. text, font, text color, number of lines, etc).
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 <!-- In our case, we'll use an off-black (#4A4A4A) text color and bold font weight of `San Francisco`, the default system font created by Apple. -->
 
@@ -178,11 +162,7 @@ class UIControl : UIView { ... }
 
 ![Tip Input Outline](assets/tip_input_outline.png)
 
-<<<<<<< HEAD
 ヘッダービューと同じく、このUIコンポーネントのグループを個々のコンポーネントへと分解します。
-=======
-As with the header view, we'll break down this group of UI components into its individual components.
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 ### UILabel
 
@@ -210,11 +190,7 @@ As with the header view, we'll break down this group of UI components into its i
 
 ### UISegmentedControl
 
-<<<<<<< HEAD
 `UISegmentedControl`クラスはスイッチと似ていて、ユーザーが異なるオプション間でトグルできるようにするUIオブジェクトを提供しています。 主な違いは、セグメント化されたコントロールは2つ以上の異なるステートを有することができる一方で、スイッチはオンとオフのステート間でトグルできるだけだということです。
-=======
-Similar to the switch, the `UISegmentedControl` class provides a UI object that allows the user to toggle between different options. The main different being that a segmented control can have 2+ different states, while a switch can only toggle in-between an on and off state.
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 2つ以上のトグルのステートに加えて、スイッチは各オプション名にラベル付けできます。チップ計算機で使用する、セグメント化されたコントロールを見てみましょう。
 
@@ -250,29 +226,17 @@ Similar to the switch, the `UISegmentedControl` class provides a UI object that 
 
 ### UIButton
 
-<<<<<<< HEAD
 `UIButton`は、ラベルと同じく、UIを作成するのに最もよく使われるオブジェクトです。ユーザーはタップすることで、イベントを引き起こし、ボタンとやりとりすることができます。このイベントは、関数の呼び出しとコードの実行につなげることができます。
 
 ![Reset Button](assets/reset_button.png)
 
 リセットボタンによって、ユーザーはチップ計算機から現在の入力内容を消して、空の状態にリセットできます。
-=======
-The `UIButton`, along with labels, is one of the most common objects for building your UI. A user can interact with a button by tapping it and triggering an event. This event can be tied to calling a function and running code.
-
-![Reset Button](assets/reset_button.png)
-
-Our reset button will allow a user to clear the current input from our tip calculator and reset it to an empty state.
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 > [info]
 たった今習ったばかりのUIKitオブジェクトについて、すべて暗記する必要はありません。UI開発に使える既成のUIコンポーネントがあることを覚えておきましょう。どんな種類のビジュアル要素を構築するのであれ、土台として使えるベースUIオブジェクトがあるかどうか、`UIKit`を確認してみましょう。
 
 # 学習内容をおさらい
 
-<<<<<<< HEAD
 `UIKit`の多くの新しいUIオブジェクトについて検討し、学んできました。これらのオブジェクトを、アプリの様々なUIを作成するための構成要素として使用します。UIKitオブジェクト全部を紹介する包括的なガイドを探すのであれば、Appleの開発者向け文書を参照することができます。[こちらをクリックしてください（英語)](https://developer.apple.com/documentation/uikit/views_and_controls)。
-=======
-We've reviewed and learned about many new UI objects in `UIKit`. You'll use these objects as basic building blocks for creating various UI for your app. If you're ever looking for a comprehensive guide of all of the UIKit objects, you can reference Apple's developer docs by [clicking here](https://developer.apple.com/documentation/uikit/views_and_controls).
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 もっと先へ進んで、Xcodeでチップ計算機の開発を始めて、これらのUIコンポーネントのそれぞれの使い方を検討していきます。
