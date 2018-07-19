@@ -228,7 +228,11 @@ override func viewDidLoad() {
 
 # チップの計算
 
+<<<<<<< HEAD
 ユーザーが入力した請求額を正しく読み取れたので、出力（チップ額 + 総額）を計算するロジックを実装します。
+=======
+Now that we've successfully read our user's bill amount input, we're going to implement the logic to calculate our outputs (tip amount + total amount).
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 出力を計算するには、次を行う必要があります。
 

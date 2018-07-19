@@ -307,7 +307,11 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 
 ## 縦横比
 
+<<<<<<< HEAD
 アスペクト比の制約も利用可能です。・高さを幅の何倍かに設定したり、その逆もできます。これはビューが常に真四角（縦横比 1:1）であることを保証したい場合や、高さが常に幅の1/2であると決定した場合（縦横比　1:2）に便利になります。
+=======
+Aspect ratio constraints are also available. You can set the height to be a ratio of the width or vice versa. This can be useful if you want to make sure the view is always a square (1:1 aspect ratio) or if you decide that the height will always be 1/2 of the width (1:2 aspect ratio).
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 以下の例では、縦横比を（1:3）に設定し、高さを幅の1/3にします：
 

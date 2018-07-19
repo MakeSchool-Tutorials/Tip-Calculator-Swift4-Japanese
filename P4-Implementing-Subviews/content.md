@@ -165,6 +165,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 >
 ステップバイステップ：
 >
+<<<<<<< HEAD
 1. `UISwitch`を _Object Library_ からドラッグして、ヘッダータイトルラベルの横にドロップします。
 1. `UISwitch`を選択した状態で、`Add New Constraints`ボタンをクリックします。
 1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
@@ -175,6 +176,18 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 1. `UISwitch`をクリックして再び選択します。（1つ前の手順の制約を選択していないことを確認してください。）
 1. スイッチを選択した状態で、Ctrlを押しながらクリックして`UISwitch`から`UILabel`までドラッグします。
 1. 新しい制約を追加するポップアップが表示されます。`Center Vertically`を選択して、スイッチの中心をラベルの中心に縦方向に揃えます。
+=======
+1. Drag a `UISwitch` from the _Object Library_ and drop it next to your header title label.
+1. With your  `UISwitch` selected, click the `Add New Constraints` button.
+1. Add the following two constraints using the `Add New Constraints` popup:
+    - (Switch) Trailing Edge 24pts from Super View Trailing Edge
+    - (Switch) Leading Edge 20pts from Label Trailing Edge
+1. Hover over the switch's leading edge constraint to the label and click on it. You should see it's attributes appear in the _Attributes Inspector_.
+1. Using the _Attributes Inspector_, change the constraint's _Relation_ attribute from `Equal` to `Greater Than or Equal`.
+1. Click on the `UISwitch` to select it again. Make sure you're not selecting the constraint from the previous step.
+1. With your switch selected, hold control (ctrl) and click-drag from the `UISwitch` to the `UILabel`.
+1. You should see a popup to add a new constraint. Select `Center Vertically` to vertically align your switch's center to the label's center.
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 素晴らしい！ 制約を追加して`UISwitch`に設定しました。では、スイッチの属性を構成しましょう。
 
@@ -206,7 +219,11 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 
 チップ計算機のロジックを実装するため、これらの接続の両方が後で必要になります。
 
+<<<<<<< HEAD
 まずはヘッダービュー (`UIView`) 用に、最初の`IBOutlet`を作成しましょう。
+=======
+Let's get started by creating our first `IBOutlet` for our header view (`UIView`).
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 > [action]
 アシスタント エディタを使って`Main.storyboard`ファイルと`ViewController.swift`ファイルを並べて開きます。
@@ -259,10 +276,17 @@ class ViewController: UIViewController {
 >
 ステップバイステップ：
 >
+<<<<<<< HEAD
 1. Storyboardビューコントローラーで、タイトルラベル (`UILabel`) を選択します。
 1. ヘッダービューを選択した状態で、ラベルから`ViewController`クラス定義内のSwiftコードへ、Ctrlを押しながらクリックしてドラッグします。
 1. 新しいIBコネクションを作成するためのポップアップが表示されるはずです。nameフィールドを`titleLabel`と設定します。
 1. _Connect_ をクリックして、新しい`IBOutlet`を作成します。
+=======
+1. Select your title label (`UILabel`) in your storyboard view controller.
+1. With your Tip Calculator label selected, hold down ctrl and click-drag from the label to your Swift code within the `ViewController` class definition.
+1. You should see a popup for creating a new IB connection. Set the name field as `titleLabel`.
+1. Click _Connect_ to create your new `IBOutlet`.
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 <!-- break -->
 
@@ -676,7 +700,11 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 
 ![Input Card Styled](assets/input_card_styled.png)
 
+<<<<<<< HEAD
 ビンゴ！　私たちのアプリとデザインが一致しました（もちろん、丸みのある角に関しては例外です。）
+=======
+Bam! Our app matches our design (with exception of the rounded corners of course).
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 > [info]
 丸い角（と影）は私たちのビューのレイヤーのプロパティを活用します。これは、このチュートリアルの後半で取り扱います。
@@ -689,7 +717,11 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 
 復習のため、もう一つ一緒に行いましょう。
 
+<<<<<<< HEAD
 入力カードのために(`UIView`)`IBOutlet`を作成しましょう。
+=======
+Let's create an `IBOutlet` for our input card (`UIView`).
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 > [action]
 入力カードビューのために`IBOutlet`を作成します。
@@ -962,7 +994,11 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 > [challenge]
 どうしたらいいか知っていますよね。リセットボタンに以下の属性をそれぞれ設定してください：
 >
+<<<<<<< HEAD
 **出力カードビュー：**
+=======
+**Reset Button:**
+>>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 >
 - _Type_： `System`から`Custom`に変更
 - _Title_： `Button`から`RESET`に変更
