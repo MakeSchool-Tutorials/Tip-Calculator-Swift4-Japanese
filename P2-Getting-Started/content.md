@@ -34,7 +34,7 @@ Xcodeのスタータープロジェクトをダウンロードすることから
 ```
 class ViewController: UIViewController {
 >
-    // MARK: - ライフサイクルを見る
+    // MARK: - View LifeCycle
 >
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +75,7 @@ Storyboard内のビューコントローラーの表示をクリックしてく�
 
 アセットのカタログには、すでに設定されているアプリのアイコンと、後で実装する別のカラーテーマ用にあらかじめ定義された色のセットを含んだ2つのフォルダがあるはずです。
 
-アセットのカタログでカスタムカラーのペアを作るため、プロジェクトには、コードを通じてアプリの各色にアクセスできるようにしてくれる`UIColor`の拡張子が含まれています。
+アセットのカタログでカスタムカラーのペアを作るため、プロジェクトには、コードを通じてアプリの各色にアクセスできるようにしてくれる`UIColor`の拡張が含まれています。
 
 > [action]
 プロジェクトナビゲーターから`UIColor+TC.swift`を開いてください。これが見当たらない場合は、 プロジェクトナビゲーターで`Supporting Files`フォルダを拡張する必要があります。次のように表示されます。
@@ -85,7 +85,7 @@ import UIKit.UIColor
 >
 extension UIColor {
 >
-    // MARK: テーマの色
+    // MARK: Theme Color
 >
     static var tcDarkBlue: UIColor {
         return UIColor(named: "tcDarkBlue")!
@@ -157,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 >
     var window: UIWindow?
 >
-    // MARK: - アプリのライフサイクル
+    // MARK: - Application LifeCycle
 >
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // アプリケーションの起動後にカスタマイズするためポイントをオーバーライドします。

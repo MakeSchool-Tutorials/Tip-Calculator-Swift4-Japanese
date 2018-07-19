@@ -312,7 +312,7 @@ class ViewController: UIViewController {
 >
 追加した新しいプロパティについて説明します。
 >
-1.`isDefaultStatusBar`は、既定または軽量のステータスバーのどちらを表示するかを表す`Bool`を保持します。既定の場合はステータスバーの色は黒になります。
+1. `isDefaultStatusBar`は、既定または明るい色のステータスバーのどちらを表示するかを表す`Bool`を保持します。既定の場合はステータスバーの色は黒になります。
 1. `preferredStatusBarStyle`プロパティをオーバーライドして、`isDefaultStatusBar`を使い、ビューコントローラーのステータスバーのスタイルを設定します。
 >
 「ステータスバーのスタイルを設定するのになぜ2つのプロパティが必要なんだ？」と思うかもしれません。良い質問です。`preferredStatusBarStyle`プロパティはスーパークラスが継承されているため直接設定できません。このため、どのステータスバーのスタイル`preferredStatusBarStyle`を表示すべきかを保存する`isDefaultStatusBar`変数が必要です。

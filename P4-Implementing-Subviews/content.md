@@ -19,7 +19,7 @@ slug: implementing-subviews
 1. 正しい`UIKit`オブジェクトをそれぞれ追加
 1. 各サブビューに対して _Auto-layout_ 制約を特定して設定
 1. デザインに合わせて各サブビューの属性を構成
-1. 適切な`IBOutlets`と`IBActions`を作成
+1. 適切な`IBoutlet`と`IBAction`を作成
 
 まずは最初のUIグループであるヘッダーを完成させていきましょう。
 
@@ -41,8 +41,8 @@ slug: implementing-subviews
 > [solution]
 ヘッダーを作成するには、次のビューオブジェクトが必要です。
 >
--`UILabel`: タイトルラベル
--`UISwitch`: テーマ色のスイッチ
+- `UILabel`: タイトルラベル
+- `UISwitch`: テーマ色のスイッチ
 
 追加する必要がある両方のビューオブジェクトを特定したら、 これらを追加して、それぞれの制約を設定する必要があります。タイトルラベルの作業を始めましょう！
 
@@ -114,9 +114,9 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 > [action]
 `Main.storyboard`で、ヘッダービューのタイトル ラベルを選択します。 _Utilities_ エリアの属性インスペクタに移動して、次の属性を変更します。
 >
-- _Text_: Change from `Label` to `Tip Calculator` ![Set Header View Label Text](assets/set_nav_bar_label_text.png)
-- _Font_: Change from `System 17.0` to `System Bold 24.0` ![Set Header View Label Font](assets/set_nav_bar_label_font.png)
-- _Font Color_: Use the blue dropdown to change from `Default` to `tcCharcoal` ![Set Header View Text Color](assets/set_nav_bar_label_text_color.png)
+- _Text_: `Label` から `Tip Calculator`へ変更 ![Set Header View Label Text](assets/set_nav_bar_label_text.png)
+- _Font_: `System 17.0` から `System Bold 24.0`へ変更![Set Header View Label Font](assets/set_nav_bar_label_font.png)
+- _Font Color_: `Default` から `tcCharcoal`へ変更![Set Header View Text Color](assets/set_nav_bar_label_text_color.png)
 
 上記の各属性を構成すると、タイトルラベルは次のようになります。
 
@@ -135,7 +135,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 ### 制約の識別
 
 > [challenge]
-下のデザインを使って、テーマスイッチの _Auto-layout_ の各制約を特定します。制約を1つずつ紙に書き出します。
+下のデザインを使って、タイトルラベルに対する_Auto-layout_の各制約を特定しましょう。制約を1つずつ紙に書き出します。
 >
 ヒント: 赤い領域はスイッチのフレームを表しています。
 >
@@ -196,13 +196,13 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 
 ## IB 接続を追加する
 
-最初のUIグループの実装完了までもう少しです！ 仕上げに`IBOutlets`と`IBActions`を作成する必要があります。
+最初のUIグループの実装完了までもう少しです！ 仕上げに`IBoutlet`と`IBAction`を作成する必要があります。
 
-`IBOutlets`と`IBActions`により、Swiftコードでイベントを受け取ったり、Storyboardビューと対話したりできます。
+`IBoutlet`と`IBAction`により、Swiftコードでイベントを受け取ったり、Storyboardビューと対話したりできます。
 
-`IBOutlets`はSwiftコードで参照できるインスタンス変数を作成します。これによりタイトルラベルやスイッチと、プログラムを通じて対話できます。
+`IBoutlet`はSwiftコードで参照できるインスタンス変数を作成します。これによりタイトルラベルやスイッチと、プログラムを通じて対話できます。
 
-`IBActions`は、トリガされるとコードを実行する関数を作成します。これらの関数は、ユーザーによるUI要素の操作によってトリガされます。よくある例は、ユーザーがボタンをタップした場合です。ボタンがタップされると、`IBAction`をトリガして、対応する関数内のコードを実行します。
+`IBAction`は、トリガされるとコードを実行する関数を作成します。これらの関数は、ユーザーによるUI要素の操作によってトリガされます。よくある例は、ユーザーがボタンをタップした場合です。ボタンがタップされると、`IBAction`をトリガして、対応する関数内のコードを実行します。
 
 チップ計算機のロジックを実装するため、これらの接続の両方が後で必要になります。
 
@@ -267,12 +267,12 @@ class ViewController: UIViewController {
 <!-- break -->
 
 > [info]
-前回は _Document Outline_ のヘッダービューからCtrlを押しながらドラッグして`IBOutlet`を作成しました。今回はラベルのStoryboard オブジェクトからCtrlを押しながらドラッグして`IBOutlet`を作成します。どちらの`IBOutlets`の作成方法も有効です。
+前回は _Document Outline_ のヘッダービューからCtrlを押しながらドラッグして`IBOutlet`を作成しました。今回はラベルのStoryboard オブジェクトからCtrlを押しながらドラッグして`IBOutlet`を作成します。どちらの`IBoutlet`の作成方法も有効です。
 
 この時点で、`IBOutlet`の作成方法を2回説明しました。あなたの番です。
 
 > [challenge]
-`themeSwitch`という名前の`UISwitch`用に`IBOutlet`を作成します。行き詰まったら、前に戻って、以前2つの`IBOutlets`を作成する際に使った手順を参照しましょう。
+`themeSwitch`という名前の`UISwitch`用に`IBOutlet`を作成します。行き詰まったら、前に戻って、以前2つの`IBoutlet`を作成する際に使った手順を参照しましょう。
 
 <!-- break -->
 
@@ -316,7 +316,7 @@ class ViewController: UIViewController {
 <!-- break -->
 
 > [info]
-スイッチの`IBAction`を作成したら、アシスタントエディタを閉じます。画面のスペースがあまりない場合は、必要に応じて _Assistant Editor_ を開いたり閉じたりしましょう。
+スイッチの`IBAction`を作成したら、Assistant Editorを閉じます。画面のスペースがあまりない場合は、必要に応じて _Assistant Editor_ を開いたり閉じたりしましょう。
 
 新しい`IBAction`のテストを行って、正しく機能するか確認しましょう。
 
@@ -333,7 +333,7 @@ class ViewController: UIViewController {
 }
 ```
 
-上記のコードを追加したら、`IBAction`をテストできます。`
+上記のコードを追加したら、`IBAction`をテストできます。
 
 > [action]
 プロジェクトをビルドして実行します。スイッチのオン・オフを数回切り替えます。Xcodeの _Debugger_ エリアを見ると、スイッチを切り替えるたびに次の出力ステートメントがコンソールに表示されるはずです。
@@ -435,7 +435,7 @@ class ViewController: UIViewController {
 
 ご覧の通り、スタックビューと制約の組み合わせは、開発者に対して複雑なUIレイアウトを作成する高い能力を与えてくれます。
 
-入力カードのレイアウトの実装方法の検討がついたので、実際に開発を始めましょう！
+入力カードのレイアウトの実装方法の見当がついたので、実際に開発を始めましょう！
 
 ## 制約を追加する
 
@@ -588,7 +588,7 @@ Storyboardは次のように表示されるはずです。
 最後に、`UISegmentedControl`に固定幅の制約を追加する必要があります。自分で実装できるかどうか試してみましょう。
 
 > [challenge]
- _Tip Percent Segmented Control_ のオブジェクトに幅の制約を追加してください。幅を173ptsに設定してください。問題が生じたり、行き詰まってしまったら、テキストフィールドに幅の制約を追加した、前の例を見てください。
+ _Tip Percent Segmented Control_ のオブジェクトに幅の制約を追加してください。幅を173ptsに設定してください。問題が生じたり、行き詰まってしまったりしたら、テキストフィールドに幅の制約を追加した、前の例を見てください。
 
 以下で解答を確認してください。
 
@@ -607,7 +607,7 @@ _Tip Percent Segmented Control_ の幅の制約を以下によって設定しま
 
 ![Input Card Finished Constraints Unstyled](assets/input_card_finished_constraints_unstyled.png)
 
-ご覧の通り、入力カードの外見は私たちのデザインに近づき始めています。次に、入力カードのビューの属性の構成に取り組みましょう。
+ご覧の通り、入力カードの外見は私たちのデザインに近づき始めています。次に、入力カードのビューの属性の設定に取り組みましょう。
 
 ## 属性の設定
 
@@ -708,9 +708,9 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 <!-- break -->
 
 > [challenge]
-次は、自分で練習する番です。行き詰まったら、以前に`IBOutlets`をどのように実装したかを見直して、記憶をリフレッシュしてください。
+次は、自分で練習する番です。行き詰まったら、以前に`IBoutlet`をどのように実装したかを見直して、記憶をリフレッシュしてください。
 >
-以下の`IBOutlets`を作成します：
+以下の`IBoutlet`を作成します：
 >
 - `billAmountTextField`という名の`UITextField`
 - `tipPercentSegmentedContro`という名の`UISegmentedControl`
@@ -793,7 +793,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 スタックビューと制約を使う練習はすでにこなしました。今度は自分で練習する番です。行き詰まったら、入力カードのレイアウトをどう実装したか振り返ってみましょう。
 
 > [challenge]
-つの`UILabel`ビューを持つ内側のトップスタックビューを作成しましょう。
+2つの`UILabel`ビューを持つ内側のトップスタックビューを作成しましょう。
 
 <!-- break -->
 
@@ -835,9 +835,9 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 > [challenge]
 外側のスタックビューのフレームに以下の制約を設定してください。
 >
-- （外側のスタックビュー）Super View (Output Card) Leading EdgeからLeading Edge 22pts
-- （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
-- （外側のスタックのビュー）Super View CenterにCenter vertically aligned
+- （外側のスタックビュー）スーパービュー のLeading EdgeからLeading Edge 22pt
+- （外側のスタックビュー）スーパービュー のTrailing EdgeからTrailing Edge 22pt
+- （外側のスタックのビュー）スーパービュー CenterにCenter vertically aligned
 
 <!-- break -->
 
@@ -907,7 +907,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 >
 **Tip Amount Label（内側のトップスタックビュー）：**
 >
-- _Text_： `Label」から`$0.00`に変更
+- _Text_： `Label`から`$0.00`に変更
 - _Font_： `System 17.0`から`System Medium 20.0`に変更
 - _Color_： `Default`から`tcBlack`に変更
 - _Alignment_： `---`から`Right Aligned`に変更
@@ -935,13 +935,13 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 ## IB 接続を追加する
 
 > [challenge]
-以下のIBコネクションを追加してください。行き詰まったら、以前に`IBOutlets`をどのように実装したかを見直して、記憶をリフレッシュしてください。
+以下のIBコネクションを追加してください。行き詰まったら、以前に`IBoutlet`をどのように実装したかを見直して、記憶をリフレッシュしてください。
 >
 以下の図表を参考に使ってください：
 >
 ![Tip Output Subviews](assets/tip_output_subviews.png)
 >
-以下の`IBOutlets`を作成します：
+以下の`IBoutlet`を作成します：
 >
 - `outputCardView`と呼ばれる`UIView`
 - `tipAmountTitleLabel`と呼ばれる`UILabel`

@@ -1,5 +1,5 @@
 ---
-title: "ヒント電卓のロジック"
+title: "チップ計算のロジック"
 slug: tip-calculator-logic
 ---
 
@@ -24,7 +24,7 @@ slug: tip-calculator-logic
 まずはこれを直しましょう。キーボードの右上に _Calculate_ ボタンを実装します。
 
 > [info]
-シンプルにするために、もうすぐ完成するcalculateボタンの背後でちょっとした魔法を使います。大部分は特製の`UITextField`サブクラスに抽象化しました。これは現在の`UITextField`に取って代わります。Calculateボタンがどうして表示されるのかを完全に理解していなくても、今のところは大丈夫です！
+シンプルにするために、もうすぐ完成するcalculateボタンの背後でちょっとした魔法を使います。大部分は特製のUITextFieldのサブクラスに抽象化しました。これは現在の`UITextField`に取って代わります。Calculateボタンがどうして表示されるのかを完全に理解していなくても、今のところは大丈夫です！
 
 ## 計算ボタンを追加する
 
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
 }
 ```
 
-That's it! テキストフィールドをカスタム`UITextField`サブクラスに設定しました。変更をテストしましょう。
+そうです! テキストフィールドをカスタム`UITextField`サブクラスに設定しました。変更をテストしましょう。
 
 > [action]
 プロジェクトをビルドして実行します。`billAmountTextField`をタップして選択します。キーボードが上にスライドして、次が表示されるはずです。
@@ -396,7 +396,7 @@ class UILabel : UIView, NSCoding, UIContentSizeCategoryAdjusting {
 }
 ```
 
-`UILabel`が表示するテキストを更新するには、各`UILabel`の`text`プロパティを使用できます。`calculateButtonAction`が出力カードのチップ額と送金額のラベルを設定するよう、クロージャを更新しましょう。
+`UILabel`が表示するテキストを更新するには、各`UILabel`の`text`プロパティを使用できます。`calculateButtonAction`が出力カードのチップ額と総額のラベルを設定するよう、クロージャを更新しましょう。
 
 > [action]
 `ViewController.swift`でコードを更新して、出力カードのラベルを更新します。
