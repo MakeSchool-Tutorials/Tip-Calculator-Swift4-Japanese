@@ -215,8 +215,8 @@ Auto-layoutと制約によって、どんなiOSデバイスでも動的なビュ
 ヘッダービューを選択した状態で、_Add New Constraints_ ボタンをクリックし、各エッジの制約を設定します：
 >
 - ヘッダービューの _Top Edge_ : ルートビューの _Top Edge (上)_ まで 0pt
-- ヘッダービューの _Leading Edge (左）_ : ルートビューの _Leading Edge (左) _ まで 0pt
-- ヘッダービューの _Trailing Edge (右)_ : ルートビューの _Trailing Edge (右) _ まで 0pt
+- ヘッダービューの _Leading Edge (左）_ : ルートビューの _Leading Edge (左)_ まで 0pt
+- ヘッダービューの _Trailing Edge (右)_ : ルートビューの _Trailing Edge (右)_ まで 0pt
 
 現時点では、私たちのヘッダービューの制約は不完全です。ビューの高さを定義する制約をまだ追加していません。今アプリを実行すると、ヘッダービューの高さが0になるので、ヘッダービューは表示されません。Xcodeとインターフェイスビルダー は、このことについて警告しようとしています：
 
@@ -350,7 +350,7 @@ Auto-layoutと制約によって、どんなiOSデバイスでも動的なビュ
 1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
 1. 以下の制約を設定してください：
     - （入力カード）ヘッダービューの _Bottom Edge（下）_から数えて_Top Edge（上）_ を24ptに
-    - （入力カード）スーパービュー (Root View) の_Leading Edge（左）_から数えて_Leading Edge（左）_ を15ptに
+    - （入力カード）スーパービュー (Root View) の_Leading Edge（左)_ から数えて _Leading Edge（左）_ を15ptに
     - （入力カード）スーパービューの _Trailing Edge（右）_ から数えて _Trailing Edge（右）_ を15ptに
 
 新たな（入力カード）ビューの高さの制約が欠けているため、この時点で_Auto-layout_エラーが表示されます。今のところはこの警告を無視してください。すぐに修正します。
@@ -370,7 +370,7 @@ Storyboardで新しい`UIView`を追加して、以下の制約を設定して�
 1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
 1. 以下の制約を設定してください：
     - （出力カード）入力カードの _Bottom Edge（下）_から数えて _Top Edge（上）_ を24ptに
-    - （出力カード）スーパービューの _Leading Edge（左）_から数えて_Leading Edge（左）_ を15ptに
+    - （出力カード）スーパービューの _Leading Edge（左）_ から数えて_Leading Edge（左）_ を15ptに
     - （出力カード）Super View _Trailing Edge（右）_から数えて_Trailing Edge（右）_ を15ptに
 
 入力カードビューと出力カードビューの間にも、同じ高さの制約を追加します。
