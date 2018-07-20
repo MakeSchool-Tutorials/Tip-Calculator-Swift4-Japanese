@@ -86,8 +86,8 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 1. `UILabel`を _Object Library_ からドラッグして、ヘッダービュー (`UIView`) の上にドロップします。
 1. 新しい`UILabel`を選択した状態で、`Add New Constraints`ボタンをクリックします。
 1. 次の最初の制約2つを、`Add New Constraints`ポップアップを使って追加します。
-    - （ラベル）スーパービューの Leading Edge（上）からLeading Edge（左）を24ptへ
-    - （ラベル）スーパービューの Bottom Edge（下）からBottom Edge（下）を0ptへ
+    - （ラベル）スーパービューの Leading Edge（左）から数えてLeading Edge（左）を24ptへ
+    - （ラベル）スーパービューの Bottom Edge（下）から数えてBottom Edge（下）を0ptへ
 1. 最後の制約を追加するために、 _Document Outline_ の`UILabel`を選択します。
 1. `UILabel`を選択した状態で、Ctrlを押しながらクリックして _Document Outline_ の _Safe Area_ オブジェクトまでドラッグします。
 1. 新しい制約を追加するポップアップが表示されます。`Vertical Spacing`を選択します。ちょっと待ってください。新しい`Vertical Spacing`の制約は適切に設定されていません。
@@ -114,7 +114,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 > [action]
 `Main.storyboard`で、ヘッダービューのタイトル ラベルを選択します。 _Utilities_ エリアの属性インスペクタに移動して、次の属性を変更します。
 >
-- _Text_: `Label` から `Tip Calculator`へ変更 ![Set Header View Label Text](assets/set_nav_bar_label_text.png)
+- _Text_: `Label` から `チップ計算機`へ変更 ![Set Header View Label Text](assets/set_nav_bar_label_text.png)
 - _Font_: `System 17.0` から `System Bold 24.0`へ変更![Set Header View Label Font](assets/set_nav_bar_label_font.png)
 - _Font Color_: `Default` から `tcCharcoal`へ変更![Set Header View Text Color](assets/set_nav_bar_label_text_color.png)
 
@@ -150,9 +150,9 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 >
 **制約**:
 >
--（スイッチ）スーパービュー (ヘッダービュー) のTrailing Edge（左）から数えてTrailing Edge（左）を24ptに
--（スイッチ）ラベルの Trailing Edge（左）から数えてLeading Edge（左）を ≥20ptに
--（スイッチ）ラベルの Center（中央）とCenter vertically（中央揃え）
+- （スイッチ）スーパービュー (ヘッダービュー) のTrailing Edge（左）から数えてTrailing Edge（左）を24ptに
+- （スイッチ）ラベルの Trailing Edge（左）から数えてLeading Edge（左）を ≥20ptに
+- （スイッチ）ラベルの Center（中央）とCenter vertically（中央揃え）
 
 ### 制約を追加する
 
@@ -168,8 +168,8 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 1. `UISwitch`を _Object Library_ からドラッグして、ヘッダータイトルラベルの横にドロップします。
 1. `UISwitch`を選択した状態で、`Add New Constraints`ボタンをクリックします。
 1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
-    -（スイッチ）Super View Trailing EdgeからTrailing Edge 24pts
-    -（スイッチ）Label Trailing EdgeからLeading Edge 20pts
+    - （スイッチ）スーパービューの Trailing Edge(右)からTrailing Edge(右) へ24pt
+    - （スイッチ）ラベルの Trailing Edge（右)からLeading Edge(左)へ 20pt
 1. ラベルに対するスイッチの前辺の端の制約にカーソルを合わせて、これをクリックします。属性が属性インスペクタに表示されます。
 1. 属性インスペクタを使用して、制約の _Relation_ 属性を`Equal`から`Greater Than or Equal`に変更します。
 1. `UISwitch`をクリックして再び選択します。（1つ前の手順の制約を選択していないことを確認してください。）
@@ -439,7 +439,7 @@ class ViewController: UIViewController {
 
 ## 制約を追加する
 
-ご覧の通り、入力カードのレイアウトはかなり複雑です。実装を小さなステップに分解することで簡単にしましょう。
+入力カードのレイアウトはかなり複雑です。実装を小さなステップに分解することで簡単にしましょう。
 
 内側のトップスタックビュー、 _Bill Amount Stack View_ から始めます。
 
@@ -575,7 +575,7 @@ Storyboardは次のように表示されるはずです。
 ### 固定幅の制約
 
 > [action]
- _Bill Amount Text Field_ に幅の制約を設定してください。
+ _請求額(Bill Amount) Text Field_ に幅の制約を設定してください。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/text_field_width_constraint.mp4)
 >
@@ -588,12 +588,12 @@ Storyboardは次のように表示されるはずです。
 最後に、`UISegmentedControl`に固定幅の制約を追加する必要があります。自分で実装できるかどうか試してみましょう。
 
 > [challenge]
- _Tip Percent Segmented Control_ のオブジェクトに幅の制約を追加してください。幅を173ptsに設定してください。問題が生じたり、行き詰まってしまったりしたら、テキストフィールドに幅の制約を追加した、前の例を見てください。
+ _チップ％（Tip Percent） Segmented Control_ のオブジェクトに幅の制約を追加してください。幅を173ptsに設定してください。問題が生じたり、行き詰まってしまったりしたら、テキストフィールドに幅の制約を追加した、前の例を見てください。
 
 以下で解答を確認してください。
 
 > [solution]
-_Tip Percent Segmented Control_ の幅の制約を以下によって設定します。
+_チップ％（Tip Percent） Segmented Control_ の幅の制約を以下によって設定します。
 >
 ![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/segmented_control_width_constraint.mp4)
 >
@@ -607,7 +607,7 @@ _Tip Percent Segmented Control_ の幅の制約を以下によって設定しま
 
 ![Input Card Finished Constraints Unstyled](assets/input_card_finished_constraints_unstyled.png)
 
-ご覧の通り、入力カードの外見は私たちのデザインに近づき始めています。次に、入力カードのビューの属性の設定に取り組みましょう。
+入力カードの外見は私たちのデザインに近づき始めています。次に、入力カードのビューの属性の設定に取り組みましょう。
 
 ## 属性の設定
 
@@ -632,19 +632,19 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 
 > [challenge]
 各要素に以下の属性を設定しましょう：
->>
+>
 **外側のスタックビュー：**
 >
 - _Spacing_： `0`から`35`に変更
 >
-**Bill Amount Title Label（内側のトップスタックビュー）：**
+**請求額（Bill Amount）Title Label（内側のトップスタックビュー）：**
 >
-- _Text_： `Label`から`Bill Amount`に変更
+- _Text_： `Label`から`請求額`に変更
 - _Font_： `System 17.0`から`System 20.0`に変更
 - _Color_： `Default`から`tcWhite`に変更
 - _Alignment_： `---`から`Left Aligned`に変更
 >
-**Bill Amount Text Field（内側のトップスタックビュー）：**
+**請求額（Bill Amount） Text Field（内側のトップスタックビュー）：**
 >
 - _Alignment_： `---`から`Center Aligned`に変更
 - _Placeholder_： 空の状態から`$0.00`に変更
@@ -653,14 +653,14 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 - _Keyboard Look_： `Default`から`Light`に変更
 - _Tint_： `Default`から`tcHotPink`に変更
 >
-**Tip Percent Title Label（内側のボトムスタックビュー）：**
+**チップ％（Tip Percent） Title Label（内側のボトムスタックビュー）：**
 >
-- _Text_： `Label`から`Tip %`に変更
+- _Text_： `Label`から`チップ%`に変更
 - _Font_： `System 17.0`から`System 20.0`に変更
 - _Color_： `Default`から`tcWhite`に変更
 - _Alignment_： `---`から`Left Aligned`に変更
 >
-**Tip Percent Segmented Control（内側のボトムスタックビュー）：**
+**チップ％（Tip Percent） Segmented Control（内側のボトムスタックビュー）：**
 >
 - _Segments_： `2`から`3`に変更
 - _Tint_： `Default`から`tcHotPink`に変更
@@ -730,7 +730,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 ステップバイステップ：
 >
 1. _Document Outline_ でセグメント化されたコントロールを選択してください(`UISegmentedControl`)。
-1. セグメント化されたコントロールを選択した状態で、ctrl を押しながらクリックして、＿Document Outline＿のセグメント化されたコントロールを、`ViewController`クラスへドラッグしてください。
+1. セグメント化されたコントロールを選択した状態で、ctrl を押しながらクリックして、＿Document Outline＿ のセグメント化されたコントロールを、`ViewController`クラスへドラッグしてください。
 1. 新しいIBコネクションを作成するためのポップアップが表示されます。ポップアップで _Connection_ 型を`Outlet`から`Action`に変更します。
 1. アクションの名前を`tipPercentChanged`に設定します。
 1. _Type_ のプロパティを`Any`から`UISegmentedControl`に変更してください。
@@ -768,7 +768,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 まず、2つの水平スタックビューがあります。
 
 - （内側のトップスタックビュー）チップ額タイトルラベルおよびチップ額ラベル
-- （内側のボトムスタックビュー）総額タイトルラベルおよび総額ラベル
+- （内側のボトムスタックビュー）合計額タイトルラベルおよび合計額ラベル
 
 次に、2つの内側のスタックビューから、外側の（垂直）スタックビューを作成します。
 
@@ -781,9 +781,9 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 最後に、サブビューの幅が正しいサイズになるように、さらにいくつかの制約を追加します。
 
 - （内側のトップスタックビュー）外側のスタックビューと同じ幅
--（内側のボトムスタックビュー）外側のスタックビューと同じ幅
+- （内側のボトムスタックビュー）外側のスタックビューと同じ幅
 - （チップ額タイトルラベル）Width（幅） 110pt
-- （総額タイトルラベル）Width（幅） 110pt
+- （合計額タイトルラベル）Width（幅） 110pt
 
 > [info]
 こういった制約を追加したのはなぜなのかと不思議に思っている場合、詳しくは入力カードの実装方法を見直してみましょう。
@@ -836,7 +836,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 外側のスタックビューのフレームに以下の制約を設定してください。
 >
 - （外側のスタックビュー）スーパービュー のLeading Edge（左）からLeading Edge（左）を 22ptに
-- （外側のスタックビュー）スーパービュー のTrailing Edge（右）からTrailing Edge（右） 22ptに
+- （外側のスタックビュー）スーパービュー のTrailing Edge（右）からTrailing Edge（右）を 22ptに
 - （外側のスタックのビュー）スーパービューのCenter（中央）とCenter vertically aligned（中央揃え）
 
 <!-- break -->
@@ -857,9 +857,9 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 各ビューに幅の制約を設定しましょう：
 >
 - （内側のトップスタックビュー）外側のスタックビューと同じ幅
--（内側のボトムスタックビュー）外側のスタックビューと同じ幅
+- （内側のボトムスタックビュー）外側のスタックビューと同じ幅
 - （チップ額タイトルラベル）Width（幅） 110pts
-- （総額タイトルラベル）Width（幅） 110pts
+- （合計額タイトルラベル）Width（幅） 110pts
 
 <!-- break -->
 
@@ -898,32 +898,32 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 >
 - _Spacing_： `0`から`35`に変更
 >
-**Tip Amount Title Label （内側のトップスタックビュー）：**
+**チップ額（Tip Amount） Title Label （内側のトップスタックビュー）：**
 >
-- _Text_： `Label`から`Tip Amount`に変更します
+- _Text_： `Label`から`チップ額`に変更します
 - _Font_：`System 17.0`から`System Light 20.0`に変更
 - _Color_：`Default`から`tcCharcoal`に変更します
 - _Alignment_： `---`から`Left Aligned`に変更
 >
-**Tip Amount Label（内側のトップスタックビュー）：**
+**チップ額（Tip Amount） Label（内側のトップスタックビュー）：**
 >
 - _Text_： `Label`から`$0.00`に変更
 - _Font_： `System 17.0`から`System Medium 20.0`に変更
 - _Color_： `Default`から`tcBlack`に変更
 - _Alignment_： `---`から`Right Aligned`に変更
 >
-**Total Amount Title Label（内側のボトムスタックビュー）：**
+**合計額（Total Amount） Title Label（内側のボトムスタックビュー）：**
 >
-- _Text_： `Label`から`Total`に変更します
+- _Text_： `Label`から`合計額`に変更します
 - _Font_：`System 17.0`から`System Light 20.0`に変更
 - _Color_： `Default`から`tcCharcoal`に変更します
 - _Alignment_：`---`から`Left Aligned`に変更
 >
-**Total Amount Label （内側のボトムスタックビュー）：**
+**合計額（Total Amount） Label （内側のボトムスタックビュー）：**
 >
 - _Text_： `Label`から`$0.00`に変更
 - _Font_： `System 17.0`から`System Medium 20.0`に変更
-- _Color_： `Default」から`tcBlack`に変更
+- _Color_： `Default`から`tcBlack`に変更
 - _Alignment_： `---`から`Right Aligned`に変更
 
 プロジェクトをビルドし、実行して、どれぐらい進んだか確かめてみましょう。
@@ -935,7 +935,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 ## IB 接続を追加する
 
 > [challenge]
-以下のIBコネクションを追加してください。行き詰まったら、以前に`IBoutlet`をどのように実装したかを見直して、記憶をリフレッシュしてください。
+以下のIBコネクションを追加してください。行き詰まったら、以前に`IBOutlet`をどのように実装したかを見直して、記憶をリフレッシュしてください。
 >
 以下の図表を参考に使ってください：
 >

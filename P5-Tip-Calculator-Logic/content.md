@@ -19,12 +19,12 @@ slug: tip-calculator-logic
 
 ![Bill Amount Input](assets/bill_amount_input.png)
 
-ユーザーが _Bill Amount_ のテキストフィールドをタップすると、ユーザーの入力用のテンキーが表示されます。ですが、請求額を入力した後にキーボードを消せません。
+ユーザーが _請求額（Bill Amount）_ のテキストフィールドをタップすると、ユーザーの入力用のテンキーが表示されます。ですが、請求額を入力した後にキーボードを消せません。
 
-まずはこれを直しましょう。キーボードの右上に _Calculate_ ボタンを実装します。
+まずはこれを直しましょう。キーボードの右上に _計算（Calculate）_ ボタンを実装します。
 
 > [info]
-シンプルにするために、もうすぐ完成するcalculateボタンの背後でちょっとした魔法を使います。大部分は特製のUITextFieldのサブクラスに抽象化しました。これは現在の`UITextField`に取って代わります。Calculateボタンがどうして表示されるのかを完全に理解していなくても、今のところは大丈夫です！
+シンプルにするために、もうすぐ完成する計算（Calculate）ボタンの背後でちょっとした魔法を使います。大部分は特製のUITextFieldのサブクラスに抽象化しました。これは現在の`UITextField`に取って代わります。計算（Calculate）ボタンがどうして表示されるのかを完全に理解していなくても、今のところは大丈夫です！
 
 ## 計算ボタンを追加する
 
@@ -40,9 +40,9 @@ slug: tip-calculator-logic
 サブクラスを使用するには、現在の`UITextField`を`BillAmountTextField`サブクラスで置き換える必要があります。
 
 > [action]
-`Main.storyboard`を開いて`BillAmountTextField`を _Bill Amount_ テキストフィールドのカスタムクラスとして設定します。
+`Main.storyboard`を開いて`BillAmountTextField`を _請求額（Bill Amount）_ テキストフィールドのカスタムクラスとして設定します。
 >
-1. _Document Outline_ を使って _Bill Amount_ テキストフィールドを選択します。![Select Text Field](assets/select_text_field.png)
+1. _Document Outline_ を使って _請求額（Bill Amount）_ テキストフィールドを選択します。![Select Text Field](assets/select_text_field.png)
 1. テキストフィールドを選択した状態でユーティリティエリアの _Identity Inspector_ を開きます。![Open Identity Inspector](assets/open_identity_inspector.png)
 1. _Identity Inspector_ で _Class_ フィールドを見つけて、`BillAmountTextField`に設定します。入力し始めると、オートコンプリートで探しているクラスが入力されます。うまく動作しないのならば、何かがおかしいということです！ ![Set Text Field Class](assets/set_text_field_class.png)
 
@@ -66,15 +66,15 @@ class ViewController: UIViewController {
 そうです! テキストフィールドをカスタム`UITextField`サブクラスに設定しました。変更をテストしましょう。
 
 > [action]
-プロジェクトをビルドして実行します。`billAmountTextField`をタップして選択します。キーボードが上にスライドして、次が表示されるはずです。
+プロジェクトをビルドして実行します。`billAmountTextField`をタップして選択します。キーボードが上にスライドして、次の様な画面が表示されるはずです。
 >
 ![Finished Custom Text Field](assets/finished_custom_text_field.png)
 
-表示されましたか？ キーボードのすぐ上に、新しいCalculateボタンが表示されます!
+表示されましたか？ キーボードのすぐ上に、新しい計算（Calculate）ボタンが表示されます!
 
 ## ボタンの動作を計算する
 
-次に、 _Calculate_ ボタンがタップされたらコードを実行する方法を突き止める必要があります。
+次に、 _計算（Calculate）_ ボタンがタップされたらコードを実行する方法を突き止める必要があります。
 
 プロジェクトナビゲーターから`BillAmountTextField.swift`を開きます。
 
@@ -105,13 +105,13 @@ class BillAmountTextField: UITextField {
 }
 ```
 
-カスタム テキスト フィールドの`calculateButtonAction`プロパティを設定することで、 _Calculate_ ボタンがタップされるたびに実行されるクロージャを渡せます。
+カスタム テキスト フィールドの`calculateButtonAction`プロパティを設定することで、 _計算（Calculate）_ ボタンがタップされるたびに実行されるクロージャを渡せます。
 
 > [info]
-頭をかきながら、どういう仕組みで _Calculate_  ボタンがタップされるたびに`calculateButtonTapped(_:)`が呼び出されるのだろうと不思議に思っているかもしれません。このチュートリアルでは詳しく掘り下げませんが、簡単に言うと、次のコード行で同等の`IBAction`をプログラムによりセットアップしました。
+頭をかきながら、どういう仕組みで _計算（Calculate）_  ボタンがタップされるたびに`calculateButtonTapped(_:)`が呼び出されるのだろうと不思議に思っているかもしれません。このチュートリアルでは詳しく掘り下げませんが、簡単に言うと、次のコード行で同等の`IBAction`をプログラムによりセットアップしました。
 >
 ```
-let calculateButton = UIBarButtonItem(title: "Calculate Tip", style: .done, target: self, action: #selector(calculateButtonTapped))
+let calculateButton = UIBarButtonItem(title: "計算する", style: .done, target: self, action: #selector(calculateButtonTapped))
 ```
 
 `calculateButtonAction`の設定に取り組んで、printステートメントを持つクロージャを実行できるようにしましょう。
@@ -126,7 +126,7 @@ override func viewDidLoad() {
     // 1
     billAmountTextField.calculateButtonAction = {
         // 2
-        print("calculate button tapped")
+        print("計算ボタンがタップされました")
     }
 }
 ```
@@ -146,32 +146,32 @@ override func viewDidLoad() {
 他の一般的なビュー コントローラーライフサイクル関数には次のようなものがあります。
 >
 ```
-func viewWillAppear(_ animated: Bool) // Called when the view is about to made visible. Default does nothing
+func viewWillAppear(_ animated: Bool) // 間も無くビューが見える様になるという時に呼び出されます。デフォルトでは何もしません。
 >
-func viewDidAppear(_ animated: Bool) // Called when the view has been fully transitioned onto the screen. Default does nothing
+func viewDidAppear(_ animated: Bool) // スクリーンに完全に映し出された時に呼び出されます。デフォルトでは何もしません。
 >
-func viewWillDisappear(_ animated: Bool) // Called when the view is dismissed, covered or otherwise hidden. Default does nothing
+func viewWillDisappear(_ animated: Bool) // ビューが表示されなくなる直前に呼び出されます。デフォルトでは何もしません。
 >
-func viewDidDisappear(_ animated: Bool) // Called after the view was dismissed, covered or otherwise hidden. Default does nothing
+func viewDidDisappear(_ animated: Bool) // ビューが表示されなくなった時に呼び出されます。デフォルトでは何もしません。
 >
-func viewDidLayoutSubviews() // Called just after the view controller's view's layoutSubviews method is invoked. Subclasses can implement as necessary. The default is a nop.
+func viewDidLayoutSubviews() // ビューコントローラーのビューのサブビューメソッドが完了した直後に呼び出されます。サブクラスが必要に応じて実行されます。
 ```
 >
 この場合では、ビューコントローラーのビューが読み込まれたら最初に実行したいセットアップコードを呼び出すにあたって、`viewDidLoad`は便利です。
 
-`viewDidLoad`メソッドで設定したクロージャが、 _Calculate_ ボタンをタップすると呼び出されるか検証しましょう。
+`viewDidLoad`メソッドで設定したクロージャが、 _計算（Calculate）_ ボタンをタップすると呼び出されるか検証しましょう。
 
 > [action]
 プロジェクトをビルドして実行します。
 >
 1. `billAmountTextField`をタップして選択します。
-1. キーボードの上の _Calculate_ ボタンをタップします。
+1. キーボードの上の _計算（Calculate）_ ボタンをタップします。
 >
 _Calculate_ ボタンを数回タップしたら、デバッグ コンソールに表示されるprint ステートメントを確認します。
 >
 ![Calculate Button Console Print](assets/calculate_button_console_print.png)
 
-素晴らしい！ ここまでは、 _Calculate_ ボタンがタップされるたびにprint ステートメントがきちんと実行されています。最後に、 _Bill Amount_  テキストフィールドにユーザーが入力した請求額を出力するように、printステートメントを変更しましょう。
+素晴らしい！ ここまでは、 _計算（Calculate）_ ボタンがタップされるたびにprint ステートメントがきちんと実行されています。最後に、 _請求額（Bill Amount）_  テキストフィールドにユーザーが入力した請求額を出力するように、printステートメントを変更しましょう。
 
 ## テキストフィールドの入力部分にアクセスする
 
@@ -197,7 +197,7 @@ open class UITextField : UIControl, UITextInput, NSCoding, UIContentSizeCategory
 
 試してみましょう！
 
-> [action]> [action]
+> [action]
 `viewDidLoad`のコードを次のように変更します。
 >
 ```
@@ -208,7 +208,7 @@ override func viewDidLoad() {
         guard let billAmountText = self.billAmountTextField.text
             else { return }
 >
-        print("Bill Amount: \(billAmountText)")
+        print("請求額: \(billAmountText)")
     }
 }
 ```
@@ -219,7 +219,7 @@ override func viewDidLoad() {
 >
 1. `billAmountTextField`をタップして選択します。
 1. テンキーで請求額を入力します。
-1. _Calculate_ ボタンをタップします。
+1. _計算（Calculate）_ ボタンをタップします。
 1. デバッグコンソールに正しい請求額が出力されるのを確認します。
 >
 ![Bill Amount Console Print](assets/bill_amount_console_print.png)
@@ -228,11 +228,11 @@ override func viewDidLoad() {
 
 # チップの計算
 
-ユーザーが入力した請求額を正しく読み取れたので、出力（チップ額 + 総額）を計算するロジックを実装します。
+ユーザーが入力した請求額を正しく読み取れたので、出力（チップ額 + 合計額）を計算するロジックを実装します。
 
 出力を計算するには、次を行う必要があります。
 
-1. 請求額の入力値を`String`から`Double`に変更します。 _Bill Amount_ 値は小数点以下2桁に四捨五入されます。
+1. 請求額の入力値を`String`から`Double`に変更します。 _請求額（Bill Amount）_ 値は小数点以下2桁に四捨五入されます。
 1. 請求額にチップの割合を掛けてチップ額を計算します。チップ額も小数点以下2桁に四捨五入されます。
 1. 請求額とチップ額を合計して総額を計算します。
 
@@ -254,7 +254,7 @@ override func viewDidLoad() {
                 return
         }
 >
-        print("Bill Amount: \(billAmount)")
+        print("請求額: \(billAmount)")
     }
 }
 ```
@@ -279,7 +279,7 @@ override func viewDidLoad() {
 >
         let roundedBillAmount = (100 * billAmount).rounded() / 100
 >
-        print("Bill Amount: \(roundedBillAmount)")
+        print("請求額: \(roundedBillAmount)")
     }
 }
 ```
@@ -312,16 +312,16 @@ override func viewDidLoad() {
         let tipAmount = roundedBillAmount * tipPercent
         let roundedTipAmount = (100 * tipAmount).rounded() / 100
 >
-        print("Bill Amount: \(roundedBillAmount)")
-        print("Tip Amount: \(roundedTipAmount)")
+        print("請求額: \(roundedBillAmount)")
+        print("チップ額: \(roundedTipAmount)")
     }
 }
 ```
 
-ロジックを完成させるために、チップと請求額を合計して総額を計算します。
+ロジックを完成させるために、チップと請求額を合計して合計額を計算します。
 
 > [action]
-総額を計算します。
+合計額を計算します。
 >
 ```
 override func viewDidLoad() {
@@ -344,9 +344,9 @@ override func viewDidLoad() {
         // 3
         let totalAmount = roundedBillAmount + roundedTipAmount
 >
-        print("Bill Amount: \(roundedBillAmount)")
-        print("Tip Amount: \(roundedTipAmount)")
-        print("Total Amount: \(totalAmount)")
+        print("請求額: \(roundedBillAmount)")
+        print("チップ額: \(roundedTipAmount)")
+        print("合計額: \(totalAmount)")
     }
 }
 ```
@@ -625,6 +625,6 @@ func calculate() {
 
 うまく行きました！ このセクションでは、UIとIBコネクションを使ってチップ計算機のロジックを実装しました。
 
-最初に、ユーザーの入力を _Bill Amount_ テキストフィールドから取得しました。次に、ユーザーの入力を使ってチップと合計金額を計算しました。仕上げに、出力カードに各ラベルを設定して、UIを更新しました。
+最初に、ユーザーの入力を _請求額(Bill Amount)_ テキストフィールドから取得しました。次に、ユーザーの入力を使ってチップと合計金額を計算しました。仕上げに、出力カードに各ラベルを設定して、UIを更新しました。
 
 次のセクションでは、チップ計算機の残りのスタイリングと機能を仕上げます！

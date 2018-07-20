@@ -72,7 +72,7 @@ func setupViews() {
     headerView.layer.shadowOpacity = 0.05
     headerView.layer.shadowColor = UIColor.black.cgColor
     headerView.layer.shadowRadius = 35
-}}
+}
 ```
 >
 `CALayer`にはビューの外観を構成できる属性がたくさんあります。上記のコードにヘッダービューの薄い影を作成するコードを追加します。
@@ -171,11 +171,7 @@ func setupViews() {
 
 # ライト / ダークテーマ
 
-<<<<<<< HEAD
 実装する必要がある最後の機能はテーマの切り替えです。現在のアプリは明るい色のテーマになっています。実装が完了すると、`UISwitch`が明るい色のテーマと暗い色のテーマを切り替えられるようになります。
-=======
-The last feature we need to implement is the ability to toggle themes. Currently, our app has a light colored theme. When we're finished, our `UISwitch` will be able to toggle from our light colored theme to a dark one (and vice versa).
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9
 
 まず、テーマを切り替えるコードを記述する新しい関数を作成しましょう。
 
