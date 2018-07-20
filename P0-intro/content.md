@@ -17,11 +17,11 @@ Xcodeのナビゲーションおよび使用方法について基本的な理解
 
 ## 既に知っているべきこと
 
-このチュートリアルは最初のMake Schoolチュートリアルの _Magic 8-Ball_ 開発で学んだ主なコンセプトの上に成り立っています。あなたは、すでにシンプルなiOSアプリの開発方法や、Xcodeの操作方法について基本的な理解を持っているはずです。
+このチュートリアルは最初のMake Schoolチュートリアルの _マジックエイトボール_ 開発で学んだ主なコンセプトの上に成り立っています。あなたは、すでにシンプルなiOSアプリの開発方法や、Xcodeの操作方法について基本的な理解を持っているはずです。
 
-もしあなたがまったくの初心者で、iOS開発の初歩的な入門を求めている場合は、 _Magic 8-Ball_ 開発に関する前回のMake Schoolチュートリアルをまず完了することをオススメします。
+もしあなたがまったくの初心者で、iOS開発の初歩的な入門を求めている場合は、 _マジックエイトボール_ 開発に関する前回のMake Schoolチュートリアルをまず完了することをオススメします。
 
-## 推定完了時刻：
+## 推定所要時間：
 
 3 時間
 
@@ -50,12 +50,4 @@ Xcodeのナビゲーションおよび使用方法について基本的な理解
 
 # 行き詰まった場合は
 
-<<<<<<< HEAD
 コーディング（そしてデバッギング）の最中に行き詰まってしまうのは、プログラミングのプロセスにおいてごく自然なことです。何か問題に悩んだり、迷ってしまったら、少し休んで一息つきましょう。散歩をするのもいいかもしれません。その後で、今までの足取りを見直してみましょう（散歩ではなくチュートリアルです）。チュートリアルの各ステップに従ったことを確認してください。タイピングミスをしたり、うっかりと重要な手順を飛ばしてしまうことはよくあります。
-=======
-Getting stuck when coding (and debugging) is a natural part of the programming process. If you find yourself stuck on a problem or lost, pause for a moment and take a breath. Maybe take a walk. Then retrace your steps (in the tutorial, not the walk). Make sure you've follow each step of the tutorial. It's easy to make typos or to accidentally skip over important steps.
-
-If you want to compare your code to the solution, you can find it here.
-
-<!-- TODO: insert link to github repo -->
->>>>>>> cbcfbeaf301c91d7970277fdcd0642ed9be265c9

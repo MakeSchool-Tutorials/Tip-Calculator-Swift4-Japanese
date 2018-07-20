@@ -129,14 +129,14 @@ iOSの座標系システム内でビューのframeを説明している前の図
 
 この問題を解決するために、Appleは _Auto-Layout_ と呼ばれる、相対的に位置を設定するツールを作成しました。 _Auto-Layout_ を使って、制約を定義します。
 
-制約とは、2つのビューの間の相対的な位置またはサイズを定義できるルールです。 _Auto-Layout_ はすべての制約（ルール）が守られるようにするため、計算をすべて行い、ビューのframeを設定してくれます。これにより、どんな画面サイズの場合でも位置と形状を再び調整する、ダイナミックなビューのレイアウトを開発できるようになります。
+制約とは、2つのビューの間の相対的な位置またはサイズを定義できるルールです。 _Auto-Layout_ はすべての制約（ルール）が守られるようにするため、計算をすべて行い、ビューのframeを設定してくれます。これにより、どんな画面サイズの場合でも位置と形状を再び調整する、動的なビューのレイアウトを開発できるようになります。
 
 例えば、私たちの見本のビューに以下の制約を与えることができます：
 
-- Top：Super View (Root View) Top Edgeから20pt
-- Leading (左)： Super View (Root View) のLeading Edgeから40pt
-- Trailing (右)： Super View (Root View) のTrailing Edgeから-80pt
-- Bottom：Bottomから-380pt
+- Top（上）：Super View (Root View) のTop Edge（上側）から20pt
+- Leading (左)： Super View (Root View) のLeading Edge（上側）から40pt
+- Trailing (右)： Super View (Root View) のTrailing Edge（右側）から-80pt
+- Bottom（下）：下から-380pt
 
 > [info]
 iOS座標系システムの方向に基づいた正と負の値に注意してください。
@@ -151,14 +151,14 @@ iOS座標系システムの方向に基づいた正と負の値に注意して�
 
 もしその代わり、固定の幅または高さを与えたい場合は、固定定数の制約を追加することもできます。私たちのビューの例に、新しい制約を与えてみましょう：
 
-- Top：Super View (Root View) のTop Edgeから20pt
+- Top(上)：Super View (Root View) のTop Edgeから20pt
 - Leading (左)： Super View (Root View) のLeading Edgeから40pt
-- Width：150pt
-- Height：200pt
+- Width (幅)：150pt
+- Height(高さ)：200pt
 
 ![Fixed Size Constraints Example](assets/fixed_size_constraint_example.png)
 
-Auto-layoutと制約によって、どんなiOSデバイスでもダイナミックなビューレイアウトを簡単に作成できるようになります。
+Auto-layoutと制約によって、どんなiOSデバイスでも動的なビューレイアウトを簡単に作成できるようになります。
 
 ## 制約を決定する
 
@@ -172,10 +172,10 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 > [solution]
 ヘッダービューには、以下の制約があるでしょう：
 >
-- Top：Super View (Root View) Top Edgeから0
-- Leading (左)： Super View (Root View) Leading Edgeから0
-- Trailing (右)： Super View (Root View) Trailing Edgeから0
-- Height: 105 固定数
+- Top（上）：Super View (Root View) のTop Edge（上側）から0
+- Leading (左)： Super View (Root View) のLeading Edge（左側）から0
+- Trailing (右)： Super View (Root View) のTrailing Edge（右側）から0
+- Height（高さ）: 105pt
 
 なかなかの出来栄えです。各デバイスにまたがるこれらの制約を持った、私たちのヘッダービューを見てみましょう：
 
@@ -191,11 +191,11 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 
 ## Safe Area (セーフエリア)
 
-セーフエリアは、私たちのビューに対応する制約を正しく作成する助けとなる、貴重なレイアウト情報を提供してくれます。今回の場合は、セーフエリアのトップはステータスバーの下部と一致します。
+セーフエリアは、私たちのビューに対応する制約を正しく作成する助けとなる、貴重なレイアウト情報を提供してくれます。今回の場合は、セーフエリアの上部はステータスバーの下部と一致します。
 
 ![Safe Area](assets/safe_area.png)
 
-元々の制約を修正するには、高さの制約をセーフエリアの下部から-85という制約と置き換える必要があります。これで、ヘッダービューはダイナミックに各デバイスでのレイアウトを正確に計算してくれます。
+元々の制約を修正するには、高さの制約をセーフエリアの下部から-85という制約と置き換える必要があります。これで、ヘッダービューは動的に各デバイスでのレイアウトを正確に計算してくれます。
 
 ![Header View Correct Height](assets/nav_bar_correct_height.png)
 
@@ -214,9 +214,9 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 >
 ヘッダービューを選択した状態で、_Add New Constraints_ ボタンをクリックし、各エッジの制約を設定します：
 >
-- ヘッダービューの _Top Edge_ 0ptから、ルートビューの _Top Edge_ へ
-- ヘッダービューの _Leading (Left) Edge_ 0ptから 、ルートビューの _Leading (左) Edge_ へ
-- ヘッダービューの _Trailing (Right) Edge_ 0ptからルートビューの _Trailing (右) Edge_ へ
+- ヘッダービューの _Top Edge_ : ルートビューの _Top Edge (上)_ まで 0pt
+- ヘッダービューの _Leading Edge (左）_ : ルートビューの _Leading Edge (左) _ まで 0pt
+- ヘッダービューの _Trailing Edge (右)_ : ルートビューの _Trailing Edge (右) _ まで 0pt
 
 現時点では、私たちのヘッダービューの制約は不完全です。ビューの高さを定義する制約をまだ追加していません。今アプリを実行すると、ヘッダービューの高さが0になるので、ヘッダービューは表示されません。Xcodeとインターフェイスビルダー は、このことについて警告しようとしています：
 
@@ -248,7 +248,7 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 
 # 異なるタイプの制約
 
-ヘッダービューの制約を適切に設定するにあたって、一種類の制約を使っただけですが、複雑なUIレイアウトを作成するために使える、様々な種類の制約が数多く用意されています。他に制約を設定する前に、ダイナミックなレイアウトを構築するために自動レイアウトによって使用することのできる共通の制約を見てみましょう。
+ヘッダービューの制約を適切に設定するにあたって、一種類の制約を使っただけですが、複雑なUIレイアウトを作成するために使える、様々な種類の制約が数多く用意されています。他に制約を設定する前に、動的なレイアウトを構築するために自動レイアウトによって使用することのできる共通の制約を見てみましょう。
 
 ## 相対的位置決め
 
@@ -323,7 +323,7 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 
 # ビューグルーピングに自動レイアウトを設定
 
-デザインをもう一度見てみましょう：ビューグルー
+デザインをもう一度見てみましょう：
 
 ![TC Design](assets/tc_design_reference.png)
 
@@ -342,16 +342,16 @@ Auto-layoutと制約によって、どんなiOSデバイスでもダイナミッ
 > [action]
 `Main.storyboard`を開いてください。新たな`UIView`を追加して、次の制約を設定してください：
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_input_card_w_constraints.mp4)
 >
 ステップバイステップ：
 >
 1. _Object Library_ からルートビューへ`UIView`をドラッグします。
 1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
 1. 以下の制約を設定してください：
-    - （入力カード）Header View _Bottom Edge_から_Top Edge_ 24pt
-    - （入力カード）Super View (Root View) _Leading (Left) Edge_から_Leading (Left) Edge_ 15pt
-    - （入力カード）Super View _Trailing (Right) Edge_から_Trailing (Right) Edge_ 15pt
+    - （入力カード）ヘッダービューの _Bottom Edge（下）_から数えて_Top Edge（上）_ を24ptに
+    - （入力カード）スーパービュー (Root View) の_Leading Edge（左）_から数えて_Leading Edge（左）_ を15ptに
+    - （入力カード）スーパービューの _Trailing Edge（右）_ から数えて _Trailing Edge（右）_ を15ptに
 
 新たな（入力カード）ビューの高さの制約が欠けているため、この時点で_Auto-layout_エラーが表示されます。今のところはこの警告を無視してください。すぐに修正します。
 
@@ -369,16 +369,16 @@ Storyboardで新しい`UIView`を追加して、以下の制約を設定して�
 1. _Object Library_ から、`UIView`を入力カードの下のビューコントローラーのルートビューへドラッグしてください。
 1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
 1. 以下の制約を設定してください：
-    - （出力カード）Input Card _Bottom Edge_から_Top Edge_ 24pt
-    - （出力カード）Super View _Leading Edge_から_Leading Edge_ 15pt
-    - （出力カード）Super View _Trailing Edge_から_Trailing Edge_ 15pt
+    - （出力カード）入力カードの _Bottom Edge（下）_から数えて _Top Edge（上）_ を24ptに
+    - （出力カード）スーパービューの _Leading Edge（左）_から数えて_Leading Edge（左）_ を15ptに
+    - （出力カード）Super View _Trailing Edge（右）_から数えて_Trailing Edge（右）_ を15ptに
 
 入力カードビューと出力カードビューの間にも、同じ高さの制約を追加します。
 
 > [action]
 入力カードと出力カードの間で、等しい高さの制約を追加してください：
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_cards_equal_height_constraint.mp4)
 >
 ステップバイステップ：
 >
@@ -394,25 +394,25 @@ Storyboardで新しい`UIView`を追加して、以下の制約を設定して�
 > [action]
 Storyboardで新しい`UIButton`を追加し、以下の制約を設定してください：
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_reset_button_w_constraints.mp4)
 >
 ステップバイステップ：
 >
 1. _Object Library_ から、`UIButton`を出力カードの下にあるビューコントローラーのルートビューへドラッグします。
 1. インターフェースビルダーエディタのウィンドウ右下隅の`Add New Constraints`ボタンをクリックしてください。
 1. 以下の制約を設定してください：
-    - （リセットボタン）Output Card _Bottom Edge_ から _Top Edge_ 24pt
-    - （リセットボタン）Super View _Leading Edge_ から _Leading Edge_ 15pt
-    - （リセットボタン）Super View _Trailing Edge_ から _Trailing Edge_ 15pt
-    - （リセットボタン）Super View _Bottom Edge_ から _Bottom Edge_ 24pt
-    - (リセットボタン)高さ60ポイント
+    - （リセットボタン）出力カードの _Bottom Edge（下）_ から数えて _Top Edge（上）_ を24ptに
+    - （リセットボタン）スーパービューの _Leading Edge（左) _ から数えて _Leading Edge(左)_ を15ptに
+    - （リセットボタン）スーハービューの _Trailing Edge（右）_ から数えて _Trailing Edge（右）_ を15ptに
+    - （リセットボタン）スーパービューの _Bottom Edge（下）_ から _Bottom Edge（下）_ を24ptに
+    - (リセットボタン) 高さ: 60pt
 
 デフォルトで、ボタンにはクリアーな背景色が施されています。リセットボタンを見やすくするために、背景色を`Clear`から`tcDarkBlue`へ変更しましょう。
 
 > [action]
 リセットボタンの _Background color_ の変更：
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/set_reset_button_bg_color.mp4)
 >
 ステップバイステップ：
 >
@@ -447,6 +447,6 @@ _Auto-layout_ の警告が消えました！ リセットボタンとその制�
 
 ## 結論
 
-このセクションでは、UIレイアウトの方法について学びました。最初はframe、そして次に _Auto-layout_ を使いました。複数のデバイスでダイナミックなビューのレイアウトを構築するにあたり、制約について、及びその重要性について学びました。最後に、 チップ計算機のデザインの土台を実装することで、知識を実際に活用しました。
+このセクションでは、UIレイアウトの方法について学びました。最初はframe、そして次に _Auto-layout_ を使いました。複数のデバイスで動的なビューのレイアウトを構築するにあたり、制約について、及びその重要性について学びました。最後に、 チップ計算機のデザインの土台を実装することで、知識を実際に活用しました。
 
 次のセクションでは、各UIグループをフルに実装して、スタイルを決めることで、UIを開発します。
