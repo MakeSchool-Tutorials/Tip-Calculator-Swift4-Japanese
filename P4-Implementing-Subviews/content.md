@@ -18,7 +18,7 @@ slug: implementing-subviews
 
 1. 正しい`UIKit`オブジェクトをそれぞれ追加
 1. 各サブビューに対して _Auto-layout_ 制約を特定して設定
-1. デザインに合わせて各サブビューの属性を構成
+1. デザインに合わせて各サブビューの属性を設定
 1. 適切な`IBoutlet`と`IBAction`を作成
 
 まずは最初のUIグループであるヘッダーを完成させていきましょう。
@@ -53,7 +53,7 @@ slug: implementing-subviews
 Storyboardに制約を追加していく前に、一歩下がって、タイトルラベルに必要な制約をすべて割り出しましょう。
 
 > [challenge]
-下のデザインを使って、タイトルラベルのために _Auto-layout_ の各制約を特定しましょう。各制約を紙に書き出します。
+下のデザインを使って、タイトルラベルに対する _Auto-layout_ の各制約を特定しましょう。各制約を紙に書き出します。
 >
 ヒント: 赤い領域はラベルのフレームを表しています。
 >
@@ -68,9 +68,9 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 >
 **制約**:
 >
-- （ラベル）Super View (Header View) Leading EdgeからLeading Edge 24pts
-- （ラベル）Super View Bottom EdgeからBottom Edge 0pts
-- （ラベル）Safe Area Top EdgeからTop Edge 0pts
+- （ラベル）スーパービュー(ヘッダービュー) のLeading Edge（左）から数えてLeading Edge（左）を24ptへ
+- （ラベル）スーパービューの Bottom Edge（下）から数えてBottom Edge （下）を0ptへ
+- （ラベル）セーフエリアの Top Edge（上）から数えてTop Edge を0ptへ
 
 ### 制約を追加する
 
@@ -86,11 +86,11 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 1. `UILabel`を _Object Library_ からドラッグして、ヘッダービュー (`UIView`) の上にドロップします。
 1. 新しい`UILabel`を選択した状態で、`Add New Constraints`ボタンをクリックします。
 1. 次の最初の制約2つを、`Add New Constraints`ポップアップを使って追加します。
-    - （ラベル）Super View Leading EdgeからLeading Edge 24pts
-    - （ラベル）Super View Bottom EdgeからBottom Edge 0pts
+    - （ラベル）スーパービューの Leading Edge（上）からLeading Edge（左）を24ptへ
+    - （ラベル）スーパービューの Bottom Edge（下）からBottom Edge（下）を0ptへ
 1. 最後の制約を追加するために、 _Document Outline_ の`UILabel`を選択します。
 1. `UILabel`を選択した状態で、Ctrlを押しながらクリックして _Document Outline_ の _Safe Area_ オブジェクトまでドラッグします。
-1. 新しい制約を追加するポップアップが表示されます。`Vertical Spacing`を選択します。ちょっと待ってください。新しい`Vertical Spacing`の制約は適切に構成されていません。
+1. 新しい制約を追加するポップアップが表示されます。`Vertical Spacing`を選択します。ちょっと待ってください。新しい`Vertical Spacing`の制約は適切に設定されていません。
 1. 新しい`Vertical Spacing`にカーソルを重ねてクリックします。属性が属性インスペクタに表示されます。
 1. 属性インスペクタで制約の属性を変更します。
     - _Second Item_: `Label.Bottom`から`Top`に変更
@@ -118,7 +118,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 - _Font_: `System 17.0` から `System Bold 24.0`へ変更![Set Header View Label Font](assets/set_nav_bar_label_font.png)
 - _Font Color_: `Default` から `tcCharcoal`へ変更![Set Header View Text Color](assets/set_nav_bar_label_text_color.png)
 
-上記の各属性を構成すると、タイトルラベルは次のようになります。
+上記の各属性を設定すると、タイトルラベルは次のようになります。
 
 ![Header View Label Styled](assets/nav_bar_label_w_styling.png)
 
@@ -126,7 +126,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 
 ## ライト/ダークモード (テーマ) スイッチ
 
-制約を特定します。オブジェクトを追加して制約を設定します。属性を構成します。さっぱり洗い流します。もう一度繰り返します。
+制約を特定します。オブジェクトを追加して制約を設定します。属性を設定します。さっぱり洗い流します。もう一度繰り返します。
 
 このチュートリアルが終わるまで、このプロセスを何回も繰り返します。自分のアプリを開発するときも同じプロセスを行うことになるので、ぜひ慣れてください。
 
@@ -150,9 +150,9 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 >
 **制約**:
 >
--（スイッチ）Super View (Header View) Trailing EdgeからTrailing Edge 24pts
--（スイッチ）Label Trailing EdgeからLeading Edge ≥20pts
--（スイッチ）Label CenterにCenter vertically aligned
+-（スイッチ）スーパービュー (ヘッダービュー) のTrailing Edge（左）から数えてTrailing Edge（左）を24ptに
+-（スイッチ）ラベルの Trailing Edge（左）から数えてLeading Edge（左）を ≥20ptに
+-（スイッチ）ラベルの Center（中央）とCenter vertically（中央揃え）
 
 ### 制約を追加する
 
@@ -161,7 +161,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 > [action]
 `Main.storyboard`を開いて、`UISwitch`とその制約を実装します。
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_tip_percent_stack_view.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/add_switch_w_constraints.mp4)
 >
 ステップバイステップ：
 >
@@ -176,7 +176,7 @@ Storyboardに制約を追加していく前に、一歩下がって、タイト�
 1. スイッチを選択した状態で、Ctrlを押しながらクリックして`UISwitch`から`UILabel`までドラッグします。
 1. 新しい制約を追加するポップアップが表示されます。`Center Vertically`を選択して、スイッチの中心をラベルの中心に縦方向に揃えます。
 
-素晴らしい！ 制約を追加して`UISwitch`に設定しました。では、スイッチの属性を構成しましょう。
+素晴らしい！ 制約を追加して`UISwitch`に設定しました。では、スイッチの属性を設定しましょう。
 
 ### 属性の設定
 
@@ -240,7 +240,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var headerView: UIView!
 
-    // MARK: - ライフサイクルを見る
+    // MARK: - View LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -255,7 +255,7 @@ class ViewController: UIViewController {
 > [action]
 ヘッダービューの`titleLabel`というタイトルラベルの`IBOutlet`を作成します。
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/create_tip_percent_stack_view.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p4_implementing_subviews/title_label_iboutlet.mp4)
 >
 ステップバイステップ：
 >
@@ -286,7 +286,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var themeSwitch: UISwitch!
 >
-    // MARK: - ライフサイクルを見る
+    // MARK: - View LifeCycle
 >
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -316,7 +316,7 @@ class ViewController: UIViewController {
 <!-- break -->
 
 > [info]
-スイッチの`IBAction`を作成したら、Assistant Editorを閉じます。画面のスペースがあまりない場合は、必要に応じて _Assistant Editor_ を開いたり閉じたりしましょう。
+スイッチの`IBAction`を作成したら、アシスタントエディタを閉じます。画面のスペースがあまりない場合は、必要に応じて _アシスタントエディタ_ を開いたり閉じたりしましょう。
 
 新しい`IBAction`のテストを行って、正しく機能するか確認しましょう。
 
@@ -326,9 +326,9 @@ class ViewController: UIViewController {
 ```
 @IBAction func themeToggled(_ sender: UISwitch) {
     if sender.isOn {
-        print("switch toggled on")
+        print("スイッチがオンになりました")
     } else {
-        print("switch toggled off")
+        print("スイッチがオフになりました")
     }
 }
 ```
@@ -405,9 +405,9 @@ class ViewController: UIViewController {
 
 次の制約を外側のスタックビューに追加します。
 
-- （外側スタックビュー）Super View (Input Card) Leading EdgeからLeading Edge 22pts
-- （外側スタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
-- （外側のスタックのビュー）Super View CenterにCenter vertically aligned
+- （外側スタックビュー）スーパービュー (入力カード) のLeading Edge（左）から数えてLeading Edge（左）を 22ptに
+- （外側スタックビュー）スーパービューの Trailing Edge（右）からTrailing Edge（右） 22pt
+- （外側のスタックのビュー）スーパービューの Center（中央）とCenter vertically aligned （中央揃え）
 
 各ビューが正しい幅であることを保証するために、幅の制約をもういくつか追加しなければなりません。
 
@@ -544,8 +544,8 @@ Storyboardは次のように表示されるはずです。
 1. _Document Outline_ で、外側のスタックビューを選択してください。
 1. 外側のスタックビューが選択された状態で、`Add New Constraints`ボタンをクリックしてください。
 1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
-    - （外側のスタックビュー）Super View (Input Card) Leading EdgeからLeading Edge 22pts
-    - （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+    - （外側のスタックビュー）スーパービュー(入力カード) Leading Edge（左）から数えてLeading Edge（左）を 22ptに
+    - （外側のスタックビュー）スーパービューの Trailing Edge（右）から数えてTrailing Edge（右）を 22ptに
 1. _Document Outline_ で、コントロール（ctrl）キーを押さえながらクリックし、外側のスタックビューからスーパービュー（入力カード）へドラッグしてください。
 1. ポップアップが出たら、新たな制約を作成するために`Center Vertically In Container`を選択してください。そうすれば、外側のスタックビューの中心と、スーパービューの中心を、垂直に整列できます。
 
@@ -774,16 +774,16 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 
 入力カードの外側のスタックビューとちょうど同じように、以下の制約を追加して、外側のスタックビューのフレームを設定します。
 
-- （外側のスタックビュー）Super View (Output Card) Leading EdgeからLeading Edge 22pts
-- （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
-- （外側のスタックのビュー）Super View CenterにCenter vertically aligned
+- （外側のスタックビュー）スーパービュー (出力カード) Leading Edge（左）からLeading Edge（左）を 22ptに
+- （外側のスタックビュー）スーパービュー Trailing Edge（右）からTrailing Edge（右）を22ptに
+- （外側のスタックのビュー）スーパービュー Center（中央）とCenter vertically aligned（中央揃え）
 
 最後に、サブビューの幅が正しいサイズになるように、さらにいくつかの制約を追加します。
 
 - （内側のトップスタックビュー）外側のスタックビューと同じ幅
 -（内側のボトムスタックビュー）外側のスタックビューと同じ幅
-- （チップ額タイトルラベル）Width 110pts
-- （総額タイトルラベル）Width 110pts
+- （チップ額タイトルラベル）Width（幅） 110pt
+- （総額タイトルラベル）Width（幅） 110pt
 
 > [info]
 こういった制約を追加したのはなぜなのかと不思議に思っている場合、詳しくは入力カードの実装方法を見直してみましょう。
@@ -835,9 +835,9 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 > [challenge]
 外側のスタックビューのフレームに以下の制約を設定してください。
 >
-- （外側のスタックビュー）スーパービュー のLeading EdgeからLeading Edge 22pt
-- （外側のスタックビュー）スーパービュー のTrailing EdgeからTrailing Edge 22pt
-- （外側のスタックのビュー）スーパービュー CenterにCenter vertically aligned
+- （外側のスタックビュー）スーパービュー のLeading Edge（左）からLeading Edge（左）を 22ptに
+- （外側のスタックビュー）スーパービュー のTrailing Edge（右）からTrailing Edge（右） 22ptに
+- （外側のスタックのビュー）スーパービューのCenter（中央）とCenter vertically aligned（中央揃え）
 
 <!-- break -->
 
@@ -846,8 +846,8 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 1. _Document Outline_ で、外側のスタックビューを選択してください。
 1. 外側のスタックビューが選択された状態で、`Add New Constraints`ボタンをクリックしてください。
 1. 次の2つの制約を、`Add New Constraints`ポップアップを使って追加します。
-    - （外側のスタックビュー）Super View (Input Card) Leading EdgeからLeading Edge 22pts
-    - （外側のスタックビュー）Super View Trailing EdgeからTrailing Edge 22pts
+    - （外側のスタックビュー）スーパービュー(入力カード) Leading Edge（左）からLeading Edge（左）を22ptに
+    - （外側のスタックビュー）Super View Trailing Edge（右）からTrailing Edge（右）を 22ptに
 1. _Document Outline_ で、コントロール（ctrl）キーを押さえながらクリックし、外側のスタックビューからスーパービュー（入力カード）へドラッグしてください。
 1. ポップアップが出たら、新たな制約を作成するために`Center Vertically In Container`を選択してください。そうすれば、外側のスタックビューの中心と、スーパービューの中心を、垂直に整列できます。
 
@@ -858,8 +858,8 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 >
 - （内側のトップスタックビュー）外側のスタックビューと同じ幅
 -（内側のボトムスタックビュー）外側のスタックビューと同じ幅
-- （チップ額タイトルラベル）Width 110pts
-- （総額タイトルラベル）Width 110pts
+- （チップ額タイトルラベル）Width（幅） 110pts
+- （総額タイトルラベル）Width（幅） 110pts
 
 <!-- break -->
 
@@ -883,7 +883,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 
 ![Output Card Finished Constraints Unstyled](assets/output_card_finished_constraints_unstyled.png)
 
-次に出力カードビューの属性を構成して、デザインと一致するようにします。
+次に出力カードビューの属性を設定して、デザインと一致するようにします。
 
 ## 属性の設定
 
@@ -996,7 +996,7 @@ _Input Card_ の背景色を`tcDarkBlue`に設定してください。
 >
 ```
 @IBAction func resetButtonTapped(_ sender: UIButton) {
-    print("reset button tapped")
+    print("リセットボタンがタップされました")
 }
 ```
 
