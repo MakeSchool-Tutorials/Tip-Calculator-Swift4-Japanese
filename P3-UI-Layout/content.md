@@ -24,7 +24,7 @@ _インターフェイスビルダー_ でUIを実装することで、アプリ
 > [action]
 `UIView`オブジェクトをオブジェクトライブラリーからビューコントローラーのトップへとドラッグしてヘッダービューを作成してください。今のところは、完璧なサイズや位置については、あまり悩まないでください。これは後で取り扱います。
 >
-![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_output_card_w_constraints.mp4)
+![ms-video](https://s3.amazonaws.com/mgwu-misc/Tip+Calculator+Swift+4/p3_ui_layout/add_custom_nav_bar.mp4)
 
 たった今追加した新しい`UIView`オブジェクトが、カスタムヘッダービューになります ここには後で他のサブビューを追加します。
 
